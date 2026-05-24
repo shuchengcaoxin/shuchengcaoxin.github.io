@@ -2,33 +2,31 @@
 layout: about
 title: about
 permalink: /
-subtitle: <a href='#'>Affiliations</a>. Address. Contacts. Motto. Etc.
+subtitle: PhD Candidate · Quantitative Life Sciences · McGill University
 
 profile:
   align: right
-  image: prof_pic.jpg
-  image_circular: false # crops the image to make it circular
+  image: 
+  image_circular: false
   more_info: >
-    <p>555 your office number</p>
-    <p>123 your address street</p>
-    <p>Your City, State 12345</p>
+    <p>📍 Montréal, Québec, Canada</p>
+    <p>📧 shucheng.cao [at] mail.mcgill.ca</p>
+    <p>📄 CV: <a href="/assets/pdf/CV_EN.pdf">English</a> · <a href="/assets/pdf/CV_CN.pdf">中文</a></p>
 
-selected_papers: true # includes a list of papers marked as "selected={true}"
-social: true # includes social icons at the bottom of the page
-
+selected_papers: false
+social: false
 announcements:
-  enabled: true # includes a list of news items
-  scrollable: true # adds a vertical scroll bar if there are more than 3 news items
-  limit: 5 # leave blank to include all the news in the `_news` folder
-
+  enabled: false
 latest_posts:
-  enabled: true
-  scrollable: true # adds a vertical scroll bar if there are more than 3 new posts items
-  limit: 3 # leave blank to include all the blog posts
+  enabled: false
 ---
 
-Write your biography here. Tell the world about yourself. Link to your favorite [subreddit](https://www.reddit.com). You can put a picture in, too. The code is already in, just name your picture `prof_pic.jpg` and put it in the `img/` folder.
+👋 Hi, I'm **Shucheng (Bangli) Cao** — a computational genetics researcher and healthcare data scientist based in Montréal.
 
-Put your address / P.O. box / other info right below your picture. You can also disable any of these elements by editing `profile` property of the YAML header of your `_pages/about.md`. Edit `_bibliography/papers.bib` and Jekyll will render your [publications page](/al-folio/publications/) automatically.
+🔬 I use large-scale genomic and proteomic data (790K+ individuals) with causal inference (Mendelian randomization) to identify proteins that *actually cause* metabolic disease — and evaluate whether they can be drugged. My work directly informs drug target prioritization in indications where historical success rates are ~5%.
 
-Link to your social media connections, too. This theme is set up to use [Font Awesome icons](https://fontawesome.com/) and [Academicons](https://jpswalsh.github.io/academicons/), like the ones below. Add your Facebook, Twitter, LinkedIn, Google Scholar, or just disable all of them.
+🎓 PhD candidate supervised by [Dr. Guillaume Butler-Laporte](https://www.mcgill.ca/) and co-supervised by [Dr. Brent Richards](https://www.mcgill.ca/genepi/) (CEO, 5 Prime Sciences). Google Scholar citations >1,000 · H-index = 6.
+
+**Keywords** — Mendelian Randomization · GWAS · Proteomics · Multi-omics · Drug Target Discovery · Causal Inference · R · Python
+
+🌟 **Open to:** Target Validation · Multi-omics Data Science · Biopharma Data Analysis · Life Sciences Investment Research · Life Sciences Consulting — feel free to reach out!
