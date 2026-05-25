@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: PhD Candidate · Quantitative Life Sciences · McGill University
+subtitle: PhD Candidate · Statistics & Machine Learning · McGill University
 
 profile:
   align: right
@@ -21,12 +21,12 @@ latest_posts:
   enabled: false
 ---
 
-👋 Hi, I'm **Shucheng (Bangli) Cao** — a computational genetics researcher and healthcare data scientist based in Montréal.
+👋 Hi, I'm **Shucheng (Bangli) Cao** — a data scientist and statistician with a PhD background in computational biology, based in Montréal.
 
-🔬 I use large-scale genomic and proteomic data (790K+ individuals) with causal inference (Mendelian randomization) to identify proteins that *actually cause* metabolic disease — and evaluate whether they can be drugged. My work directly informs drug target prioritization in indications where historical success rates are ~5%.
+📊 I work with large-scale, high-dimensional datasets (790K+ individuals) and apply statistical modeling, causal inference, and machine learning to extract actionable insights from complex data. My work spans the full pipeline: hypothesis formulation, data wrangling, statistical analysis, model building, and communicating results to both technical and non-technical audiences.
 
-🎓 Google Scholar citations >1,000 · H-index = 6.
+🔬 My domain is biomedical and health data, but my core toolkit — **statistics, causal inference, ML/AI, and data storytelling** — transfers across industries. I've applied these skills to problems ranging from drug target prioritization to medical AI validation to 3D tumor drug screening.
 
-**Keywords** — Mendelian Randomization · GWAS · Proteomics · Multi-omics · Drug Target Discovery · Causal Inference · R · Python
+**Keywords** — Statistics · Causal Inference · Machine Learning · Data Science · Python · R · High-Dimensional Data · Survival Analysis · Bayesian Methods · Bioinformatics · GWAS · Multi-omics · Scientific Computing · Data Visualization · Linux
 
-🌟 **Open to:** Target Validation · Multi-omics Data Science · Biopharma Data Analysis · Life Sciences Investment Research · Life Sciences Consulting — feel free to reach out!
+🌟 **Actively seeking** full-time or internship opportunities in **data science, statistics, quantitative research, and machine learning** — including roles in biopharma, hedge funds / quant finance, consulting, and tech. If you have openings or would like to collaborate, feel free to reach out!
