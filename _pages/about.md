@@ -25,7 +25,7 @@ latest_posts:
 
 🔬 I use large-scale genomic and proteomic data (790K+ individuals) with causal inference (Mendelian randomization) to identify proteins that *actually cause* metabolic disease — and evaluate whether they can be drugged. My work directly informs drug target prioritization in indications where historical success rates are ~5%.
 
-🎓 PhD candidate supervised by [Dr. Guillaume Butler-Laporte](https://www.mcgill.ca/) and co-supervised by [Dr. Brent Richards](https://www.mcgill.ca/genepi/) (CEO, 5 Prime Sciences). Google Scholar citations >1,000 · H-index = 6.
+🎓 Google Scholar citations >1,000 · H-index = 6.
 
 **Keywords** — Mendelian Randomization · GWAS · Proteomics · Multi-omics · Drug Target Discovery · Causal Inference · R · Python
 
