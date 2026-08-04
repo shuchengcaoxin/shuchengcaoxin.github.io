@@ -4,26 +4,26 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Shucheng (Bangli) Cao — Causal inference &amp; statistical genetics</title>
-<meta name="description" content="Shucheng (Bangli) Cao is a PhD candidate at McGill University working on causal inference, Mendelian randomization and statistical genetics at biobank scale, applied to drug target discovery and machine learning for biomedicine.">
+<title>Shucheng (Bangli) Cao — Statistics &amp; machine learning for causal questions</title>
+<meta name="description" content="Shucheng (Bangli) Cao uses and builds statistical and machine learning methods for causal questions in large-scale human data — instrumental-variable and Bayesian inference, robustness evaluation of machine learning models, and LLM agents for auditable evidence. PhD candidate at McGill University, Montréal.">
 <meta name="author" content="Shucheng (Bangli) Cao">
 <link rel="canonical" href="https://shuchengcaoxin.github.io/">
 
 <!-- Link preview (LinkedIn / X / WeChat / Slack) -->
 <meta property="og:type" content="profile">
 <meta property="og:site_name" content="Shucheng (Bangli) Cao">
-<meta property="og:title" content="Shucheng (Bangli) Cao — Causal inference &amp; statistical genetics">
-<meta property="og:description" content="I separate correlation from causation in human genetic data at biobank scale — and turn it into decisions about which drug targets are worth pursuing.">
+<meta property="og:title" content="Shucheng (Bangli) Cao — Statistics &amp; machine learning for causal questions">
+<meta property="og:description" content="I use and build statistical and machine learning methods that separate correlation from causation in data on hundreds of thousands of people — and turn the answer into a decision.">
 <meta property="og:url" content="https://shuchengcaoxin.github.io/">
 <meta property="og:image" content="https://shuchengcaoxin.github.io/assets/img/og-card.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Shucheng (Bangli) Cao — Causal inference &amp; statistical genetics">
-<meta name="twitter:description" content="I separate correlation from causation in human genetic data at biobank scale — and turn it into decisions about which drug targets are worth pursuing.">
+<meta name="twitter:title" content="Shucheng (Bangli) Cao — Statistics &amp; machine learning for causal questions">
+<meta name="twitter:description" content="I use and build statistical and machine learning methods that separate correlation from causation in data on hundreds of thousands of people — and turn the answer into a decision.">
 <meta name="twitter:image" content="https://shuchengcaoxin.github.io/assets/img/og-card.png">
 
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧬</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
 
 <script type="application/ld+json">
 {
@@ -34,15 +34,12 @@
   "url": "https://shuchengcaoxin.github.io/",
   "email": "mailto:shucheng.cao@mail.mcgill.ca",
   "jobTitle": "PhD Candidate in Quantitative Life Sciences",
+  "description": "Statistician and machine learning researcher working on causal inference in large-scale human data.",
   "affiliation": {
     "@type": "CollegeOrUniversity",
     "name": "McGill University",
     "url": "https://www.mcgill.ca/"
   },
-  "alumniOf": [
-    { "@type": "CollegeOrUniversity", "name": "King Abdullah University of Science and Technology (KAUST)" },
-    { "@type": "CollegeOrUniversity", "name": "China Pharmaceutical University" }
-  ],
   "address": {
     "@type": "PostalAddress",
     "addressLocality": "Montréal",
@@ -51,15 +48,15 @@
   },
   "knowsAbout": [
     "Causal inference",
+    "Machine learning",
+    "Statistical modelling",
+    "Instrumental variable analysis",
+    "Bayesian methods",
+    "Biostatistics",
     "Mendelian randomization",
     "Statistical genetics",
-    "Genetic epidemiology",
-    "Colocalization analysis",
     "Genome-wide association studies",
-    "Proteomics",
-    "Machine learning",
-    "Drug target discovery",
-    "Biostatistics"
+    "Drug target discovery"
   ],
   "sameAs": [
     "https://scholar.google.com/citations?user=q1cAyE0AAAAJ",
@@ -83,7 +80,8 @@
   --accent-ink:#0a5450;
   --amber:#b45309;
   --amber-soft:#fdf3e3;
-  --maxw:760px;
+  /* one column edge for the whole page — every block lines up against this */
+  --maxw:900px;
 }
 @media (prefers-color-scheme: dark){
   :root{
@@ -189,16 +187,9 @@ header.hero{padding:60px 0 8px}
 .links a:hover{color:var(--accent-ink); border-color:var(--accent); background:var(--accent-soft)}
 .links a svg{width:15px; height:15px; flex:0 0 15px}
 
-/* metrics */
-.metrics{
-  display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
-  background:var(--line); border:1px solid var(--line); border-radius:12px;
-  overflow:hidden; margin:34px 0 0;
-}
-.metrics div{background:var(--bg); padding:15px 14px}
-.metrics .n{font-size:20px; font-weight:680; letter-spacing:-.02em; color:var(--accent-ink); display:block; line-height:1.2}
-.metrics .l{font-size:12.5px; color:var(--ink-3); line-height:1.35; display:block; margin-top:3px}
-@media (max-width:620px){ .metrics{grid-template-columns:repeat(2,1fr)} }
+/* short bio + a plain facts line (no dashboard) */
+.bio{color:var(--ink-2); font-size:16.5px; line-height:1.62; margin:26px 0 0}
+.facts{color:var(--ink-3); font-size:14.5px; margin:14px 0 0}
 
 /* ---------- sections ---------- */
 section{padding:52px 0 0}
@@ -242,6 +233,7 @@ h2::after{content:""; flex:1; height:1px; background:var(--line)}
 
 /* method cards */
 .methods{display:grid; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:12px; overflow:hidden}
+@media (min-width:820px){ .methods{grid-template-columns:repeat(2,1fr)} }
 .method{background:var(--bg); padding:20px 22px}
 .method h3{margin:0 0 6px; font-size:16.5px; font-weight:660; letter-spacing:-.01em; color:var(--ink)}
 .method p{margin:0; color:var(--ink-2); font-size:15.5px; line-height:1.6}
@@ -321,7 +313,7 @@ footer a{color:var(--ink-3)}
   <div class="hero-top">
     <div class="hero-text">
       <h1 class="name">Shucheng <span style="font-weight:500;color:var(--ink-2)">(Bangli)</span> Cao<span class="cn">曹书诚</span></h1>
-      <p class="tagline">I work on <em>causal inference and statistical genetics at biobank scale</em> — separating what merely correlates with disease from what actually causes it.</p>
+      <p class="tagline">I use and build <em>statistical and machine learning methods for causal questions</em> — separating what merely correlates from what actually causes it, in data on hundreds of thousands of people.</p>
       <p class="affil">PhD Candidate, Quantitative Life Sciences · <strong>McGill University</strong> · Montréal, Canada</p>
     </div>
 
@@ -334,7 +326,7 @@ footer a{color:var(--ink-3)}
 
   <div class="status">
     <span class="dot"></span>
-    <span><b>Open to opportunities.</b> Graduating 2027 — looking for full-time roles and 2026–27 internships where causal inference and large-scale statistical modelling drive real decisions: computational biology, data science, and quantitative research.</span>
+    <span><b>Open to opportunities.</b> Graduating 2027 — looking for full-time roles and 2026–27 internships where causal inference and large-scale statistical modelling drive real decisions: machine learning, data science, quantitative research, and computational biology.</span>
   </div>
 
   <div class="links">
@@ -350,12 +342,14 @@ footer a{color:var(--ink-3)}
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>CV</a>
   </div>
 
-  <div class="metrics">
-    <div><span class="n">1,000+</span><span class="l">citations</span></div>
-    <div><span class="n">790K+</span><span class="l">individuals analysed</span></div>
-    <div><span class="n">CA$350K+</span><span class="l">competitive funding</span></div>
-    <div><span class="n">8</span><span class="l">journals reviewed for</span></div>
-  </div>
+  <!-- ============================================================
+       THIS PARAGRAPH IS THE ONE YOU SHOULD REWRITE IN YOUR OWN WORDS.
+       It is the only place on the page where a reader hears you talk
+       instead of reading a description of you. Keep it plain.
+       ============================================================ -->
+  <p class="bio">I focus on one question: is this effect real, or is it an artefact of the data, the pipeline, or the confounding? I work on it with molecular dynamics trajectories, with multi-hospital CT scans, and now with genotypes and plasma proteomes at biobank scale — using whatever the failure mode calls for: causal inference when confounding is the problem, robustness evaluation when the model is.</p>
+
+  <p class="facts">1,000+ citations · h-index 6 · CA$350K+ in competitive funding · peer reviewer for eight journals</p>
 </header>
 
 
@@ -371,17 +365,12 @@ footer a{color:var(--ink-3)}
     <li>
       <time datetime="2026-07">Jul 2026</time>
       <div class="body"><span class="tag">Paper</span><strong>Accepted at Nature Communications.</strong>
-      Our study disentangling osteoarthritis-specific genetic effects from obesity — where I ran the Mendelian randomization analyses and led the druggability assessment of the resulting targets.</div>
+      Our study disentangling osteoarthritis-specific genetic effects from obesity.</div>
     </li>
 
     <li>
       <time datetime="2026-06-13">Jun 2026</time>
       <div class="body"><span class="tag">Talk</span>Presented a poster at <strong>ESHG 2026</strong> in Gothenburg on proteome-wide causal inference for metabolic liver disease.</div>
-    </li>
-
-    <li>
-      <time datetime="2026-05">May 2026</time>
-      <div class="body"><span class="tag">Paper</span>First-author manuscript on <strong>BMI-driven proteins in MASLD pathogenesis</strong> submitted to Nature Communications.</div>
     </li>
 
     <li>
@@ -396,7 +385,7 @@ footer a{color:var(--ink-3)}
 
     <li>
       <time datetime="2025-11-06">Nov 2025</time>
-      <div class="body"><span class="tag">Talk</span>Invited speaker at the <strong>McGill Epidemiology Round Table</strong>.</div>
+      <div class="body"><span class="tag">Talk</span>Invited speaker — and host — at the <strong>Lady Davis Institute Epidemiology Round Table</strong>.</div>
     </li>
 
     <li class="hidden-news">
@@ -404,10 +393,6 @@ footer a{color:var(--ink-3)}
       <div class="body"><span class="tag">Award</span>Awarded the <strong>FRQNT Doctoral Scholarship</strong> (CA$25,000/year).</div>
     </li>
 
-    <li class="hidden-news">
-      <time datetime="2023-10">Oct 2023</time>
-      <div class="body"><span class="tag">Award</span>Won <strong>Best Product–Market Fit</strong> at the AWS Retail GenAI Hackathon with Team AI Avatar.</div>
-    </li>
 
 <!-- ===================== END OF NEWS LIST ===================== -->
   </ul>
@@ -450,7 +435,6 @@ footer a{color:var(--ink-3)}
 
 <section id="work">
   <h2>Where I apply it</h2>
-  <p class="lede">Same toolkit, different problems.</p>
 
   <div class="domain">
     <h3>Drug target discovery <span class="where">PhD, Butler-Laporte lab, McGill</span></h3>
@@ -459,19 +443,13 @@ footer a{color:var(--ink-3)}
   </div>
 
   <div class="domain">
-    <h3>Separating a disease from its confounder <span class="where">Nature Communications, accepted</span></h3>
-    <p>Much of the genetic signal for osteoarthritis is really a signal for obesity. Using GWAS-by-subtraction across 12 traits and four proteomic cohorts, we pulled the two apart — then I classified the surviving targets by biological mechanism and assessed each one for druggability.</p>
-    <span class="out">Over half the candidate targets only became visible after obesity was subtracted out — including one already-approved antibody as a repurposing candidate.</span>
-  </div>
-
-  <div class="domain">
     <h3>Medical AI that survives contact with hospitals <span class="where">IEEE TPAMI</span></h3>
-    <p>Segmentation models that top leaderboards often fail in clinics. I helped build what was then the largest multi-hospital abdominal CT dataset — 1,112 cases from 12 hospitals — and quantified how much performance leading models lose on real multi-centre data.</p>
-    <span class="out">Now used by 4,000+ teams worldwide as a standard benchmark (AbdomenCT-1K).</span>
+    <p>Segmentation models that top leaderboards often fail in clinics. I helped build what was then the largest multi-hospital abdominal CT dataset — more than 1,000 CT scans from 12 medical centres — and quantified how much performance leading models lose on real multi-centre data.</p>
+    <span class="out">Released publicly as AbdomenCT-1K, with the annotations and evaluation code open-sourced under Apache 2.0.</span>
   </div>
 
   <div class="domain">
-    <h3>Molecular simulation for peptide design <span class="where">MSc, KAUST</span></h3>
+    <h3>Molecular simulation for peptide design</h3>
     <p>Controlled molecular dynamics experiments to isolate what really drives ultrashort peptide self-assembly, and turn that mechanism into a ranking model for new designs.</p>
     <span class="out">Showed hydrophobicity — not aromaticity — is the driver, overturning a two-decade consensus, and produced a first proof of concept for blocking amyloid aggregation.</span>
   </div>
@@ -482,12 +460,6 @@ footer a{color:var(--ink-3)}
   <h2>Selected publications</h2>
   <p class="lede">Full list on <a href="https://scholar.google.com/citations?user=q1cAyE0AAAAJ" target="_blank" rel="noopener">Google Scholar</a>.</p>
   <ul class="pubs">
-
-    <li>
-      <span class="t">The impact of BMI-driven proteins on MASLD pathogenesis</span>
-      <span class="me">S. Cao</span>, CY. Su, D. Tan, et al., G. Butler-Laporte.
-      <span class="venue">Nature Communications</span> — under review<span class="badge first">First author</span>
-    </li>
 
     <li>
       <span class="t">Disentangling osteoarthritis-specific genetic effects from obesity to identify novel therapeutic targets</span>
@@ -515,7 +487,7 @@ footer a{color:var(--ink-3)}
 
     <li>
       <span class="t">MD simulations of amphiphilic ultrashort peptide self-assembly</span>
-      <span class="me">S. Cao</span>. MSc thesis, KAUST, 2022 — ranked in the top ten theses of the year.<span class="badge first">First author</span>
+      <span class="me">S. Cao</span>. MSc thesis, KAUST, 2022 — ranked in the top ten theses of the year.
     </li>
 
   </ul>
@@ -525,24 +497,12 @@ footer a{color:var(--ink-3)}
 <section id="talks">
   <h2>Talks &amp; presentations</h2>
   <ul class="talks">
-    <li><time datetime="2026-10-20">Oct 2026</time><div class="body"><strong>ASHG Annual Meeting</strong>, Montréal — abstract accepted</div></li>
     <li><time datetime="2026-06-13">Jun 2026</time><div class="body"><strong>ESHG 2026</strong>, Gothenburg — poster</div></li>
     <li><time datetime="2026-02-03">Feb 2026</time><div class="body"><strong>QLS Research Day</strong>, McGill — oral</div></li>
     <li><time datetime="2025-12-24">Dec 2025</time><div class="body"><strong>Guangdong Medical University</strong>, Dongguan — invited talk</div></li>
-    <li><time datetime="2025-11-06">Nov 2025</time><div class="body"><strong>McGill Epidemiology Round Table</strong> — invited talk</div></li>
+    <li><time datetime="2025-11-06">Nov 2025</time><div class="body"><strong>Lady Davis Institute Epidemiology Round Table</strong> — invited talk, and host</div></li>
     <li><time datetime="2024-11-08">Nov 2024</time><div class="body"><strong>ASHG Annual Meeting</strong> — poster</div></li>
   </ul>
-</section>
-
-
-<section id="background">
-  <h2>Background</h2>
-  <ul class="talks">
-    <li><time>2022 – 2027</time><div class="body"><strong>PhD, Quantitative Life Sciences</strong> — McGill University, Montréal. Advisor: Dr. Guillaume Butler-Laporte.</div></li>
-    <li><time>2020 – 2022</time><div class="body"><strong>MSc, Bioengineering</strong> — KAUST, Saudi Arabia. Full fellowship.</div></li>
-    <li><time>2015 – 2019</time><div class="body"><strong>BSc, Pharmaceutical Analysis</strong> — China Pharmaceutical University, Nanjing.</div></li>
-  </ul>
-  <p class="lede" style="margin:22px 0 0">Also: peer reviewer for eight journals · chaired the LDI Research Day (300+ attendees, 10+ institutions) · taught R, statistics, Linux and polygenic-score workshops at McGill MiCM · working languages English and Mandarin, with basic French.</p>
 </section>
 
 
@@ -551,7 +511,7 @@ footer a{color:var(--ink-3)}
   <div class="contact-box">
     <p>The fastest way to reach me is email — I read everything and reply to anything specific.</p>
     <p><a class="mail" href="mailto:shucheng.cao@mail.mcgill.ca">shucheng.cao@mail.mcgill.ca</a></p>
-    <p style="font-size:15px;color:var(--ink-3);margin-top:16px">Happy to talk about causal inference in drug discovery, Mendelian randomization methodology, or a role where this toolkit would be useful. Based in Montréal; open to relocating.</p>
+    <p style="font-size:15px;color:var(--ink-3);margin-top:16px">Happy to talk about causal inference, evaluating machine learning models honestly, Mendelian randomization methodology, or a role where this toolkit would be useful. Based in Montréal; open to relocating.</p>
   </div>
 </section>
 
