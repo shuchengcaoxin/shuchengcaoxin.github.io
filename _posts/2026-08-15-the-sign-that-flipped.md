@@ -168,5 +168,4 @@ published work (Zheng et al., *Nature Genetics* 2020, via EpiGraphDB) — this a
 computes no causal inference of its own, which is exactly why getting the direction
 sentence right matters so much.
 
-*Thanks to the CABS cohort, and to Natalie Huang, whose drug-safety module is the
-companion piece to this one.*
+*Thanks to the CABS 2026 cohort for the arguments that shaped this.*
