@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 210" width="860" height="210" role="img" aria-label="The pipeline: nine tools over eight public databases feed a ledger that stores every return verbatim; code renders the card from the ledger; the model writes only a verdict line and one paragraph; a validator fails the whole run if either contains anything absent from tool output.">
+  <style>
+    .t   { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .box { fill: #ffffff; stroke: #0d6e68; stroke-width: 1.4; }
+    .lbl { fill: #16191c; font-size: 13.5px; font-weight: 600; }
+    .sub { fill: #4a5158; font-size: 11.5px; }
+    .arw { stroke: #0d6e68; stroke-width: 1.5; fill: none; }
+    .hd  { fill: #767d85; font-size: 10.5px; font-weight: 700; letter-spacing: 1.4px; }
+    .gate      { fill: #fdf3e3; stroke: #b45309; stroke-width: 1.6; }
+    .gate-lbl  { fill: #b45309; font-size: 13.5px; font-weight: 700; }
+    .gate-sub  { fill: #7c3d07; font-size: 11.5px; }
+    @media (prefers-color-scheme: dark) {
+      .box { fill: #161a1d; stroke: #5fb9b2; }
+      .lbl { fill: #e9e8e4; }
+      .sub { fill: #adb4ba; }
+      .arw { stroke: #5fb9b2; }
+      .hd  { fill: #828a92; }
+      .gate     { fill: #2c2115; stroke: #e0a760; }
+      .gate-lbl { fill: #e0a760; }
+      .gate-sub { fill: #d4b184; }
+    }
+  </style>
+
+  <text class="t hd" x="8" y="14">RETRIEVE</text>
+  <rect class="box" x="8" y="26" width="180" height="70" rx="9"/>
+  <text class="t lbl" x="24" y="52">9 tools</text>
+  <text class="t sub" x="24" y="71">over 8 public databases,</text>
+  <text class="t sub" x="24" y="86">no API key</text>
+
+  <path class="arw" d="M188 61 L214 61"/>
+  <path class="arw" d="M222 61 l-9 -5 v10 z" fill="#0d6e68" stroke="none"/>
+
+  <text class="t hd" x="230" y="14">KEEP</text>
+  <rect class="box" x="230" y="26" width="180" height="70" rx="9"/>
+  <text class="t lbl" x="246" y="52">The ledger</text>
+  <text class="t sub" x="246" y="71">every return stored word</text>
+  <text class="t sub" x="246" y="86">for word, with its release</text>
+
+  <path class="arw" d="M410 61 L436 61"/>
+  <path class="arw" d="M444 61 l-9 -5 v10 z" fill="#0d6e68" stroke="none"/>
+
+  <text class="t hd" x="452" y="14">RENDER</text>
+  <rect class="box" x="452" y="26" width="180" height="70" rx="9"/>
+  <text class="t lbl" x="468" y="52">Code writes the card</text>
+  <text class="t sub" x="468" y="71">tables, caveats, sources —</text>
+  <text class="t sub" x="468" y="86">all mechanical</text>
+
+  <path class="arw" d="M632 61 L658 61"/>
+  <path class="arw" d="M666 61 l-9 -5 v10 z" fill="#0d6e68" stroke="none"/>
+
+  <text class="t hd" x="674" y="14">THE ONLY GENERATION</text>
+  <rect class="box" x="674" y="26" width="178" height="70" rx="9"/>
+  <text class="t lbl" x="690" y="52">The model writes</text>
+  <text class="t sub" x="690" y="71">one verdict line and</text>
+  <text class="t sub" x="690" y="86">one paragraph. Nothing else.</text>
+
+  <path class="arw" d="M763 96 L763 122"/>
+  <path class="arw" d="M763 130 l-5 -9 h10 z" fill="#0d6e68" stroke="none"/>
+
+  <rect class="gate" x="8" y="132" width="844" height="66" rx="9"/>
+  <text class="t gate-lbl" x="28" y="158">The validator runs last, and it can fail the whole run</text>
+  <text class="t gate-sub" x="28" y="180">A number, rsID or accession in those two sentences that is absent from tool output — or causal wording on an estimate whose Steiger, colocalization and LD checks are all missing — rejects the page. 62 regression tests hold this.</text>
+</svg>
