@@ -231,9 +231,8 @@ h2{scroll-margin-top:64px}
     <li><strong>"The model was right" is not the same as "the pipeline supported it."</strong>
     Track the second one, because the first will keep being true until it suddenly isn't, and you will
     have built no way to notice.</li>
-    <li><strong>An estimate existing is not an estimate being validated.</strong> If your sources
-    carry sanity checks, make the language your system is allowed to use depend on them.</li>
-    <li><strong>Ask what your measurement is actually measuring.</strong> For plasma proteins the answer is often how much broken-off protein is floating in blood, not how much is working on cells &#8212; shedding (receptors cut loose into the blood) and clearance can dominate the number &#8212; and whether a protein is prone to that is recorded in the UniProt annotations the pipeline already retrieves.</li>
+    <li><strong>An estimate existing is not an estimate being validated.</strong> If your sources carry their own quality checks, make the language your system is allowed to use depend on them.</li>
+    <li><strong>Ask what your measurement is actually measuring.</strong> For plasma proteins the answer is often how much broken-off protein is floating in blood, not how much is working on cells &#8212; shedding (receptors cut loose into the blood) and clearance can dominate the number &#8212; and whether a protein does this is recorded in the UniProt annotations the pipeline already retrieves.</li>
     <li><strong>Report how much was checkable, not just how much passed.</strong> A pass rate
     without claim density measures caution, not accuracy.</li>
     <li><strong>Attack your own guardrails before trusting them.</strong> I would have shipped
@@ -350,8 +349,7 @@ h2{scroll-margin-top:64px}
     </picture>
     <figcaption><b>The architecture.</b> Generation is the smallest box on purpose. Everything a
     reader might check is produced by code from stored tool returns, so the only text that can
-    drift from the evidence is two sentences long — and those two sentences are the only thing
-    the validator has to police.</figcaption>
+    drift from the evidence is two sentences long — and those two sentences are the only thing the validator has to check.</figcaption>
   </figure>
 
   <h2 id="attack">How hard it was attacked</h2>
@@ -443,7 +441,7 @@ ld_check              null</code></pre>
 <pre><code>IL6R   beta -0.0442  p 2.21e-07  n_snp 1  steiger NA    ld_check null  coloc null
 LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc null</code></pre>
 
-  <p>Three sanity checks travel with an estimate like this. Steiger asks whether the variant moves the protein first and the disease second, rather than the reverse; colocalization and the LD check ask whether the protein signal and the disease signal trace to the same variant, rather than to two neighbours inherited together. LPA's estimate passed a Steiger test and an LD check. IL6R's carried none of the three &#8212; Steiger NA, LD null, no colocalization: not run, rather than failed. A single-variant estimate with none of them cannot tell a causal effect from a neighbouring gene's, or from cause and effect running backwards.</p>
+  <p>Three quality checks travel with an estimate like this. Steiger asks whether the variant moves the protein first and the disease second, rather than the reverse; colocalization and the LD check ask whether the protein signal and the disease signal trace to the same variant, rather than to two neighbours inherited together. LPA's estimate passed a Steiger test and an LD check. IL6R's carried none of the three &#8212; Steiger NA, LD null, no colocalization: not run, rather than failed. A single-variant estimate with none of them cannot tell a causal effect from a neighbouring gene's, or from cause and effect running backwards.</p>
 
   <p><strong>Both cards used the same strength of language</strong> &#8212; "Supports a causal role",
   in both.</p>
@@ -504,7 +502,7 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
   <p><em>The benchmark run described here is from 21 August 2026.</em></p>
 
   <p>The failure this post is about — the model supplying from memory what retrieval did not give
-  it — is one I could not catch when I wrote this. So I built checks for its two commonest shapes &#8212; causal wording that the retrieved estimate cannot support, and clinical-status wording (approved, in trials, on the market) that no retrieved record backs &#8212; and then went looking for the failure somewhere I had not chosen the data.</p>
+  it — is one I could not catch when I wrote this. So I built checks for its two most common shapes &#8212; causal wording that the retrieved estimate cannot support, and clinical-status wording (approved, in trials, on the market) that no retrieved record backs &#8212; and then went looking for the failure somewhere I had not chosen the data.</p>
 
   <p>I scored the agent against twenty target–indication pairs sampled from
   <a href="https://doi.org/10.1038/s41586-024-07316-0" target="_blank" rel="noopener">Minikel et al.,
@@ -522,7 +520,7 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
 
   <p>The verdicts themselves held up better than I expected: every GO the agent issued was a drug
   that launched, and it backed none of the ten failures. I am not claiming that as a result —
-  n is twenty, and an audit of the run showed part of that precision rides on residual clinical signal: the Open Targets association score folds in every evidence type, clinical records included, so withholding the clinical tool does not fully scrub approval history from the inputs. I am claiming something
+  n is twenty, and an audit of the run showed part of that precision depends on leftover clinical signal: the Open Targets association score includes every evidence type, clinical records among them, so switching off the clinical tool does not fully remove approval history from the inputs. I am claiming something
   smaller and, to me, more useful: <strong>every error was a refusal to answer, never a wrong answer.</strong> When the
   evidence was thin, the agent said &#8220;not enough&#8221; instead of guessing.</p>
 
@@ -556,7 +554,7 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
   was wrong.</p>
 
   <p>But it is enough to make the point sharper than I could when I first drafted this.
-  <strong>The remembered answer was not merely unsupported by the retrieval &#8212; it did not
+  <strong>The remembered answer was not just unsupported by the retrieval &#8212; it did not
   even stay true.</strong> The mechanism was real and the target was engaged: hsCRP, the standard blood marker of IL-6-driven inflammation, fell exactly as the biology said it should. And the outcome still did not move. If the field's own consensus
   can be that far from the trial result, then a pipeline that stays silent and lets the reader
   fill the gap from memory is not borrowing a safe fact. It is borrowing a bet.</p>
