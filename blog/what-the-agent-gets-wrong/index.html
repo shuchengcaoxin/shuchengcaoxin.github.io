@@ -233,7 +233,7 @@ h2{scroll-margin-top:64px}
     have built no way to notice.</li>
     <li><strong>An estimate existing is not an estimate being validated.</strong> If your sources
     carry sanity checks, make the language your system is allowed to use depend on them.</li>
-    <li><strong>Ask what your measurement is actually measuring.</strong> For plasma proteins the answer is often the level of debris in blood rather than activity on cells &#8212; shedding (receptors cut loose into the blood) and clearance can dominate the number &#8212; and whether a protein is prone to that is recorded in the UniProt annotations the pipeline already retrieves.</li>
+    <li><strong>Ask what your measurement is actually measuring.</strong> For plasma proteins the answer is often how much broken-off protein is floating in blood, not how much is working on cells &#8212; shedding (receptors cut loose into the blood) and clearance can dominate the number &#8212; and whether a protein is prone to that is recorded in the UniProt annotations the pipeline already retrieves.</li>
     <li><strong>Report how much was checkable, not just how much passed.</strong> A pass rate
     without claim density measures caution, not accuracy.</li>
     <li><strong>Attack your own guardrails before trusting them.</strong> I would have shipped
@@ -243,8 +243,8 @@ h2{scroll-margin-top:64px}
 
   <h2 id="product">What it ships</h2>
 
-  <p>One command &#8212; a protein and a disease &#8212; returns one evidence card. The verdict
-  banner and one paragraph are the model&#8217;s; the validation line, every table and every
+  <p>One command &#8212; a protein and a disease &#8212; returns one evidence card. The
+  verdict banner (the go / no-go call at the top) and one paragraph are the model&#8217;s; the validation line, every table and every
   number are written by code from stored tool returns. Each panel names the database
   release it came from.</p>
 
@@ -334,16 +334,19 @@ h2{scroll-margin-top:64px}
   them into a page, and that is the step where it can write past them &#8212; so the design
   gives the model as little of that step as possible.</p>
 
-  <p>Tool outputs are captured verbatim. The evidence table, the caveats, the sources and the
-  provenance footer are rendered mechanically from them. The model writes exactly two
-  things: a one-line verdict and a short reasoning paragraph. A validator then rejects the
+  <p>Every tool return is stored word for word. From that store, code &#8212; not the model
+  &#8212; builds the evidence table, the warnings, the source links, and the footer recording
+  where each number came from and which database release it belongs to. (That record is what
+  &#8220;provenance&#8221; means here: being able to trace any number on the page back to the
+  call that produced it.) The model writes exactly two things: a one-line verdict &#8212; the
+  GO / NO-GO call &#8212; and a short reasoning paragraph. A validator then rejects the
   run if that prose contains a number, an rsID or an identifier that appears nowhere in the
   tool output.</p>
 
   <figure>
     <picture>
       <source media="(max-width: 640px)" srcset="../../assets/blog/pipeline-narrow.svg">
-      <img src="../../assets/blog/pipeline.svg" alt="Retrieve: nine tools over eight public databases, no API key. Keep: the ledger, every return stored word for word with its release. Render: code writes the card — tables, caveats, sources, all mechanical. The only generation: the model writes one verdict line and one paragraph, nothing else. The validator runs last and can fail the whole run.">
+      <img src="../../assets/blog/pipeline.svg" alt="Retrieve: nine tools over eight public databases, no API key. Keep: the ledger, every return stored word for word with its release. Render: code writes the card — tables, warnings, sources, all built by code. The only generation: the model writes one verdict line and one paragraph, nothing else. The validator runs last and can fail the whole run.">
     </picture>
     <figcaption><b>The architecture.</b> Generation is the smallest box on purpose. Everything a
     reader might check is produced by code from stored tool returns, so the only text that can
@@ -411,8 +414,7 @@ ld_check              null</code></pre>
     signal</strong>. Less IL-6 signalling means less inflammation, and the carriers have
     less coronary heart disease.</li>
     <li>Put together: in this dataset, high IL6R in plasma does not mean more IL6R at
-    work. It means the opposite &#8212; <strong>it is the debris of receptors that no
-    longer signal</strong>. A drug that blocks this receptor (tocilizumab) pushes in the
+    work. It means the opposite &#8212; <strong>it is the leftover pieces of receptors that no longer work</strong>. A drug that blocks this receptor (tocilizumab) pushes in the
     same protective direction the variant does.</li>
   </ol>
 
@@ -546,7 +548,7 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
   ZEUS, a phase 3 heart-outcomes trial. Major cardiac events were not reduced (hazard
   ratio 0.99).</p>
 
-  <p>Two caveats keep this a finding rather than a headline. Ziltivekimab targets <strong>IL-6, the ligand</strong> — one step
+  <p>Two limits keep this a finding rather than a headline. Ziltivekimab targets <strong>IL-6, the ligand</strong> — one step
   upstream of the receptor the card was actually about — and ZEUS enrolled patients with
   atherosclerotic disease <em>and</em> chronic kidney disease, not the general coronary
   population the MR estimate describes. And a missed endpoint announced by press release is
@@ -560,7 +562,7 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
   fill the gap from memory is not borrowing a safe fact. It is borrowing a bet.</p>
 
   <p>That is the whole argument for making the silence visible. A card that prints
-  <code>Steiger / coloc / LD → NA / NA / NA</code> and refuses the causal sentence is not being pedantic; it is declining to make that bet on the reader's behalf.</p>
+  <code>Steiger / coloc / LD → NA / NA / NA</code> and refuses the causal sentence is not being fussy; it is refusing to make that bet on the reader&#8217;s behalf.</p>
 
   <p>The code, the 62 regression tests that hold the validator's rules in place, and the audit are open, in the repo built during the CABS
   2026 data science internship. The MR estimates throughout are <em>retrieved</em>: the exposure
