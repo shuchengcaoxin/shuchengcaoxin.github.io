@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>What a drug-target evidence agent gets wrong when the literature already knows the answer — Shucheng (Bangli) Cao</title>
-<meta name="description" content="The card was pharmacologically correct and nothing it retrieved supported the conclusion. That combination is harder to catch than a hallucinated number, because every check comes back clean and every expert who reads it nods.">
+<title>Building an AI agent that can&#8217;t fake drug-target evidence — Shucheng (Bangli) Cao</title>
+<meta name="description" content="The scariest failure was not a made-up number. It was a correct conclusion that nothing the agent had retrieved supported — every check came back clean, and every expert who read it nodded.">
 <link rel="canonical" href="https://shuchengcaoxin.github.io/blog/what-the-agent-gets-wrong/">
 
 <meta property="og:type" content="article">
-<meta property="og:title" content="What a drug-target evidence agent gets wrong when the literature already knows the answer">
-<meta property="og:description" content="The card was pharmacologically correct and nothing it retrieved supported the conclusion. That is harder to catch than a hallucinated number.">
+<meta property="og:title" content="Building an AI agent that can&#8217;t fake drug-target evidence">
+<meta property="og:description" content="The scariest failure was not a made-up number. It was a correct conclusion that nothing the agent had retrieved supported.">
 <meta property="og:url" content="https://shuchengcaoxin.github.io/blog/what-the-agent-gets-wrong/">
 <meta property="og:image" content="https://shuchengcaoxin.github.io/assets/blog/il6r-card.jpg">
 <meta property="article:published_time" content="2026-08-17">
@@ -168,14 +168,14 @@ h2{scroll-margin-top:64px}
 <article>
 
   <div class="kicker">Engineering</div>
-  <h1>What a drug-target evidence agent gets wrong when the literature already knows the answer</h1>
-  <p class="standfirst">The card was pharmacologically correct, and nothing it retrieved supported the conclusion. That combination is much harder to catch than a made-up number — because every check comes back clean, and every expert who reads it nods.</p>
+  <h1>Building an AI agent that can&#8217;t fake drug-target evidence</h1>
+  <p class="standfirst">The scariest failure was not a made-up number. It was a correct answer that nothing the agent had retrieved supported &#8212; every check came back clean, and every expert who read it nodded. This is how I learned to catch it.</p>
   <p class="byline">17 August 2026 · <span id="rt">11 min read</span></p>
 
-  <h2 id="why">The job, and why it is tempting to hand it to a model</h2>
+  <h2 id="why">What this agent does, and why people want AI to do it</h2>
 
-  <p><strong>The job is triage.</strong> Before anyone spends years on a drug target,
-  somebody has to read what is already known about it — the genetics, the variants, the
+  <p><strong>The job: decide which drug targets are worth years of work.</strong> Before
+  anyone commits to a target, somebody has to read what is already known about it — the genetics, the variants, the
   chemistry, the trials that were already tried — and say whether it is worth pursuing.
   That is a day of a trained person's reading, per target, and there are thousands of
   targets. It is exactly the work people now point an LLM agent at: <strong>cheap labour
@@ -204,29 +204,29 @@ h2{scroll-margin-top:64px}
       pass by asserting almost nothing.</li>
       <li>The check I built afterwards caught the same failure twice, on twenty
       target–indication pairs whose outcomes history had already settled.</li>
-      <li>And the pathway that card endorsed <strong>missed its phase 3 endpoint this
-      year</strong>. The remembered answer was not just unsupported. It was provisional.</li>
+      <li>And the pathway that card backed <strong>failed its phase 3 trial this
+      year</strong>. The remembered answer was not just unsupported &#8212; it did not even stay true.</li>
     </ul>
   </div>
 
   <nav class="toc" aria-label="Contents">
     <div class="h">Contents</div>
     <ol>
-      <li><a href="#why">The job, and the temptation</a></li>
-      <li><a href="#lessons">What I&#8217;d take from this</a></li>
+      <li><a href="#why">What this agent does</a></li>
+      <li><a href="#lessons">What I learned</a></li>
       <li><a href="#product">What it ships</a></li>
       <li><a href="#design">How it works</a></li>
       <li><a href="#attack">How hard it was attacked</a></li>
       <li><a href="#case">The full story: IL6R</a></li>
       <li><a href="#right">Why the card was right</a></li>
-      <li><a href="#measurable">The measurable part</a></li>
-      <li><a href="#vanity">Pass rate is a vanity metric</a></li>
+      <li><a href="#measurable">The part I could measure</a></li>
+      <li><a href="#vanity">Why 10/10 meant nothing</a></li>
       <li><a href="#external">Tested on data I didn&#8217;t pick</a></li>
-      <li><a href="#phase3">The phase 3 read-out</a></li>
+      <li><a href="#phase3">The phase 3 result</a></li>
     </ol>
   </nav>
 
-  <h2 id="lessons">What I&#8217;d take from this</h2>
+  <h2 id="lessons">What I learned</h2>
 
   <ol>
     <li><strong>"The model was right" is not the same as "the pipeline supported it."</strong>
@@ -239,7 +239,7 @@ h2{scroll-margin-top:64px}
     derivable from annotations you already have.</li>
     <li><strong>Report how much was checkable, not just how much passed.</strong> A pass rate
     without claim density measures caution, not accuracy.</li>
-    <li><strong>Adversarially test guardrails before trusting them.</strong> I would have shipped
+    <li><strong>Attack your own guardrails before trusting them.</strong> I would have shipped
     mine with a clean conscience. Recall 0/18 is not a number you discover by staring at your own
     code.</li>
   </ol>
@@ -355,17 +355,17 @@ h2{scroll-margin-top:64px}
   <h2 id="attack">How hard it was attacked</h2>
 
   <p>Every version of this thing has been shipped, attacked, and shipped again. The attack
-  that mattered: 41 adversarial agents across four critic lenses, every allegation re-checked by an
-  independent skeptic before it counted. 86 alleged, 27 upheld,
+  that mattered: 41 adversarial agents across four critic lenses, every claim re-checked by an
+  independent second agent before it counted. 86 claimed, 27 survived the re-check,
   <strong>18 confirmed distinct defects</strong>.</p>
 
   <figure>
     <picture>
       <source media="(max-width: 700px)" srcset="../../assets/blog/audit-narrow.svg">
-      <img src="../../assets/blog/audit.svg" alt="The audit funnel: 41 adversarial agents across four critic lenses produce 86 allegations; an independent skeptic re-verifies every allegation before it counts, upholding 27; these resolve to 18 confirmed distinct defects, each fixed. The validator caught zero of the eighteen.">
+      <img src="../../assets/blog/audit.svg" alt="The audit funnel: 41 adversarial agents across four critic lenses produce 86 claimed defects; an independent second agent re-checks every claim before it counts, and 27 survive; these resolve to 18 confirmed distinct defects, each fixed. The validator caught zero of the eighteen.">
     </picture>
     <figcaption><b>The audit, as a funnel.</b> Nothing counts as a defect until a second,
-    independent agent fails to knock the allegation down.</figcaption>
+    independent agent fails to knock the claim down.</figcaption>
   </figure>
 
   <p><strong>My validator's recall against those 18 was zero.</strong> Every check I had
@@ -418,12 +418,12 @@ ld_check              null</code></pre>
   <p>That is the failure mode I now worry about most. Not a hallucinated fact — a <em>correct
   conclusion that the retrieval does not support</em>. A domain expert skimming the card nods,
   because the sentence is true. The reviewer fills the gap from their own memory, exactly as the
-  model did, and the pipeline's silence is laundered through the reader's expertise.</p>
+  model did, and the reader's own expertise hides the pipeline's silence.</p>
 
   <p>Next time the remembered answer will be stale, or wrong, or right for a different protein.
   Nothing in the system can tell the difference.</p>
 
-  <h2 id="measurable">The part that is measurable</h2>
+  <h2 id="measurable">The part I could measure</h2>
 
   <p>Two cards in the same batch, same outcome, same tool:</p>
 
@@ -440,8 +440,8 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
 
   <p>That is a defect you can encode, so I did. The validator now fails any run that uses causal
   wording on a single-instrument estimate whose Steiger, colocalization and LD check are all
-  absent. When I re-ran the benchmark, it fired on exactly the card it was built for — and note
-  the direction of travel, the model was <em>more</em> confident this time, not less:</p>
+  absent. When I re-ran the benchmark, it fired on exactly the card it was built for — and notice
+  which way the model moved: <em>more</em> confident this time, not less:</p>
 
   <div class="tablewrap">
   <table>
@@ -468,7 +468,7 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
   rejected a sentence that was correct. A check that punishes you for being precise just teaches
   you to be vague, which is the opposite of what any of this is for.</p>
 
-  <h2 id="vanity">Pass rate is a vanity metric</h2>
+  <h2 id="vanity">Why a perfect pass rate meant nothing</h2>
 
   <p>Ten of ten cards passed validation. I nearly wrote that number down as progress.</p>
 
@@ -511,11 +511,11 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
   </div>
 
   <p>The verdicts themselves held up better than I expected: every GO the agent issued was a drug
-  that launched, and it endorsed none of the ten failures. I am not claiming that as a result —
+  that launched, and it backed none of the ten failures. I am not claiming that as a result —
   n is twenty, and an audit of the run showed part of that precision rides on residual clinical
   signal inside an association score rather than on genetics alone. I am claiming something
-  smaller and, to me, more useful: <strong>the errors were all abstentions.</strong> When the
-  retrieval was thin, the agent declined rather than reached.</p>
+  smaller and, to me, more useful: <strong>every error was a refusal to answer, never a wrong answer.</strong> When the
+  evidence was thin, the agent said &#8220;not enough&#8221; instead of guessing.</p>
 
   <h2 id="phase3">The pharmacology was right, and it still did not work</h2>
 
@@ -523,7 +523,7 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
   supplied the shedding mechanism from memory, and was correct. I have been treating that
   as a near miss: right this time, wrong eventually.</p>
 
-  <p>It is worse than that. Here is what happened to the pathway that card endorsed.</p>
+  <p>It is worse than that. Here is what happened to the pathway that card backed.</p>
 
   <figure>
     <picture>
@@ -532,7 +532,7 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
     </picture>
     <figcaption><b>Fourteen years, hand-verified against PubMed, openFDA, EMA and
     ClinicalTrials.gov.</b> The genetics in 2012 pointed the same way the card did in 2026.
-    The phase 3 read-out did not follow.</figcaption>
+    The phase 3 result did not follow.</figcaption>
   </figure>
 
   <p>Two caveats before anyone over-reads this, because they are the difference between a
@@ -544,10 +544,10 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
   card.</p>
 
   <p>But it is enough to make the point sharper than I could make it in August.
-  <strong>The remembered answer was not merely unsupported by the retrieval. It was
-  provisional.</strong> The mechanism was real, the target was engaged, hsCRP fell exactly
+  <strong>The remembered answer was not merely unsupported by the retrieval &#8212; it did not
+  even stay true.</strong> The mechanism was real, the target was engaged, hsCRP fell exactly
   as the biology said it should — and the outcome did not move. If the field's own consensus
-  can be that far from the read-out, then a pipeline that stays silent and lets the reader
+  can be that far from the trial result, then a pipeline that stays silent and lets the reader
   fill the gap from memory is not borrowing a safe fact. It is borrowing a bet.</p>
 
   <p>Which is the whole argument for making the silence visible. A card that prints

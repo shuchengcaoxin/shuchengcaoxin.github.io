@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 470" width="360" height="470" role="img" aria-label="The adversarial audit, stacked: 41 adversarial agents made 86 allegations; an independent skeptic upheld 27, resolving to 18 confirmed distinct defects; the validator caught zero of the eighteen.">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 470" width="360" height="470" role="img" aria-label="The adversarial audit, stacked: 41 adversarial agents made 86 claimed defects; an independent second agent re-tested each and 27 survived, resolving to 18 confirmed distinct defects; the validator caught zero of the eighteen.">
   <style>
     .t   { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
     .box { fill: #ffffff; stroke: #0d6e68; stroke-width: 1.4; }
@@ -37,16 +37,16 @@
   <text class="t hd" x="6" y="126">ALLEGE</text>
   <rect class="box" x="6" y="134" width="348" height="64" rx="9"/>
   <text class="t big" x="22" y="164">86</text>
-  <text class="t lbl" x="64" y="160">allegations</text>
-  <text class="t sub" x="22" y="186">everything they could pin on it</text>
+  <text class="t lbl" x="64" y="160">claimed defects</text>
+  <text class="t sub" x="22" y="186">everything they could find wrong</text>
 
   <path class="arw" d="M180 198 L180 214"/>
   <path class="ah" d="M180 222 l-5 -9 h10 z"/>
 
   <text class="t hd" x="6" y="240">RE-CHECK</text>
   <rect class="box" x="6" y="248" width="348" height="64" rx="9"/>
-  <text class="t lbl" x="22" y="272">independent skeptic</text>
-  <text class="t sub" x="22" y="292">re-verifies every allegation &#183; 27 upheld</text>
+  <text class="t lbl" x="22" y="272">independent re-check</text>
+  <text class="t sub" x="22" y="292">a second agent re-tests each &#183; 27 survive</text>
 
   <path class="arw" d="M180 312 L180 328"/>
   <path class="ah" d="M180 336 l-5 -9 h10 z"/>
