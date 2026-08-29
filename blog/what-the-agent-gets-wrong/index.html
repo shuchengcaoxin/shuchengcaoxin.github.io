@@ -174,24 +174,25 @@ h2{scroll-margin-top:64px}
 
   <h2 id="why">What this agent does, and why people want AI to do it</h2>
 
-  <p><strong>The job: decide which drug targets are worth years of work.</strong> Before
-  anyone commits to a target, somebody has to read what is already known about it — the genetics, the variants, the
-  chemistry, the trials that were already tried — and say whether it is worth pursuing.
-  That is a day of a trained person's reading, per target, and there are thousands of
-  targets. It is exactly the work people now point an LLM agent at: <strong>cheap labour
+  <p><strong>The job is target prioritization.</strong> Before anyone commits years to a
+  drug target, somebody has to read what is already known about it — the genetics, the
+  variants, the chemistry, the trials already run — and rank it against the alternatives.
+  That reading takes a trained person about a day per target, and there are thousands of
+  targets. It is exactly the work people now hand to an LLM agent: <strong>cheap labour
   that never gets bored.</strong></p>
 
-  <p><strong>And the stakes are real.</strong> About nine in ten programmes that reach the
-  clinic never reach approval. Genetic support is one of the few things known to move
-  that number: targets that have it are roughly <strong>2.6&#215; likelier to succeed</strong>
-  (<a href="https://doi.org/10.1038/s41586-024-07316-0" target="_blank" rel="noopener">Minikel
-  et al., <em>Nature</em> 2024</a>). So this is not a summarising chore. It is a decision.</p>
+  <p><strong>A wrong call is expensive.</strong> About nine in ten programmes that reach
+  the clinic never reach approval, and genetic support is one of the few things known to
+  move that number — targets that have it are roughly <strong>2.6&#215; likelier to
+  succeed</strong> (<a href="https://doi.org/10.1038/s41586-024-07316-0" target="_blank" rel="noopener">Minikel
+  et al., <em>Nature</em> 2024</a>). So prioritization is a decision, not a summarising
+  task.</p>
 
-  <p><strong>Which is why hallucination is the wrong thing to be relaxed about here.</strong>
-  A model asked this question answers fluently whether or not it has grounds to. Cheap labour
-  that invents its evidence is not cheap — a confident wrong sentence does not cost you a
-  wrong answer; it costs a multi-year programme. So I built the agent, and then spent most of
-  the summer trying to make it fail.</p>
+  <p><strong>This is why hallucination is dangerous here.</strong> A model asked this
+  question answers fluently whether or not it has grounds to. Cheap labour that invents
+  its evidence is not cheap: a confident wrong sentence does not cost you a wrong answer;
+  it costs a multi-year programme. So I built the agent, and then spent most of the summer
+  trying to make it fail.</p>
 
   <div class="findings">
     <span class="h">What this post found</span>
