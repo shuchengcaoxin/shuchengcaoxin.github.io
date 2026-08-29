@@ -400,18 +400,35 @@ ld_check              null</code></pre>
 
   <h2 id="right">Why the card was right</h2>
 
-  <p>IL6R's instrument, rs4129267, is a near-perfect proxy (r² ≈ 0.96–0.99 in Europeans) for
-  rs2228145, the Asp358Ala missense variant. The 358Ala allele accelerates ADAM-mediated
-  shedding of the receptor's ectodomain. That <strong>raises soluble IL6R in plasma while
-  impairing classical IL-6 signalling</strong>, and it lowers C-reactive protein and coronary
-  heart disease risk. It is the variant that genetically mimics tocilizumab.</p>
+  <p>The resolution is one piece of biology, and it takes four steps.</p>
 
-  <p>So "genetically higher plasma IL6R" and "IL-6R blockade is protective" are not opposites.
-  They are the same statement, once you know that the measured plasma species is a shed decoy
-  rather than the signalling receptor.</p>
+  <ol>
+    <li>The genetic variant behind this estimate &#8212; rs4129267, a near-perfect stand-in
+    (r&#178; &#8776; 0.96&#8211;0.99 in Europeans) for the missense variant rs2228145 &#8212;
+    changes the IL-6 receptor so that it is <strong>more easily cut off the cell
+    surface</strong>. The cutting is done by an enzyme (ADAM17), and the process is called
+    shedding.</li>
+    <li>The cut-off piece drifts in the blood &#8212; and <strong>that drifting piece is
+    what the plasma assay measures</strong>. So people who carry the variant show
+    <em>more</em> IL6R protein in a blood test.</li>
+    <li>But with receptors cut off the surface, their cells <strong>receive less IL-6
+    signal</strong>. Less IL-6 signalling means less inflammation, and the carriers have
+    less coronary heart disease.</li>
+    <li>Put together: in this dataset, high IL6R in plasma does not mean more IL6R at
+    work. It means the opposite &#8212; <strong>it is the debris of receptors that no
+    longer signal</strong>. A drug that blocks this receptor (tocilizumab) pushes in the
+    same protective direction the variant does.</li>
+  </ol>
 
-  <p>The card had it right &#8212; and <strong>not one field it retrieved contained that
-  mechanism.</strong> The model supplied it from memory, and happened to be correct.</p>
+  <p>So the card&#8217;s conclusion &#8212; inhibiting IL6R protects against coronary
+  heart disease &#8212; was right, and my &#8220;backwards&#8221; reading was wrong. I had
+  treated the blood measurement as if it tracked receptor activity, when it actually
+  tracks the loss of it.</p>
+
+  <p>Here is the problem: <strong>none of that biology was in anything the agent
+  retrieved.</strong> The tool returned a beta, a p-value and an instrument &#8212; the
+  code block above is the whole of it. The four steps came from the model&#8217;s memory
+  of its training data, and they happened to be correct.</p>
 
   <p>That is the failure mode I now worry about most: not a hallucinated fact, but a
   <em>correct conclusion that the retrieval does not support</em>. A domain expert skimming the card nods,
@@ -516,8 +533,7 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
 
   <h2 id="phase3">The pharmacology was right, and it still did not work</h2>
 
-  <p>Everything above turns on one move — the model reached past what it had retrieved,
-  supplied the shedding mechanism from memory, and was correct. I have been treating that
+  <p>Everything above turns on one move — the model reached past what it had retrieved, supplied the shedding biology from memory, and was correct. I have been treating that
   as a near miss: right this time, wrong eventually.</p>
 
   <p>It is worse than that, and the timeline below is what happened to the pathway that card backed.</p>
