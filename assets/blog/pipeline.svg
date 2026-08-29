@@ -23,9 +23,9 @@
 
   <text class="t hd" x="8" y="14">RETRIEVE</text>
   <rect class="box" x="8" y="26" width="180" height="70" rx="9"/>
-  <text class="t lbl" x="24" y="52">9 tools</text>
-  <text class="t sub" x="24" y="71">over 8 public databases,</text>
-  <text class="t sub" x="24" y="86">no API key</text>
+  <text class="t lbl" x="24" y="50">9 tools &#183; 8 databases</text>
+  <text class="t sub" x="24" y="69">published MR &#183; trials &#183; drugs</text>
+  <text class="t sub" x="24" y="85">safety &#183; variants &#183; no API key</text>
 
   <path class="arw" d="M188 61 L214 61"/>
   <path class="arw" d="M222 61 l-9 -5 v10 z" fill="#0d6e68" stroke="none"/>

@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 216" width="860" height="216" role="img" aria-label="The adversarial audit: 41 adversarial agents across four critic lenses made 86 allegations; an independent skeptic re-checked every one; 27 were upheld, resolving to 18 confirmed distinct defects. The validator I trusted caught zero of the eighteen.">
+  <style>
+    .t   { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .box { fill: #ffffff; stroke: #0d6e68; stroke-width: 1.4; }
+    .lbl { fill: #16191c; font-size: 13.5px; font-weight: 650; }
+    .big { fill: #0a5450; font-size: 24px; font-weight: 700; }
+    .sub { fill: #4a5158; font-size: 11.5px; }
+    .arw { stroke: #0d6e68; stroke-width: 1.5; fill: none; }
+    .ah  { fill: #0d6e68; }
+    .hd  { fill: #767d85; font-size: 10.5px; font-weight: 700; letter-spacing: 1.4px; }
+    .gate     { fill: #fdf3e3; stroke: #b45309; stroke-width: 1.6; }
+    .gate-lbl { fill: #b45309; font-size: 14.5px; font-weight: 700; }
+    .gate-sub { fill: #7c3d07; font-size: 11.5px; }
+    @media (prefers-color-scheme: dark) {
+      .box { fill: #161a1d; stroke: #5fb9b2; }
+      .lbl { fill: #e9e8e4; }
+      .big { fill: #8ad3cd; }
+      .sub { fill: #adb4ba; }
+      .arw { stroke: #5fb9b2; }
+      .ah  { fill: #5fb9b2; }
+      .hd  { fill: #828a92; }
+      .gate     { fill: #2c2115; stroke: #e0a760; }
+      .gate-lbl { fill: #e0a760; }
+      .gate-sub { fill: #d4b184; }
+    }
+  </style>
+
+  <text class="t hd" x="8" y="14">ATTACK</text>
+  <rect class="box" x="8" y="26" width="190" height="74" rx="9"/>
+  <text class="t big" x="24" y="56">41</text>
+  <text class="t lbl" x="62" y="52">adversarial agents</text>
+  <text class="t sub" x="24" y="76">four critic lenses,</text>
+  <text class="t sub" x="24" y="91">set loose on the cards</text>
+
+  <path class="arw" d="M198 63 L222 63"/>
+  <path class="ah" d="M230 63 l-9 -5 v10 z"/>
+
+  <text class="t hd" x="238" y="14">ALLEGE</text>
+  <rect class="box" x="238" y="26" width="164" height="74" rx="9"/>
+  <text class="t big" x="254" y="56">86</text>
+  <text class="t lbl" x="296" y="52">allegations</text>
+  <text class="t sub" x="254" y="76">everything they</text>
+  <text class="t sub" x="254" y="91">could pin on it</text>
+
+  <path class="arw" d="M402 63 L426 63"/>
+  <path class="ah" d="M434 63 l-9 -5 v10 z"/>
+
+  <text class="t hd" x="442" y="14">RE-CHECK</text>
+  <rect class="box" x="442" y="26" width="190" height="74" rx="9"/>
+  <text class="t lbl" x="458" y="52">independent skeptic</text>
+  <text class="t sub" x="458" y="72">re-verifies every allegation</text>
+  <text class="t sub" x="458" y="87">before it counts &#183; 27 upheld</text>
+
+  <path class="arw" d="M632 63 L656 63"/>
+  <path class="ah" d="M664 63 l-9 -5 v10 z"/>
+
+  <text class="t hd" x="672" y="14">CONFIRMED</text>
+  <rect class="box" x="672" y="26" width="180" height="74" rx="9"/>
+  <text class="t big" x="688" y="56">18</text>
+  <text class="t lbl" x="726" y="52">distinct defects</text>
+  <text class="t sub" x="688" y="76">real, reproducible,</text>
+  <text class="t sub" x="688" y="91">each one fixed</text>
+
+  <path class="arw" d="M762 100 L762 122"/>
+  <path class="ah" d="M762 130 l-5 -9 h10 z"/>
+
+  <rect class="gate" x="8" y="134" width="844" height="66" rx="9"/>
+  <text class="t gate-lbl" x="28" y="160">My validator caught 0 of the 18</text>
+  <text class="t gate-sub" x="28" y="180">Every check I had written was necessary. None of them covered the failures that mattered &#8212; which is why the guardrails below exist.</text>
+</svg>

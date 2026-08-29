@@ -213,19 +213,68 @@ h2{scroll-margin-top:64px}
     <div class="h">Contents</div>
     <ol>
       <li><a href="#why">The job, and the temptation</a></li>
-      <li><a href="#design">The design</a></li>
-      <li><a href="#attack">Build, attack, rebuild</a></li>
-      <li><a href="#case">The case: IL6R</a></li>
+      <li><a href="#lessons">What I&#8217;d take from this</a></li>
+      <li><a href="#product">What it ships</a></li>
+      <li><a href="#design">How it works</a></li>
+      <li><a href="#attack">How hard it was attacked</a></li>
+      <li><a href="#case">The full story: IL6R</a></li>
       <li><a href="#right">Why the card was right</a></li>
       <li><a href="#measurable">The measurable part</a></li>
       <li><a href="#vanity">Pass rate is a vanity metric</a></li>
-      <li><a href="#external">Tested on data I didn't pick</a></li>
+      <li><a href="#external">Tested on data I didn&#8217;t pick</a></li>
       <li><a href="#phase3">The phase 3 read-out</a></li>
-      <li><a href="#lessons">What I'd take from this</a></li>
     </ol>
   </nav>
 
-  <h2 id="design">The design: the model writes as little as possible</h2>
+  <h2 id="lessons">What I&#8217;d take from this</h2>
+
+  <ol>
+    <li><strong>"The model was right" is not the same as "the pipeline supported it."</strong>
+    Track the second one. The first will keep being true until it suddenly isn't, and you will
+    have built no way to notice.</li>
+    <li><strong>An estimate existing is not an estimate being validated.</strong> If your sources
+    carry sanity checks, make the language your system is allowed to use depend on them.</li>
+    <li><strong>Ask what your measurement is actually measuring.</strong> For plasma proteins the
+    answer is often "reagent binding, filtered through shedding and clearance" — and the class is
+    derivable from annotations you already have.</li>
+    <li><strong>Report how much was checkable, not just how much passed.</strong> A pass rate
+    without claim density measures caution, not accuracy.</li>
+    <li><strong>Adversarially test guardrails before trusting them.</strong> I would have shipped
+    mine with a clean conscience. Recall 0/18 is not a number you discover by staring at your own
+    code.</li>
+  </ol>
+
+  <h2 id="product">What it ships</h2>
+
+  <p>One command &#8212; a protein and a disease &#8212; returns one evidence card. The verdict
+  banner and one paragraph are the model&#8217;s; the validation line, every table and every
+  number are written by code from stored tool returns, each panel naming the database release
+  it came from.</p>
+
+  <figure>
+    <picture>
+      <source media="(max-width: 700px)" srcset="../../assets/blog/pnpla3-card-narrow.jpg">
+      <img src="../../assets/blog/pnpla3-card.jpg" alt="The evidence card for PNPLA3 and fatty liver disease: a green GO verdict banner, a validation PASS line naming the model, the model&#8217;s only paragraph validated against the ledger, then one panel per database — the MR panel honestly printing not available, the clinical development record, and the rule-based evidence concordance.">
+    </picture>
+    <figcaption><b>The product.</b> PNPLA3 &#215; MASLD (fatty liver disease). GO, validation
+    PASS &#8212; and the MR panel prints &#8220;not available&#8221;: no plasma pQTL instrument
+    exists for this protein, and absence of an estimate is not evidence of no effect.</figcaption>
+  </figure>
+
+  <div class="try">
+    <span class="h">See it yourself</span>
+    <p>Every card in this post is live and needs no account or key. Open the
+    <a href="https://ds4cabs.github.io/CausalSentinel/viewer/" target="_blank" rel="noopener">card
+    viewer</a> and pick <em>IL6R × coronary heart disease</em> from the list — the validation
+    banner, the raw tool returns behind each panel, and the database release each number came
+    from are all there.</p>
+    <p>There are also <a href="https://ds4cabs.github.io/CausalSentinel/dossiers/" target="_blank" rel="noopener">991
+    pre-generated protein dossiers</a>, and the
+    <a href="https://github.com/ds4cabs/CausalSentinel" target="_blank" rel="noopener">code</a>.</p>
+  </div>
+
+
+  <h2 id="design">How it works: the model writes as little as possible</h2>
 
   <p>Nine tools, eight public databases, no API key. Each one answers a different part of
   the question a reviewer would ask, and each is a separate call whose return is kept:</p>
@@ -303,16 +352,28 @@ h2{scroll-margin-top:64px}
     the validator has to police.</figcaption>
   </figure>
 
-  <h2 id="attack">Build, attack, rebuild</h2>
+  <h2 id="attack">How hard it was attacked</h2>
 
-  <p>Every version of this thing has been shipped, attacked, and shipped again. The attack that
-  mattered: 41 adversarial agents across four critic lenses, every allegation re-checked by an
+  <p>Every version of this thing has been shipped, attacked, and shipped again. The attack
+  that mattered: 41 adversarial agents across four critic lenses, every allegation re-checked by an
   independent skeptic before it counted. 86 alleged, 27 upheld,
   <strong>18 confirmed distinct defects</strong>.</p>
 
+  <figure>
+    <picture>
+      <source media="(max-width: 700px)" srcset="../../assets/blog/audit-narrow.svg">
+      <img src="../../assets/blog/audit.svg" alt="The audit funnel: 41 adversarial agents across four critic lenses produce 86 allegations; an independent skeptic re-verifies every allegation before it counts, upholding 27; these resolve to 18 confirmed distinct defects, each fixed. The validator caught zero of the eighteen.">
+    </picture>
+    <figcaption><b>The audit, as a funnel.</b> Nothing counts as a defect until a second,
+    independent agent fails to knock the allegation down.</figcaption>
+  </figure>
+
   <p><strong>My validator's recall against those 18 was zero.</strong> Every check I had
-  written was necessary. None of them covered the failures that mattered. What follows is the
-  one that taught me the most.</p>
+  written was necessary. None of them covered the failures that mattered.</p>
+
+  <p><em>Everything below is the engineering story behind those numbers &#8212; the failure
+  that taught me the most, the fix, and the external test. It is for the reader who wants the
+  details; the conclusions above stand on their own.</em></p>
 
   <h2 id="case">The case: IL6R &#215; coronary heart disease</h2>
 
@@ -402,17 +463,6 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
     the check catching the exact card it was written for.</figcaption>
   </figure>
 
-  <div class="try">
-    <span class="h">See it yourself</span>
-    <p>Every card in this post is live and needs no account or key. Open the
-    <a href="https://ds4cabs.github.io/CausalSentinel/viewer/" target="_blank" rel="noopener">card
-    viewer</a> and pick <em>IL6R × coronary heart disease</em> from the list — the validation
-    banner, the raw tool returns behind each panel, and the database release each number came
-    from are all there.</p>
-    <p>There are also <a href="https://ds4cabs.github.io/CausalSentinel/dossiers/" target="_blank" rel="noopener">991
-    pre-generated protein dossiers</a>, and the
-    <a href="https://github.com/ds4cabs/CausalSentinel" target="_blank" rel="noopener">code</a>.</p>
-  </div>
 
   <p>I also had to be careful about the rule itself. An early version of the direction check
   rejected a sentence that was correct. A check that punishes you for being precise just teaches
@@ -437,23 +487,6 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
   passed, 2 checkable tokens across 842 words, 0.20 per 100 words. That is worse than the run
   before it, and reporting it is the point.</p>
 
-  <h2 id="lessons">What I&#8217;d take from this</h2>
-
-  <ol>
-    <li><strong>"The model was right" is not the same as "the pipeline supported it."</strong>
-    Track the second one. The first will keep being true until it suddenly isn't, and you will
-    have built no way to notice.</li>
-    <li><strong>An estimate existing is not an estimate being validated.</strong> If your sources
-    carry sanity checks, make the language your system is allowed to use depend on them.</li>
-    <li><strong>Ask what your measurement is actually measuring.</strong> For plasma proteins the
-    answer is often "reagent binding, filtered through shedding and clearance" — and the class is
-    derivable from annotations you already have.</li>
-    <li><strong>Report how much was checkable, not just how much passed.</strong> A pass rate
-    without claim density measures caution, not accuracy.</li>
-    <li><strong>Adversarially test guardrails before trusting them.</strong> I would have shipped
-    mine with a clean conscience. Recall 0/18 is not a number you discover by staring at your own
-    code.</li>
-  </ol>
 
   <h2 id="external">Tested on data I did not pick</h2>
 
