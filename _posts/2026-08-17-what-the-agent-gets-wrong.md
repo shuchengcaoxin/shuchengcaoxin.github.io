@@ -11,10 +11,11 @@ toc:
   sidebar: left
 ---
 
-I spent this summer building an agent that reads eight public biomedical databases and
+I spent this summer building an agent that reads eight public biomedical databases through nine tools and
 writes a one-page evidence card on whether a protein is worth pursuing as a drug target
-for a given disease. The databases are UniProt, Open Targets, ChEMBL, ClinVar, gnomAD, the
-GWAS Catalog, ClinPGx, and EpiGraphDB's pQTL resource, which holds *published* Mendelian
+for a given disease. The databases are UniProt, Open Targets (queried twice — once for target–disease
+association, once for the clinical record), ChEMBL, ClinVar, gnomAD, the GWAS Catalog,
+ClinPGx, and EpiGraphDB's pQTL resource, which holds *published* Mendelian
 randomization estimates. MR, roughly, is the causal-inference method that uses genetic
 variants as natural experiments to ask whether a molecule actually *causes* a disease
 rather than merely tracking it.
@@ -31,7 +32,7 @@ would normally run comes back clean, and every expert who reads it nods.
 
 Tool outputs are captured verbatim. The evidence table, the caveats, the sources and the
 provenance footer are rendered mechanically from them. The model writes exactly two
-things — a one-line verdict and a short reasoning paragraph — and a validator (33
+things — a one-line verdict and a short reasoning paragraph — and a validator (62
 regression tests) rejects the run if that prose contains a number, an rsID or an
 identifier that appears nowhere in the tool output.
 
@@ -221,12 +222,12 @@ passed everything by asserting almost nothing.
 
 Later I made the validator stricter, and the same benchmark dropped to 8/10 — both failures
 were the model asserting clinical status ("clinically proven", "approved") that none of the
-eight sources returns. **A pass rate that falls when the check gets honest is what progress
+retrieved sources returns. **A pass rate that falls when the check gets honest is what progress
 actually looks like.**
 
 So the pipeline now reports **claim density** — checkable tokens per 100 words of reasoning
 — beside the pass rate. Neither means much alone. Together they say something real: how
-much did it claim, and how much of that held up? The most recent run: 8/10 passed, 2
+much did it claim, and how much of that held up? The run as this was written: 8/10 passed, 2
 checkable tokens across 842 words, 0.20 per 100 words. That is worse than the run before
 it, and reporting it is the point.
 
@@ -249,7 +250,33 @@ teaches you to be vague, which is the opposite of what any of this is for.
 5. **Adversarially test guardrails before trusting them.** I would have shipped mine with a
    clean conscience. Recall 0/18 is not a number you discover by staring at your own code.
 
-The code, the 33 regression tests and the audit are open, in the repo built during the CABS
+## Postscript, four days later: the same failure, caught
+
+*Added 2026-08-21.*
+
+The failure this post is about — the model supplying from memory what retrieval did not
+give it — is one I could not catch when I wrote this. So I built a check for it and then
+went looking for it somewhere I had not chosen the data.
+
+I scored the agent against twenty target–indication pairs sampled from [Minikel et al.,
+*Nature* 2024](https://doi.org/10.1038/s41586-024-07316-0): ten drugs that launched, ten
+programmes that died at phase II/III. History supplies the labels, not me. I withheld the
+clinical-evidence tool, because it reports approval stages directly and would hand the
+agent the answer.
+
+**On two of the twenty cards the validator caught the model importing knowledge it had not
+retrieved, and failed the run.** One card asserted that a target had "multiple approved
+inhibitors" — true, and nowhere in what the pipeline had fetched. That is the IL6R
+failure again, and this time the system noticed instead of me.
+
+The verdicts themselves held up better than I expected: every GO the agent issued was a
+drug that launched, and it endorsed none of the ten failures. I am not claiming that as a
+result — n is twenty, and an audit of the run showed part of that precision rides on
+residual clinical signal inside an association score rather than on genetics alone. I am
+claiming something smaller and, to me, more useful: **the errors were all abstentions.**
+When the retrieval was thin, the agent declined rather than reached.
+
+The code, the 62 regression tests and the audit are open, in the repo built during the CABS
 2026 data science internship. The MR estimates throughout are *retrieved*: the exposure side
 comes from EpiGraphDB's pQTL resource (Zheng et al., *Nature Genetics* 2020, aggregating the
 five studies above) and the outcome side from separate published GWAS. This agent computes
