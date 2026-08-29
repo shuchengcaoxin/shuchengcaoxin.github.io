@@ -107,6 +107,18 @@ footer a{color:var(--ink-2); text-decoration:none}
 footer a:hover{color:var(--accent)}
 
 
+/* ---- what the agent connects to ---- */
+.srcs{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:10px; margin:22px 0}
+.srcs .s{border:1px solid var(--line); border-radius:9px; padding:11px 13px; background:var(--card)}
+.srcs .n{font-size:14.5px; font-weight:650; color:var(--ink); display:block}
+.srcs .q{font-size:13.5px; line-height:1.45; color:var(--ink-2); display:block; margin-top:3px}
+.srcs .t{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:11.5px;
+         color:var(--ink-3); display:block; margin-top:5px}
+.srcs .s.mr{border-color:var(--accent); background:var(--accent-soft)}
+.srcs .s.mr .n{color:var(--accent-ink)}
+@media (max-width:640px){ .srcs{grid-template-columns:1fr} }
+.srcnote{font-size:14px; color:var(--ink-3); margin:-8px 0 24px}
+
 /* ---- contents: inline by default, sticky in the margin when there is room ---- */
 .toc{border:1px solid var(--line); border-radius:10px; padding:14px 16px; margin:26px 0;
      background:var(--bg-soft)}
@@ -215,12 +227,65 @@ h2{scroll-margin-top:64px}
 
   <h2 id="design">The design: the model writes as little as possible</h2>
 
-  <p>The agent reads eight public biomedical databases through nine tools — UniProt, Open
-  Targets (twice: association, then the clinical record), ChEMBL, ClinVar, gnomAD, the GWAS
-  Catalog, ClinPGx, and EpiGraphDB's pQTL resource of <em>published</em> Mendelian
-  randomization estimates. MR, roughly, is the causal-inference method that uses genetic
-  variants as natural experiments to ask whether a molecule actually <em>causes</em> a
-  disease rather than merely tracking it.</p>
+  <p>Nine tools, eight public databases, no API key. Each one answers a different part of
+  the question a reviewer would ask, and each is a separate call whose return is kept:</p>
+
+  <div class="srcs">
+    <div class="s mr">
+      <span class="n">EpiGraphDB &#183; pQTL</span>
+      <span class="q">Does a <em>published</em> Mendelian randomization estimate say this protein causes the disease? Beta, p, instrument, and the sensitivity checks that estimate did or did not pass.</span>
+      <span class="t">get_mr_result</span>
+    </div>
+    <div class="s">
+      <span class="n">Open Targets &#183; association</span>
+      <span class="q">How strongly is this target linked to this disease across all evidence types, 0 to 1?</span>
+      <span class="t">get_target_disease_evidence</span>
+    </div>
+    <div class="s">
+      <span class="n">Open Targets &#183; clinical record</span>
+      <span class="q">Has anyone already tried this target — which drugs, how far each got, and why any stopped?</span>
+      <span class="t">get_clinical_evidence</span>
+    </div>
+    <div class="s">
+      <span class="n">ChEMBL</span>
+      <span class="q">Is it druggable at all? Known modulators, or nothing catalogued.</span>
+      <span class="t">get_chembl_modulators</span>
+    </div>
+    <div class="s">
+      <span class="n">gnomAD</span>
+      <span class="q">Would blocking it be safe? Loss-of-function tolerance — pLI and LOEUF.</span>
+      <span class="t">get_gnomad_constraint</span>
+    </div>
+    <div class="s">
+      <span class="n">ClinVar</span>
+      <span class="q">Does the gene carry variants a clinic already calls pathogenic?</span>
+      <span class="t">get_clinvar_variants</span>
+    </div>
+    <div class="s">
+      <span class="n">GWAS Catalog</span>
+      <span class="q">What else is the locus associated with — complementary genetic signal.</span>
+      <span class="t">get_gwas_catalog</span>
+    </div>
+    <div class="s">
+      <span class="n">UniProt</span>
+      <span class="q">What is the protein, where does it act, what is it already tied to?</span>
+      <span class="t">get_uniprot_dossier</span>
+    </div>
+    <div class="s">
+      <span class="n">ClinPGx</span>
+      <span class="q">Any documented drug&#8211;gene pharmacogenomics, relevant to repurposing and dosing.</span>
+      <span class="t">get_pharmgkb_drug_gene</span>
+    </div>
+  </div>
+
+  <p class="srcnote">MR &#8212; Mendelian randomization &#8212; uses genetic variants as natural
+  experiments to ask whether a molecule <em>causes</em> a disease rather than tracking it. It is
+  the only one of the nine that speaks to causality, which is why the rest of this post is
+  mostly about that box.</p>
+
+  <p><strong>Now the part that fights hallucination.</strong> Having nine good sources does
+  nothing on its own: the model still has to turn them into a page, and that is the step where
+  it can write past them. So the design gives it as little of that step as possible.</p>
 
   <p>Tool outputs are captured verbatim. The evidence table, the caveats, the sources and the
   provenance footer are rendered mechanically from them. The model writes exactly two things —

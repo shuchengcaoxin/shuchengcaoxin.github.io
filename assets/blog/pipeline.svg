@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 210" width="860" height="210" role="img" aria-label="The pipeline: nine tools over eight public databases feed a ledger that stores every return verbatim; code renders the card from the ledger; the model writes only a verdict line and one paragraph; a validator fails the whole run if either contains anything absent from tool output.">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 220" width="860" height="220" role="img" aria-label="The pipeline: nine tools over eight public databases feed a ledger that stores every return verbatim; code renders the card from the ledger; the model writes only a verdict line and one paragraph; a validator fails the whole run if either contains anything absent from tool output.">
   <style>
     .t   { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
     .box { fill: #ffffff; stroke: #0d6e68; stroke-width: 1.4; }
@@ -57,7 +57,8 @@
   <path class="arw" d="M763 96 L763 122"/>
   <path class="arw" d="M763 130 l-5 -9 h10 z" fill="#0d6e68" stroke="none"/>
 
-  <rect class="gate" x="8" y="132" width="844" height="66" rx="9"/>
-  <text class="t gate-lbl" x="28" y="158">The validator runs last, and it can fail the whole run</text>
-  <text class="t gate-sub" x="28" y="180">A number, rsID or accession in those two sentences that is absent from tool output — or causal wording on an estimate whose Steiger, colocalization and LD checks are all missing — rejects the page. 62 regression tests hold this.</text>
+  <rect class="gate" x="8" y="132" width="844" height="76" rx="9"/>
+  <text class="t gate-lbl" x="28" y="156">The validator runs last, and it can fail the whole run</text>
+  <text class="t gate-sub" x="28" y="176">A number, rsID or accession in those two sentences that is absent from tool output rejects the page. So does causal</text>
+  <text class="t gate-sub" x="28" y="194">wording on an estimate whose Steiger, colocalization and LD checks are all missing. 62 regression tests hold this.</text>
 </svg>
