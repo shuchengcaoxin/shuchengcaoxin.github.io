@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 520" width="360" height="520" role="img" aria-label="The pipeline, stacked: nine tools over eight public databases feed a ledger that stores every return verbatim; code renders the card from the ledger; the model writes only a verdict line and one paragraph; a validator runs last and can fail the whole run.">
+  <style>
+    .t   { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+    .box { fill: #ffffff; stroke: #0d6e68; stroke-width: 1.4; }
+    .lbl { fill: #16191c; font-size: 15px; font-weight: 650; }
+    .sub { fill: #4a5158; font-size: 13px; }
+    .arw { stroke: #0d6e68; stroke-width: 1.8; fill: none; }
+    .ah  { fill: #0d6e68; }
+    .hd  { fill: #767d85; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; }
+    .gate     { fill: #fdf3e3; stroke: #b45309; stroke-width: 1.6; }
+    .gate-lbl { fill: #b45309; font-size: 15px; font-weight: 700; }
+    .gate-sub { fill: #7c3d07; font-size: 12.5px; }
+    @media (prefers-color-scheme: dark) {
+      .box { fill: #161a1d; stroke: #5fb9b2; }
+      .lbl { fill: #e9e8e4; }
+      .sub { fill: #adb4ba; }
+      .arw { stroke: #5fb9b2; }
+      .ah  { fill: #5fb9b2; }
+      .hd  { fill: #828a92; }
+      .gate     { fill: #2c2115; stroke: #e0a760; }
+      .gate-lbl { fill: #e0a760; }
+      .gate-sub { fill: #d4b184; }
+    }
+  </style>
+
+  <text class="t hd" x="6" y="12">RETRIEVE</text>
+  <rect class="box" x="6" y="20" width="348" height="62" rx="9"/>
+  <text class="t lbl" x="22" y="44">9 tools</text>
+  <text class="t sub" x="22" y="66">over 8 public databases, no API key</text>
+
+  <path class="arw" d="M180 82 L180 100"/>
+  <path class="ah" d="M180 108 l-5 -9 h10 z"/>
+
+  <text class="t hd" x="6" y="126">KEEP</text>
+  <rect class="box" x="6" y="134" width="348" height="80" rx="9"/>
+  <text class="t lbl" x="22" y="158">The ledger</text>
+  <text class="t sub" x="22" y="180">every return stored word for word,</text>
+  <text class="t sub" x="22" y="200">with the release it came from</text>
+
+  <path class="arw" d="M180 214 L180 232"/>
+  <path class="ah" d="M180 240 l-5 -9 h10 z"/>
+
+  <text class="t hd" x="6" y="258">RENDER</text>
+  <rect class="box" x="6" y="266" width="348" height="80" rx="9"/>
+  <text class="t lbl" x="22" y="290">Code writes the card</text>
+  <text class="t sub" x="22" y="312">tables, caveats, sources —</text>
+  <text class="t sub" x="22" y="332">all mechanical</text>
+
+  <path class="arw" d="M180 346 L180 364"/>
+  <path class="ah" d="M180 372 l-5 -9 h10 z"/>
+
+  <text class="t hd" x="6" y="390">THE ONLY GENERATION</text>
+  <rect class="box" x="6" y="398" width="348" height="62" rx="9"/>
+  <text class="t lbl" x="22" y="422">The model writes two sentences</text>
+  <text class="t sub" x="22" y="444">one verdict line, one paragraph. Nothing else.</text>
+
+  <path class="arw" d="M180 460 L180 472"/>
+  <path class="ah" d="M180 480 l-5 -9 h10 z"/>
+
+  <rect class="gate" x="6" y="484" width="348" height="32" rx="8"/>
+  <text class="t gate-lbl" x="22" y="505">The validator can fail the whole run</text>
+</svg>

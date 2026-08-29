@@ -106,6 +106,42 @@ footer{border-top:1px solid var(--line); margin-top:44px; padding:20px 0 40px;
 footer a{color:var(--ink-2); text-decoration:none}
 footer a:hover{color:var(--accent)}
 
+
+/* ---- contents: inline by default, sticky in the margin when there is room ---- */
+.toc{border:1px solid var(--line); border-radius:10px; padding:14px 16px; margin:26px 0;
+     background:var(--bg-soft)}
+.toc .h{font-size:11.5px; letter-spacing:1.4px; text-transform:uppercase; font-weight:700;
+        color:var(--ink-3); margin-bottom:8px}
+.toc ol{margin:0; padding-left:20px; font-size:15px}
+.toc li{margin:0 0 5px}
+.toc a{color:var(--ink-2); text-decoration:none}
+.toc a:hover{color:var(--accent); text-decoration:underline}
+@media (min-width:1180px){
+  .toc{position:fixed; top:96px; left:calc(50% - 600px); width:210px; margin:0;
+       max-height:calc(100vh - 140px); overflow-y:auto; font-size:14px}
+  .toc ol{font-size:13.5px}
+}
+
+/* ---- what the post found, up front ---- */
+.findings{border:1px solid var(--accent); border-radius:10px; padding:16px 18px;
+          background:var(--accent-soft); margin:24px 0}
+.findings .h{display:block; font-size:11.5px; letter-spacing:1.4px; text-transform:uppercase;
+             font-weight:700; color:var(--accent-ink); margin-bottom:9px}
+.findings ul{margin:0; padding-left:19px}
+.findings li{margin:0 0 8px; font-size:16px; line-height:1.55}
+.findings li:last-child{margin:0}
+
+/* ---- figures that survive a phone ---- */
+.figscroll{overflow-x:auto; -webkit-overflow-scrolling:touch}
+.figscroll img{border-radius:10px; border:1px solid var(--line); display:block}
+@media (max-width:640px){
+  .figscroll img{min-width:560px; max-width:none; width:560px}
+  .figscroll::after{content:""}
+  figcaption .swipe{display:inline}
+}
+figcaption .swipe{display:none; color:var(--accent-ink); font-weight:650}
+h2{scroll-margin-top:64px}
+
 @media (max-width:600px){
   body{font-size:16px}
   h1{font-size:27px}
@@ -131,24 +167,59 @@ footer a:hover{color:var(--accent)}
   <p class="standfirst">The card was pharmacologically correct, and nothing it retrieved supported the conclusion. That combination is much harder to catch than a made-up number — because every check comes back clean, and every expert who reads it nods.</p>
   <p class="byline">17 August 2026 · <span id="rt">11 min read</span></p>
 
-  <p>I spent this summer building an agent that reads eight public biomedical databases
-  through nine tools and writes a one-page evidence card on whether a protein is worth
-  pursuing as a drug target for a given disease. The databases are UniProt, Open Targets
-  (queried twice — once for target–disease association, once for the clinical record),
-  ChEMBL, ClinVar, gnomAD, the GWAS Catalog, ClinPGx, and EpiGraphDB's pQTL resource,
-  which holds <em>published</em> Mendelian randomization estimates. MR, roughly, is the
-  causal-inference method that uses genetic variants as natural experiments to ask whether
-  a molecule actually <em>causes</em> a disease rather than merely tracking it.</p>
+  <h2 id="why">Why build this at all</h2>
 
-  <p>The interesting failure was not a hallucination. It was this:</p>
+  <p>Roughly nine in ten drug programmes that reach the clinic never reach approval. Human
+  genetic evidence is one of the few things known to move that number: targets with genetic
+  support are about <strong>2.6 times likelier to succeed</strong>
+  (<a href="https://doi.org/10.1038/s41586-024-07316-0" target="_blank" rel="noopener">Minikel
+  et al., <em>Nature</em> 2024</a>). So the obvious thing to build is a system that gathers
+  the genetic evidence on a target and tells you whether it is worth pursuing.</p>
 
-  <blockquote><p><strong>The card wrote a conclusion that is pharmacologically correct, and
-  that nothing it retrieved supports.</strong></p></blockquote>
+  <p>The obvious thing to build is also the dangerous one. A language model asked that
+  question directly produces a fluent answer whether or not it has grounds for one — and here
+  a confident wrong sentence does not cost you a wrong answer. It costs a multi-year
+  programme.</p>
 
-  <p>That combination is much harder to catch than a made-up number, because every check you
-  would normally run comes back clean, and every expert who reads it nods.</p>
+  <p>So I spent the summer building the agent, and then most of it trying to make the agent
+  fail. It reads eight public biomedical databases through nine tools — UniProt, Open Targets
+  (twice: association, then the clinical record), ChEMBL, ClinVar, gnomAD, the GWAS Catalog,
+  ClinPGx, and EpiGraphDB's pQTL resource of <em>published</em> Mendelian randomization
+  estimates — and writes one evidence card.</p>
 
-  <h2>The design: the model writes as little as possible</h2>
+  <div class="findings">
+    <span class="h">What this post found</span>
+    <ul>
+      <li>The failure that mattered <strong>was not a hallucination</strong>. It was a
+      sentence that is true, and that nothing the pipeline retrieved supported.</li>
+      <li>My guardrails caught none of it. 41 adversarial agents surfaced 18 real defects;
+      <strong>my validator's recall against them was zero.</strong></li>
+      <li>A high pass rate turned out to measure caution, not accuracy — the model learned to
+      pass by asserting almost nothing.</li>
+      <li>The check I built afterwards caught the same failure twice, on twenty
+      target–indication pairs whose outcomes history had already settled.</li>
+      <li>And the pathway that card endorsed <strong>missed its phase 3 endpoint this
+      year</strong>. The remembered answer was not just unsupported. It was provisional.</li>
+    </ul>
+  </div>
+
+  <nav class="toc" aria-label="Contents">
+    <div class="h">Contents</div>
+    <ol>
+      <li><a href="#why">Why build this</a></li>
+      <li><a href="#design">The design</a></li>
+      <li><a href="#attack">Build, attack, rebuild</a></li>
+      <li><a href="#case">The case: IL6R</a></li>
+      <li><a href="#right">Why the card was right</a></li>
+      <li><a href="#measurable">The measurable part</a></li>
+      <li><a href="#vanity">Pass rate is a vanity metric</a></li>
+      <li><a href="#external">Tested on data I didn't pick</a></li>
+      <li><a href="#coda">Coda: phase 3</a></li>
+      <li><a href="#lessons">What I'd take from this</a></li>
+    </ol>
+  </nav>
+
+  <h2 id="design">The design: the model writes as little as possible</h2>
 
   <p>Tool outputs are captured verbatim. The evidence table, the caveats, the sources and the
   provenance footer are rendered mechanically from them. The model writes exactly two things —
@@ -156,21 +227,28 @@ footer a:hover{color:var(--accent)}
   prose contains a number, an rsID or an identifier that appears nowhere in the tool output.</p>
 
   <figure>
-    <img src="../../assets/blog/pipeline.svg" alt="Retrieve: nine tools over eight public databases, no API key. Keep: the ledger, every return stored word for word with its release. Render: code writes the card — tables, caveats, sources, all mechanical. The only generation: the model writes one verdict line and one paragraph, nothing else. The validator runs last and can fail the whole run.">
+    <picture>
+      <source media="(max-width: 640px)" srcset="../../assets/blog/pipeline-narrow.svg">
+      <img src="../../assets/blog/pipeline.svg" alt="Retrieve: nine tools over eight public databases, no API key. Keep: the ledger, every return stored word for word with its release. Render: code writes the card — tables, caveats, sources, all mechanical. The only generation: the model writes one verdict line and one paragraph, nothing else. The validator runs last and can fail the whole run.">
+    </picture>
     <figcaption><b>The architecture.</b> Generation is the smallest box on purpose. Everything a
     reader might check is produced by code from stored tool returns, so the only text that can
     drift from the evidence is two sentences long — and those two sentences are the only thing
     the validator has to police.</figcaption>
   </figure>
 
-  <p>Then I attacked it with 41 adversarial agents across four critic lenses, with every
-  allegation re-checked by an independent skeptic before it counted: 86 alleged, 27 upheld,
-  <strong>18 confirmed distinct defects</strong>. My validator's recall against those 18 was
-  <strong>zero</strong>.</p>
+  <h2 id="attack">Build, attack, rebuild</h2>
 
-  <p>Every check I had written was necessary. None of them covered the failures that mattered.</p>
+  <p>Every version of this thing has been shipped, attacked, and shipped again. The attack that
+  mattered: 41 adversarial agents across four critic lenses, every allegation re-checked by an
+  independent skeptic before it counted. 86 alleged, 27 upheld,
+  <strong>18 confirmed distinct defects</strong>.</p>
 
-  <h2>The case</h2>
+  <p><strong>My validator's recall against those 18 was zero.</strong> Every check I had
+  written was necessary. None of them covered the failures that mattered. What follows is the
+  one that taught me the most.</p>
+
+  <h2 id="case">The case: IL6R &#215; coronary heart disease</h2>
 
   <p>For <strong>IL6R × coronary heart disease</strong>, the MR tool returned:</p>
 
@@ -195,7 +273,7 @@ ld_check              null</code></pre>
 
   <p>That reading was wrong, and the way it was wrong is the point of this post.</p>
 
-  <h2>Why the card was right</h2>
+  <h2 id="right">Why the card was right</h2>
 
   <p>IL6R's instrument, rs4129267, is a near-perfect proxy (r² ≈ 0.96–0.99 in Europeans) for
   rs2228145, the Asp358Ala missense variant. The 358Ala allele accelerates ADAM-mediated
@@ -218,7 +296,7 @@ ld_check              null</code></pre>
   <p>Next time the remembered answer will be stale, or wrong, or right for a different protein.
   Nothing in the system can tell the difference.</p>
 
-  <h2>The part that is measurable</h2>
+  <h2 id="measurable">The part that is measurable</h2>
 
   <p>Two cards in the same batch, same outcome, same tool:</p>
 
@@ -247,8 +325,8 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
   </div>
 
   <figure>
-    <img src="../../assets/blog/il6r-card.jpg" alt="The IL6R by coronary heart disease evidence card as the system renders it today. A green GO verdict banner sits above a red validation FAIL with two flags: causal-claim-on-unvalidated-estimate and direction-contradicts-beta. The MR panel shows beta -0.0442, p 2.2e-7, a single-SNP Wald ratio on the cis instrument rs4129267, and Steiger, colocalization and LD all reported as NA.">
-    <figcaption><b>The same card today.</b> The verdict banner still says GO — the model is as
+    <div class="figscroll"><img src="../../assets/blog/il6r-card.jpg" alt="The IL6R by coronary heart disease evidence card as the system renders it today. A green GO verdict banner sits above a red validation FAIL with two flags: causal-claim-on-unvalidated-estimate and direction-contradicts-beta. The MR panel shows beta -0.0442, p 2.2e-7, a single-SNP Wald ratio on the cis instrument rs4129267, and Steiger, colocalization and LD all reported as NA."></div>
+    <figcaption><span class="swipe">Swipe the figure sideways on a phone. </span><b>The same card today.</b> The verdict banner still says GO — the model is as
     confident as ever. The line under it says <code>validation: FAIL</code>, and names why:
     <code>causal-claim-on-unvalidated-estimate</code> and <code>direction-contradicts-beta</code>.
     Three rows down, <code>Steiger / coloc / LD</code> reads <code>NA / NA / NA</code>. That is
@@ -271,7 +349,7 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
   rejected a sentence that was correct. A check that punishes you for being precise just teaches
   you to be vague, which is the opposite of what any of this is for.</p>
 
-  <h2>The second lesson: pass rate is a vanity metric</h2>
+  <h2 id="vanity">Pass rate is a vanity metric</h2>
 
   <p>Ten of ten cards passed validation. I nearly wrote that number down as progress.</p>
 
@@ -290,7 +368,7 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
   passed, 2 checkable tokens across 842 words, 0.20 per 100 words. That is worse than the run
   before it, and reporting it is the point.</p>
 
-  <h2>What I'd take from this</h2>
+  <h2 id="lessons">What I&#8217;d take from this</h2>
 
   <ol>
     <li><strong>"The model was right" is not the same as "the pipeline supported it."</strong>
@@ -308,7 +386,7 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
     code.</li>
   </ol>
 
-  <h2>Postscript: the same failure, caught</h2>
+  <h2 id="external">Tested on data I did not pick</h2>
 
   <p><em>Added 28 August 2026. The benchmark run described here is from 21 August.</em></p>
 
@@ -337,7 +415,7 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
   smaller and, to me, more useful: <strong>the errors were all abstentions.</strong> When the
   retrieval was thin, the agent declined rather than reached.</p>
 
-  <h2>Coda: the pharmacology was right, and it still did not work</h2>
+  <h2 id="coda">Coda: the pharmacology was right, and it still did not work</h2>
 
   <p>Everything above turns on one move — the model reached past what it had retrieved,
   supplied the shedding mechanism from memory, and was correct. I have been treating that
@@ -346,8 +424,8 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
   <p>It is worse than that. Here is what happened to the pathway that card endorsed.</p>
 
   <figure>
-    <img src="../../assets/blog/il6r-timeline.jpg" alt="A timeline of the IL6R pathway to ziltivekimab, labelled prediction not confirmed in ASCVD and CKD — target engaged, zero MACE benefit. 2012: back-to-back Lancet Mendelian randomization papers report that an IL6R variant lowers coronary heart disease risk, odds ratio 0.95 per allele. 2017: CANTOS shows that blocking upstream IL-1-beta works. 2021: the RESCUE phase 2 trial shows dose-dependent hsCRP lowering. 2026: the ZEUS phase 3 trial misses its primary endpoint, with a MACE hazard ratio of 0.99, announced by press release.">
-    <figcaption><b>Fourteen years, hand-verified against PubMed, openFDA, EMA and
+    <div class="figscroll"><img src="../../assets/blog/il6r-timeline.jpg" alt="A timeline of the IL6R pathway to ziltivekimab, labelled prediction not confirmed in ASCVD and CKD — target engaged, zero MACE benefit. 2012: back-to-back Lancet Mendelian randomization papers report that an IL6R variant lowers coronary heart disease risk, odds ratio 0.95 per allele. 2017: CANTOS shows that blocking upstream IL-1-beta works. 2021: the RESCUE phase 2 trial shows dose-dependent hsCRP lowering. 2026: the ZEUS phase 3 trial misses its primary endpoint, with a MACE hazard ratio of 0.99, announced by press release."></div>
+    <figcaption><span class="swipe">Swipe the figure sideways on a phone. </span><b>Fourteen years, hand-verified against PubMed, openFDA, EMA and
     ClinicalTrials.gov.</b> The genetics in 2012 pointed the same way the card did in 2026.
     The phase 3 read-out did not follow.</figcaption>
   </figure>
