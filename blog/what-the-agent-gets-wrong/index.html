@@ -160,25 +160,26 @@ h2{scroll-margin-top:64px}
   <p class="standfirst">The card was pharmacologically correct, and nothing it retrieved supported the conclusion. That combination is much harder to catch than a made-up number — because every check comes back clean, and every expert who reads it nods.</p>
   <p class="byline">17 August 2026 · <span id="rt">11 min read</span></p>
 
-  <h2 id="why">Why build this at all</h2>
+  <h2 id="why">The job, and why it is tempting to hand it to a model</h2>
 
-  <p>Roughly nine in ten drug programmes that reach the clinic never reach approval. Human
-  genetic evidence is one of the few things known to move that number: targets with genetic
-  support are about <strong>2.6 times likelier to succeed</strong>
+  <p><strong>The job is triage.</strong> Before anyone spends years on a drug target,
+  somebody has to read what is already known about it — the genetics, the variants, the
+  chemistry, the trials that were already tried — and say whether it is worth pursuing.
+  That is a day of a trained person's reading, per target, and there are thousands of
+  targets. It is exactly the work people now point an LLM agent at: <strong>cheap labour
+  that never gets bored.</strong></p>
+
+  <p><strong>And the stakes are real.</strong> About nine in ten programmes that reach the
+  clinic never reach approval, and genetic support is one of the few things known to move
+  that number — targets that have it are roughly <strong>2.6&#215; likelier to succeed</strong>
   (<a href="https://doi.org/10.1038/s41586-024-07316-0" target="_blank" rel="noopener">Minikel
-  et al., <em>Nature</em> 2024</a>). So the obvious thing to build is a system that gathers
-  the genetic evidence on a target and tells you whether it is worth pursuing.</p>
+  et al., <em>Nature</em> 2024</a>). So this is not a summarising chore. It is a decision.</p>
 
-  <p>The obvious thing to build is also the dangerous one. A language model asked that
-  question directly produces a fluent answer whether or not it has grounds for one — and here
-  a confident wrong sentence does not cost you a wrong answer. It costs a multi-year
-  programme.</p>
-
-  <p>So I spent the summer building the agent, and then most of it trying to make the agent
-  fail. It reads eight public biomedical databases through nine tools — UniProt, Open Targets
-  (twice: association, then the clinical record), ChEMBL, ClinVar, gnomAD, the GWAS Catalog,
-  ClinPGx, and EpiGraphDB's pQTL resource of <em>published</em> Mendelian randomization
-  estimates — and writes one evidence card.</p>
+  <p><strong>Which is why hallucination is the wrong thing to be relaxed about here.</strong>
+  A model asked this question answers fluently whether or not it has grounds to. Cheap labour
+  that invents its evidence is not cheap — a confident wrong sentence does not cost you a
+  wrong answer, it costs a multi-year programme. So I built the agent, and then spent most of
+  the summer trying to make it fail.</p>
 
   <div class="findings">
     <span class="h">What this post found</span>
@@ -199,7 +200,7 @@ h2{scroll-margin-top:64px}
   <nav class="toc" aria-label="Contents">
     <div class="h">Contents</div>
     <ol>
-      <li><a href="#why">Why build this</a></li>
+      <li><a href="#why">The job, and the temptation</a></li>
       <li><a href="#design">The design</a></li>
       <li><a href="#attack">Build, attack, rebuild</a></li>
       <li><a href="#case">The case: IL6R</a></li>
@@ -213,6 +214,13 @@ h2{scroll-margin-top:64px}
   </nav>
 
   <h2 id="design">The design: the model writes as little as possible</h2>
+
+  <p>The agent reads eight public biomedical databases through nine tools — UniProt, Open
+  Targets (twice: association, then the clinical record), ChEMBL, ClinVar, gnomAD, the GWAS
+  Catalog, ClinPGx, and EpiGraphDB's pQTL resource of <em>published</em> Mendelian
+  randomization estimates. MR, roughly, is the causal-inference method that uses genetic
+  variants as natural experiments to ask whether a molecule actually <em>causes</em> a
+  disease rather than merely tracking it.</p>
 
   <p>Tool outputs are captured verbatim. The evidence table, the caveats, the sources and the
   provenance footer are rendered mechanically from them. The model writes exactly two things —
