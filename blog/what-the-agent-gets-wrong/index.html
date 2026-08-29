@@ -337,6 +337,40 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
   smaller and, to me, more useful: <strong>the errors were all abstentions.</strong> When the
   retrieval was thin, the agent declined rather than reached.</p>
 
+  <h2>Coda: the pharmacology was right, and it still did not work</h2>
+
+  <p>Everything above turns on one move — the model reached past what it had retrieved,
+  supplied the shedding mechanism from memory, and was correct. I have been treating that
+  as a near miss: right this time, wrong eventually.</p>
+
+  <p>It is worse than that. Here is what happened to the pathway that card endorsed.</p>
+
+  <figure>
+    <img src="../../assets/blog/il6r-timeline.jpg" alt="A timeline of the IL6R pathway to ziltivekimab, labelled prediction not confirmed in ASCVD and CKD — target engaged, zero MACE benefit. 2012: back-to-back Lancet Mendelian randomization papers report that an IL6R variant lowers coronary heart disease risk, odds ratio 0.95 per allele. 2017: CANTOS shows that blocking upstream IL-1-beta works. 2021: the RESCUE phase 2 trial shows dose-dependent hsCRP lowering. 2026: the ZEUS phase 3 trial misses its primary endpoint, with a MACE hazard ratio of 0.99, announced by press release.">
+    <figcaption><b>Fourteen years, hand-verified against PubMed, openFDA, EMA and
+    ClinicalTrials.gov.</b> The genetics in 2012 pointed the same way the card did in 2026.
+    The phase 3 read-out did not follow.</figcaption>
+  </figure>
+
+  <p>Two caveats before anyone over-reads this, because they are the difference between a
+  finding and a headline. Ziltivekimab targets <strong>IL-6, the ligand</strong> — one step
+  upstream of the receptor the card was actually about — and ZEUS enrolled patients with
+  atherosclerotic disease <em>and</em> chronic kidney disease, not the general coronary
+  population the MR estimate describes. And a missed endpoint announced by press release is
+  not a published trial. So this is evidence against the pathway, not a refutation of the
+  card.</p>
+
+  <p>But it is enough to make the point sharper than I could make it in August.
+  <strong>The remembered answer was not merely unsupported by the retrieval. It was
+  provisional.</strong> The mechanism was real, the target was engaged, hsCRP fell exactly
+  as the biology said it should — and the outcome did not move. If the field's own consensus
+  can be that far from the read-out, then a pipeline that stays silent and lets the reader
+  fill the gap from memory is not borrowing a safe fact. It is borrowing a bet.</p>
+
+  <p>Which is the whole argument for making the silence visible. A card that prints
+  <code>Steiger / coloc / LD → NA / NA / NA</code> and refuses the causal sentence is not
+  being pedantic. It is declining to make that bet on the reader's behalf.</p>
+
   <p>The code, the 62 regression tests and the audit are open, in the repo built during the CABS
   2026 data science internship. The MR estimates throughout are <em>retrieved</em>: the exposure
   side comes from EpiGraphDB's pQTL resource (Zheng et al., <em>Nature Genetics</em> 2020) and the
