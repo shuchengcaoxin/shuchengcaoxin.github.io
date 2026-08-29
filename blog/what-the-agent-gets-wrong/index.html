@@ -132,14 +132,7 @@ footer a:hover{color:var(--accent)}
 .findings li:last-child{margin:0}
 
 /* ---- figures that survive a phone ---- */
-.figscroll{overflow-x:auto; -webkit-overflow-scrolling:touch}
-.figscroll img{border-radius:10px; border:1px solid var(--line); display:block}
-@media (max-width:640px){
-  .figscroll img{min-width:560px; max-width:none; width:560px}
-  .figscroll::after{content:""}
-  figcaption .swipe{display:inline}
-}
-figcaption .swipe{display:none; color:var(--accent-ink); font-weight:650}
+figure picture{display:block}
 h2{scroll-margin-top:64px}
 
 @media (max-width:600px){
@@ -214,7 +207,7 @@ h2{scroll-margin-top:64px}
       <li><a href="#measurable">The measurable part</a></li>
       <li><a href="#vanity">Pass rate is a vanity metric</a></li>
       <li><a href="#external">Tested on data I didn't pick</a></li>
-      <li><a href="#coda">Coda: phase 3</a></li>
+      <li><a href="#phase3">The phase 3 read-out</a></li>
       <li><a href="#lessons">What I'd take from this</a></li>
     </ol>
   </nav>
@@ -325,8 +318,11 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
   </div>
 
   <figure>
-    <div class="figscroll"><img src="../../assets/blog/il6r-card.jpg" alt="The IL6R by coronary heart disease evidence card as the system renders it today. A green GO verdict banner sits above a red validation FAIL with two flags: causal-claim-on-unvalidated-estimate and direction-contradicts-beta. The MR panel shows beta -0.0442, p 2.2e-7, a single-SNP Wald ratio on the cis instrument rs4129267, and Steiger, colocalization and LD all reported as NA."></div>
-    <figcaption><span class="swipe">Swipe the figure sideways on a phone. </span><b>The same card today.</b> The verdict banner still says GO — the model is as
+    <picture>
+      <source media="(max-width: 700px)" srcset="../../assets/blog/il6r-card-narrow.jpg">
+      <img src="../../assets/blog/il6r-card.jpg" alt="The IL6R by coronary heart disease evidence card as the system renders it today. A green GO verdict banner sits above a red validation FAIL with two flags: causal-claim-on-unvalidated-estimate and direction-contradicts-beta. The MR panel shows beta -0.0442, p 2.2e-7, a single-SNP Wald ratio on the cis instrument rs4129267, and Steiger, colocalization and LD all reported as NA.">
+    </picture>
+    <figcaption><b>The same card today.</b> The verdict banner still says GO — the model is as
     confident as ever. The line under it says <code>validation: FAIL</code>, and names why:
     <code>causal-claim-on-unvalidated-estimate</code> and <code>direction-contradicts-beta</code>.
     Three rows down, <code>Steiger / coloc / LD</code> reads <code>NA / NA / NA</code>. That is
@@ -415,7 +411,7 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
   smaller and, to me, more useful: <strong>the errors were all abstentions.</strong> When the
   retrieval was thin, the agent declined rather than reached.</p>
 
-  <h2 id="coda">Coda: the pharmacology was right, and it still did not work</h2>
+  <h2 id="phase3">The pharmacology was right, and it still did not work</h2>
 
   <p>Everything above turns on one move — the model reached past what it had retrieved,
   supplied the shedding mechanism from memory, and was correct. I have been treating that
@@ -424,8 +420,11 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
   <p>It is worse than that. Here is what happened to the pathway that card endorsed.</p>
 
   <figure>
-    <div class="figscroll"><img src="../../assets/blog/il6r-timeline.jpg" alt="A timeline of the IL6R pathway to ziltivekimab, labelled prediction not confirmed in ASCVD and CKD — target engaged, zero MACE benefit. 2012: back-to-back Lancet Mendelian randomization papers report that an IL6R variant lowers coronary heart disease risk, odds ratio 0.95 per allele. 2017: CANTOS shows that blocking upstream IL-1-beta works. 2021: the RESCUE phase 2 trial shows dose-dependent hsCRP lowering. 2026: the ZEUS phase 3 trial misses its primary endpoint, with a MACE hazard ratio of 0.99, announced by press release."></div>
-    <figcaption><span class="swipe">Swipe the figure sideways on a phone. </span><b>Fourteen years, hand-verified against PubMed, openFDA, EMA and
+    <picture>
+      <source media="(max-width: 700px)" srcset="../../assets/blog/il6r-timeline-narrow.jpg">
+      <img src="../../assets/blog/il6r-timeline.jpg" alt="A timeline of the IL6R pathway to ziltivekimab, labelled prediction not confirmed in ASCVD and CKD — target engaged, zero MACE benefit. 2012: back-to-back Lancet Mendelian randomization papers report that an IL6R variant lowers coronary heart disease risk, odds ratio 0.95 per allele. 2017: CANTOS shows that blocking upstream IL-1-beta works. 2021: the RESCUE phase 2 trial shows dose-dependent hsCRP lowering. 2026: the ZEUS phase 3 trial misses its primary endpoint, with a MACE hazard ratio of 0.99, announced by press release.">
+    </picture>
+    <figcaption><b>Fourteen years, hand-verified against PubMed, openFDA, EMA and
     ClinicalTrials.gov.</b> The genetics in 2012 pointed the same way the card did in 2026.
     The phase 3 read-out did not follow.</figcaption>
   </figure>
