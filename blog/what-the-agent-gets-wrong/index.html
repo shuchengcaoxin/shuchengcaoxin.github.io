@@ -175,11 +175,10 @@ h2{scroll-margin-top:64px}
   <h2 id="why">What this agent does, and why people want AI to do it</h2>
 
   <p><strong>The job is target prioritization.</strong> Before anyone commits years to a
-  drug target, somebody has to read what is already known about it — the genetics, the
-  variants, the chemistry, the trials already run — and rank it against the alternatives.
-  That reading takes a trained person about a day per target, and there are thousands of
-  targets. It is exactly the work people now hand to an LLM agent: <strong>cheap labour
-  that never gets bored.</strong></p>
+  target, somebody reads everything known about it &#8212; genetics, variants, chemistry,
+  trials already run &#8212; and ranks it against the alternatives. A day of a trained
+  person&#8217;s reading, per target, across thousands of targets. Exactly the work people now
+  hand to an LLM agent: <strong>cheap labour that never gets bored.</strong></p>
 
   <p><strong>A wrong call is expensive.</strong> About nine in ten programmes that reach
   the clinic never reach approval, and genetic support is one of the few things known to
@@ -188,11 +187,10 @@ h2{scroll-margin-top:64px}
   et al., <em>Nature</em> 2024</a>). So prioritization is a decision, not a summarising
   task.</p>
 
-  <p><strong>This is why hallucination is dangerous here.</strong> A model asked this
-  question answers fluently whether or not it has grounds to. Cheap labour that invents
-  its evidence is not cheap: a confident wrong sentence does not cost you a wrong answer;
-  it costs a multi-year programme. So I built the agent, and then spent most of the summer
-  trying to make it fail.</p>
+  <p><strong>This is why hallucination is dangerous here.</strong> A model answers fluently whether
+  or not it has grounds to, and cheap labour that invents its evidence is not cheap: a
+  confident wrong sentence costs a multi-year programme, not a wrong answer. So I built the
+  agent, then spent the summer trying to make it fail.</p>
 
   <div class="findings">
     <span class="h">What this post found</span>
@@ -243,9 +241,9 @@ h2{scroll-margin-top:64px}
   <h2 id="product">What it ships</h2>
 
   <p>One command &#8212; a protein and a disease &#8212; returns one evidence card. The
-  verdict banner (the go / no-go call at the top) and one paragraph are the model&#8217;s; the validation line, every table and every
-  number are written by code from stored tool returns. Each panel names the database
-  release it came from.</p>
+  model writes only the verdict banner (the go / no-go call) and one paragraph. Every table,
+  every number and the validation line are written by code from stored tool returns, and each
+  panel names the database release it came from.</p>
 
   <figure>
     <picture>
@@ -334,13 +332,13 @@ h2{scroll-margin-top:64px}
   gives the model as little of that step as possible.</p>
 
   <p>Every tool return is stored word for word. From that store, code &#8212; not the model
-  &#8212; builds the evidence table, the warnings, the source links, and the footer recording
-  where each number came from and which database release it belongs to. (That record is what
-  &#8220;provenance&#8221; means here: being able to trace any number on the page back to the
-  call that produced it.) The model writes exactly two things: a one-line verdict &#8212; the
-  GO / NO-GO call &#8212; and a short reasoning paragraph. A validator then rejects the
-  run if that prose contains a number, an rsID or an identifier that appears nowhere in the
-  tool output.</p>
+  &#8212; builds the evidence table, the warnings, the source links, and a footer tracing each
+  number back to the call and database release it came from. That traceability is what
+  &#8220;provenance&#8221; means here.</p>
+
+  <p>The model writes two things: a one-line verdict &#8212; the GO / NO-GO call &#8212; and a
+  short reasoning paragraph. A validator rejects the run if that prose contains a number, an
+  rsID or an identifier absent from the tool output.</p>
 
   <figure>
     <picture>
@@ -368,9 +366,8 @@ h2{scroll-margin-top:64px}
 
   <p><strong>My validator flagged 0 of the 18 &#8212; a recall of zero.</strong> Every check I had written was necessary, and none of them covered the failures that mattered.</p>
 
-  <p><em>Everything below is the engineering story behind those numbers &#8212; the failure
-  that taught me the most, the fix, and the external test. It is for the reader who wants the
-  details; the conclusions above stand on their own.</em></p>
+  <p><em>What follows is the engineering story behind those numbers, for readers who want
+  it. The conclusions above stand without it.</em></p>
 
   <h2 id="case">The case: IL6R &#215; coronary heart disease</h2>
 
@@ -390,14 +387,17 @@ ld_check              null</code></pre>
   <blockquote><p><strong>GO</strong> — genetic and Mendelian randomization evidence supports a
   causal, <strong>protective role of IL6R inhibition</strong> in coronary heart disease.</p></blockquote>
 
-  <p>My first reading was that this was backwards. In that resource the exposure &#8212; the thing the genetic variant raises or lowers &#8212; is <em>the amount of IL6R protein in blood plasma</em>. A negative beta says genetically <strong>higher</strong> IL6R protein
-  goes with <strong>less</strong> coronary heart disease — so, I reasoned, the data supports a claim about raising the target, and the card recommended inhibiting it.</p>
+  <p>My first reading was that this was backwards. The exposure &#8212; what the variant
+  raises or lowers &#8212; is <em>IL6R protein in blood plasma</em>. A negative beta says
+  genetically <strong>higher</strong> IL6R goes with <strong>less</strong> coronary heart
+  disease. So the data seemed to support raising the target, while the card recommended
+  inhibiting it.</p>
 
   <p>That reading was wrong, and the way it was wrong is the point of this post.</p>
 
   <h2 id="right">Why the card was right</h2>
 
-  <p>The resolution is one piece of biology, and it takes four steps.</p>
+  <p>One piece of biology resolves it, in four steps.</p>
 
   <ol>
     <li>The genetic variant behind this estimate &#8212; rs4129267, a near-perfect stand-in
@@ -421,15 +421,15 @@ ld_check              null</code></pre>
   treated the blood measurement as if it tracked receptor activity, when it actually
   tracks the loss of it.</p>
 
-  <p>Here is the problem: <strong>none of that biology was in anything the agent
-  retrieved.</strong> The tool returned a beta, a p-value and an instrument &#8212; the
-  code block above is the whole of it. The four steps came from the model&#8217;s memory
-  of its training data, and they happened to be correct.</p>
+  <p><strong>None of that biology was in anything the agent retrieved.</strong> The tool
+  returned a beta, a p-value and an instrument &#8212; the code block above is all of it.
+  Those four steps came from the model&#8217;s training memory, and happened to be
+  correct.</p>
 
   <p>That is the failure mode I now worry about most: not a hallucinated fact, but a
-  <em>correct conclusion that the retrieval does not support</em>. A domain expert skimming the card nods,
-  because the sentence is true. The reviewer fills the gap from their own memory, exactly as the
-  model did, and the reader's own expertise hides the pipeline's silence.</p>
+  <em>correct conclusion that the retrieval does not support</em>. An expert skimming the card nods, because the sentence is true &#8212; filling the gap
+  from memory exactly as the model did. The reader&#8217;s own knowledge hides the
+  pipeline&#8217;s silence.</p>
 
   <p>Next time the remembered answer will be stale, or wrong, or right for a different protein, and nothing in the system will be able to tell the
   difference.</p>
@@ -441,14 +441,24 @@ ld_check              null</code></pre>
 <pre><code>IL6R   beta -0.0442  p 2.21e-07  n_snp 1  steiger NA    ld_check null  coloc null
 LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc null</code></pre>
 
-  <p>Three quality checks travel with an estimate like this. Steiger asks whether the variant moves the protein first and the disease second, rather than the reverse; colocalization and the LD check ask whether the protein signal and the disease signal trace to the same variant, rather than to two neighbours inherited together. LPA's estimate passed a Steiger test and an LD check. IL6R's carried none of the three &#8212; Steiger NA, LD null, no colocalization: not run, rather than failed. A single-variant estimate with none of them cannot tell a causal effect from a neighbouring gene's, or from cause and effect running backwards.</p>
+  <p>Three quality checks travel with an estimate like this. Steiger asks whether the
+  variant moves the protein first and the disease second, not the reverse. Colocalization and
+  the LD check ask whether both signals trace to the same variant, not to two neighbours
+  inherited together.</p>
+
+  <p>LPA&#8217;s estimate passed Steiger and LD. IL6R&#8217;s carried none of the three
+  &#8212; Steiger NA, LD null, no colocalization: <em>not run</em>, rather than failed.
+  Without them, a single-variant estimate cannot tell a causal effect from a neighbouring
+  gene&#8217;s, or from cause and effect running backwards.</p>
 
   <p><strong>Both cards used the same strength of language</strong> &#8212; "Supports a causal role",
   in both.</p>
 
-  <p>That is a defect you can encode, so I did. The validator now fails any run that uses causal
-  wording on a single-instrument estimate whose Steiger, colocalization and LD check are all
-  absent. When I re-ran the benchmark &#8212; a fixed batch of ten protein&#8211;disease cards I score after every change &#8212; the new rule fired on exactly the card it was built for. Each run regenerates the model's two sentences, so the wording shifts between runs; notice which way it shifted: <em>more</em> confident, not less:</p>
+  <p>That is a defect you can encode, so I did: the validator now fails any run using causal
+  wording on a single-variant estimate with all three checks absent. Re-running the benchmark
+  &#8212; a fixed batch of ten cards I score after every change &#8212; it fired on exactly
+  the card it was built for. Each run regenerates the model&#8217;s two sentences, and this
+  time the wording came back <em>more</em> confident, not less:</p>
 
   <div class="tablewrap">
   <table>
@@ -471,11 +481,11 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
   </figure>
 
 
-  <p>Both flags are the system doing its job, and the second one deserves a sentence:
-  the validator scores what the retrieval supports, not what is true. On the retrieved
-  numbers alone, the negative beta reads as &#8220;more plasma IL6R, less disease&#8221;,
-  so prose recommending inhibition contradicts the sign. The only thing that closes that
-  gap is the shedding biology &#8212; and the pipeline never fetched it.</p>
+  <p>The second flag looks like a contradiction and is not. <strong>The validator scores
+  what the retrieval supports, not what is true.</strong> On the retrieved numbers alone the
+  negative beta reads as &#8220;more plasma IL6R, less disease&#8221;, so recommending
+  inhibition contradicts the sign. Only the shedding biology closes that gap, and the
+  pipeline never fetched it.</p>
 
   <p>I also had to be careful about the rule itself. An early version of the direction check
   rejected a sentence that was correct. A check that punishes you for being precise just teaches
@@ -485,24 +495,31 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
 
   <p>Ten of ten cards passed validation. I nearly wrote that number down as progress.</p>
 
-  <p>Then I counted what was left to check. A checkable token is a number, rsID or identifier the validator can match against the stored tool returns &#8212; and the whole batch contained <strong>three</strong>. The model had learned that the safe move is to stop making claims that can be
-  checked. It passed everything by asserting almost nothing.</p>
+  <p>Then I counted what was left to check. A checkable token is a number, rsID or
+  identifier the validator can match against stored tool returns &#8212; and the whole batch
+  held <strong>three</strong>. The model had learned the safe move: stop making claims that
+  can be checked. It passed everything by asserting almost nothing.</p>
 
   <p>Later I made the validator stricter, and the same benchmark dropped to 8/10 — both failures
   were the model asserting clinical status ("clinically proven", "approved") that none of the
   retrieved sources returns. <strong>A pass rate that falls when the check gets honest is what
   progress actually looks like.</strong></p>
 
-  <p>So the pipeline now reports <strong>claim density</strong> — checkable tokens per 100 words
-  of reasoning — beside the pass rate. Neither means much alone; together they answer the real question: how much did it claim, and how much of that held up? The run as this was written: 8/10 passed, with 2 checkable tokens across 842 words of reasoning. That is worse than the run before it, and reporting it is the point.</p>
+  <p>So the pipeline now reports <strong>claim density</strong> &#8212; checkable tokens per
+  100 words &#8212; beside the pass rate. Alone, neither means much; together they answer the
+  real question: how much did it claim, and how much held up? This run: 8/10 passed, 2
+  checkable tokens across 842 words. Worse than the run before it, and reporting that is the
+  point.</p>
 
 
   <h2 id="external">Tested on data I did not pick</h2>
 
   <p><em>The benchmark run described here is from 21 August 2026.</em></p>
 
-  <p>The failure this post is about — the model supplying from memory what retrieval did not give
-  it — is one I could not catch when I wrote this. So I built checks for its two most common shapes &#8212; causal wording that the retrieved estimate cannot support, and clinical-status wording (approved, in trials, on the market) that no retrieved record backs &#8212; and then went looking for the failure somewhere I had not chosen the data.</p>
+  <p>I could not catch this failure when I first wrote about it. So I built checks for its
+  two most common shapes: causal wording the retrieved estimate cannot support, and
+  clinical-status wording &#8212; approved, in trials, on the market &#8212; that no retrieved
+  record backs. Then I went looking for it in data I had not chosen.</p>
 
   <p>I scored the agent against twenty target–indication pairs sampled from
   <a href="https://doi.org/10.1038/s41586-024-07316-0" target="_blank" rel="noopener">Minikel et al.,
@@ -518,18 +535,23 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
     failure again, and this time the system noticed instead of me.</strong></p>
   </div>
 
-  <p>The verdicts themselves held up better than I expected: every GO the agent issued was a drug
-  that launched, and it backed none of the ten failures. I am not claiming that as a result —
-  n is twenty, and an audit of the run showed part of that precision depends on leftover clinical signal: the Open Targets association score includes every evidence type, clinical records among them, so switching off the clinical tool does not fully remove approval history from the inputs. I am claiming something
-  smaller and, to me, more useful: <strong>every error was a refusal to answer, never a wrong answer.</strong> When the
-  evidence was thin, the agent said &#8220;not enough&#8221; instead of guessing.</p>
+  <p>The verdicts held up better than I expected: every GO was a drug that launched, and none
+  of the ten failures was backed. I am not claiming that as a result. n is twenty, and auditing
+  the run showed part of that precision depends on leftover clinical signal &#8212; the Open
+  Targets association score includes every evidence type, clinical records among them, so
+  switching off the clinical tool does not fully remove approval history.</p>
+
+  <p>The smaller claim is the useful one: <strong>every error was a refusal to answer, never a
+  wrong answer.</strong> When evidence was thin, the agent said &#8220;not enough&#8221; instead
+  of guessing.</p>
 
   <h2 id="phase3">The pharmacology was right, and it still did not work</h2>
 
-  <p>Everything above turns on one move — the model reached past what it had retrieved, supplied the shedding biology from memory, and was correct. I have been treating that
-  as a near miss: right this time, wrong eventually.</p>
+  <p>The model reached past its retrieval, supplied the shedding biology from memory, and
+  was correct. I had been calling that a near miss &#8212; right this time, wrong
+  eventually.</p>
 
-  <p>It is worse than that, and the timeline below is what happened to the pathway that card backed.</p>
+  <p>It was worse than that.</p>
 
   <figure>
     <picture>
@@ -541,32 +563,36 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
     The phase 3 result did not follow.</figcaption>
   </figure>
 
-  <p>The event itself, stated plainly: in 2026, ziltivekimab &#8212; an antibody that
-  blocks IL-6, the signal this receptor receives &#8212; missed its primary endpoint in
-  ZEUS, a phase 3 heart-outcomes trial. Major cardiac events were not reduced (hazard
-  ratio 0.99).</p>
+  <p>In 2026, ziltivekimab &#8212; an antibody blocking IL-6, the signal this receptor
+  receives &#8212; missed its primary endpoint in ZEUS, a phase 3 heart-outcomes trial.
+  Major cardiac events were not reduced: hazard ratio 0.99.</p>
 
-  <p>Two limits keep this a finding rather than a headline. Ziltivekimab targets <strong>IL-6, the ligand</strong> — one step
+  <p>Two limits, before anyone over-reads this. Ziltivekimab targets <strong>IL-6, the
+  ligand</strong> — one step
   upstream of the receptor the card was actually about — and ZEUS enrolled patients with
   atherosclerotic disease <em>and</em> chronic kidney disease, not the general coronary
   population the MR estimate describes. And a missed endpoint announced by press release is
   not a published trial. So this is evidence against the pathway, not proof that the card
   was wrong.</p>
 
-  <p>But it is enough to make the point sharper than I could when I first drafted this.
-  <strong>The remembered answer was not just unsupported by the retrieval &#8212; it did not
-  even stay true.</strong> The mechanism was real and the target was engaged: hsCRP, the standard blood marker of IL-6-driven inflammation, fell exactly as the biology said it should. And the outcome still did not move. If the field's own consensus
-  can be that far from the trial result, then a pipeline that stays silent and lets the reader
-  fill the gap from memory is not borrowing a safe fact. It is borrowing a bet.</p>
+  <p>It still sharpens the point. <strong>The remembered answer was not just unsupported by
+  the retrieval &#8212; it did not stay true.</strong> The mechanism was real and the target
+  was engaged: hsCRP, the blood marker of IL-6-driven inflammation, fell exactly as the
+  biology predicted. The outcome did not move.</p>
 
-  <p>That is the whole argument for making the silence visible. A card that prints
+  <p>If the field&#8217;s own consensus can sit that far from the trial result, a pipeline
+  that stays silent and lets the reader fill the gap from memory is not borrowing a safe
+  fact. It is borrowing a bet.</p>
+
+  <p>Making the silence visible is the whole argument. A card that prints
   <code>Steiger / coloc / LD → NA / NA / NA</code> and refuses the causal sentence is not being fussy; it is refusing to make that bet on the reader&#8217;s behalf.</p>
 
-  <p>The code, the 62 regression tests that hold the validator's rules in place, and the audit are open, in the repo built during the CABS
-  2026 data science internship. The MR estimates throughout are <em>retrieved</em>: the exposure
-  side comes from EpiGraphDB's pQTL resource (Zheng et al., <em>Nature Genetics</em> 2020) and the
-  outcome side from separate published GWAS. This agent computes no causal inference of its own,
-  which is exactly why getting the interpretation right matters so much.</p>
+  <p>The code, the 62 regression tests holding the validator&#8217;s rules in place, and the
+  audit are open, in the repo built during the CABS 2026 data science internship. Every MR
+  estimate here is <em>retrieved</em> &#8212; exposures from EpiGraphDB&#8217;s pQTL resource
+  (Zheng et al., <em>Nature Genetics</em> 2020), outcomes from published GWAS. The agent
+  computes no causal inference of its own, which is why reading it correctly matters so
+  much.</p>
 
   <p><em>Thanks to the CABS 2026 cohort for the arguments that shaped this — including the one
   that made me go back and check whether the sign was really inverted at all.</em></p>
