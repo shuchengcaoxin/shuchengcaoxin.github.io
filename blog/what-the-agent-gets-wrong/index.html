@@ -5,15 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Building an AI agent that can&#8217;t fake drug-target evidence — Shucheng (Bangli) Cao</title>
-<meta name="description" content="The scariest failure was not a made-up number. It was a correct conclusion that nothing the agent had retrieved supported — every check came back clean, and every expert who read it nodded.">
+<meta name="description" content="The most dangerous failure was not a made-up number. It was a correct conclusion that nothing the agent had retrieved supported — every check came back clean, and every expert who read it nodded.">
 <link rel="canonical" href="https://shuchengcaoxin.github.io/blog/what-the-agent-gets-wrong/">
 
 <meta property="og:type" content="article">
 <meta property="og:title" content="Building an AI agent that can&#8217;t fake drug-target evidence">
-<meta property="og:description" content="The scariest failure was not a made-up number. It was a correct conclusion that nothing the agent had retrieved supported.">
+<meta property="og:description" content="The most dangerous failure was not a made-up number. It was a correct conclusion that nothing the agent had retrieved supported.">
 <meta property="og:url" content="https://shuchengcaoxin.github.io/blog/what-the-agent-gets-wrong/">
 <meta property="og:image" content="https://shuchengcaoxin.github.io/assets/blog/il6r-card.jpg">
-<meta property="article:published_time" content="2026-08-17">
+<meta property="article:published_time" content="2026-08-28">
 <meta name="twitter:card" content="summary_large_image">
 
 <style>
@@ -169,8 +169,8 @@ h2{scroll-margin-top:64px}
 
   <div class="kicker">Engineering</div>
   <h1>Building an AI agent that can&#8217;t fake drug-target evidence</h1>
-  <p class="standfirst">The scariest failure was not a made-up number. It was a correct answer that nothing the agent had retrieved supported &#8212; every check came back clean, and every expert who read it nodded. This is how I learned to catch it.</p>
-  <p class="byline">17 August 2026 · <span id="rt">11 min read</span></p>
+  <p class="standfirst">The most dangerous failure was not a made-up number. It was a correct answer that nothing the agent had retrieved supported &#8212; every check came back clean, and every expert who read it nodded. This is how I learned to catch it.</p>
+  <p class="byline">28 August 2026 · <span id="rt">11 min read</span></p>
 
   <h2 id="why">What this agent does, and why people want AI to do it</h2>
 
@@ -199,31 +199,30 @@ h2{scroll-margin-top:64px}
     <ul>
       <li>The failure that mattered <strong>was not a hallucination</strong>. It was a true sentence
       that nothing the pipeline had retrieved supported.</li>
-      <li>My guardrails caught none of it. 41 adversarial agents surfaced 18 real defects;
-      <strong>my validator's recall against them was zero.</strong></li>
+      <li>My guardrails caught none of it: 41 adversarial agents surfaced 18 real defects, and
+      <strong>my validator's recall against them was zero</strong>.</li>
       <li>A high pass rate turned out to measure caution, not accuracy — the model learned to
       pass by asserting almost nothing.</li>
       <li>The check I built afterwards caught the same failure twice, on twenty
       target–indication pairs whose outcomes history had already settled.</li>
-      <li>And the pathway that card backed <strong>failed its phase 3 trial this
-      year</strong>. The remembered answer was not just unsupported &#8212; it did not even stay true.</li>
+      <li>The pathway that card backed then <strong>failed its phase 3 trial this year</strong>. The remembered answer was not just unsupported &#8212; it did not even stay true.</li>
     </ul>
   </div>
 
   <nav class="toc" aria-label="Contents">
     <div class="h">Contents</div>
     <ol>
-      <li><a href="#why">What this agent does</a></li>
+      <li><a href="#why">What this agent does, and why people want AI to do it</a></li>
       <li><a href="#lessons">What I learned</a></li>
       <li><a href="#product">What it ships</a></li>
-      <li><a href="#design">How it works</a></li>
+      <li><a href="#design">How it works: the model writes as little as possible</a></li>
       <li><a href="#attack">How hard it was attacked</a></li>
-      <li><a href="#case">The full story: IL6R</a></li>
+      <li><a href="#case">The case: IL6R &#215; coronary heart disease</a></li>
       <li><a href="#right">Why the card was right</a></li>
       <li><a href="#measurable">The part I could measure</a></li>
-      <li><a href="#vanity">Why 10/10 meant nothing</a></li>
-      <li><a href="#external">Tested on data I didn&#8217;t pick</a></li>
-      <li><a href="#phase3">The phase 3 result</a></li>
+      <li><a href="#vanity">Why a perfect pass rate meant nothing</a></li>
+      <li><a href="#external">Tested on data I did not pick</a></li>
+      <li><a href="#phase3">The pharmacology was right, and it still did not work</a></li>
     </ol>
   </nav>
 
@@ -231,7 +230,7 @@ h2{scroll-margin-top:64px}
 
   <ol>
     <li><strong>"The model was right" is not the same as "the pipeline supported it."</strong>
-    Track the second one. The first will keep being true until it suddenly isn't, and you will
+    Track the second one, because the first will keep being true until it suddenly isn't, and you will
     have built no way to notice.</li>
     <li><strong>An estimate existing is not an estimate being validated.</strong> If your sources
     carry sanity checks, make the language your system is allowed to use depend on them.</li>
@@ -330,12 +329,11 @@ h2{scroll-margin-top:64px}
 
   <p class="srcnote">MR &#8212; Mendelian randomization &#8212; uses genetic variants as natural
   experiments to ask whether a molecule <em>causes</em> a disease rather than tracking it. It is
-  the only one of the nine that speaks to causality, which is why the rest of this post is
-  mostly about that box.</p>
+  the only one of the nine that speaks to causality, which is why most of this post is about it.</p>
 
-  <p><strong>Now the part that fights hallucination.</strong> Having nine good sources does
-  nothing on its own: the model still has to turn them into a page, and that is the step where
-  it can write past them. So the design gives it as little of that step as possible.</p>
+  <p><strong>Nine good sources do nothing on their own.</strong> The model still has to turn
+  them into a page, and that is the step where it can write past them &#8212; so the design
+  gives the model as little of that step as possible.</p>
 
   <p>Tool outputs are captured verbatim. The evidence table, the caveats, the sources and the
   provenance footer are rendered mechanically from them. The model writes exactly two
@@ -356,10 +354,9 @@ h2{scroll-margin-top:64px}
 
   <h2 id="attack">How hard it was attacked</h2>
 
-  <p>Every version of this system has been shipped, attacked, and shipped again. The attack
-  that mattered: 41 adversarial agents across four critic lenses, every claim re-checked by an
-  independent second agent before it counted. 86 claimed, 27 survived the re-check,
-  <strong>18 confirmed distinct defects</strong>.</p>
+  <p>Every version of this system has been shipped, attacked, and shipped again. The attack that mattered used 41 adversarial agents across four critic lenses, with
+  every claim re-checked by an independent second agent before it counted: 86 claimed,
+  27 survived the re-check, and <strong>18 were confirmed as distinct defects</strong>.</p>
 
   <figure>
     <picture>
@@ -370,8 +367,8 @@ h2{scroll-margin-top:64px}
     independent agent fails to knock the claim down.</figcaption>
   </figure>
 
-  <p><strong>My validator's recall against those 18 was zero.</strong> Every check I had
-  written was necessary. None of them covered the failures that mattered.</p>
+  <p><strong>My validator's recall against those 18 was zero.</strong> Every check I had written was necessary, and none of them covered
+  the failures that mattered.</p>
 
   <p><em>Everything below is the engineering story behind those numbers &#8212; the failure
   that taught me the most, the fix, and the external test. It is for the reader who wants the
@@ -397,8 +394,7 @@ ld_check              null</code></pre>
 
   <p>My first reading was that this was backwards. The exposure in that resource is <em>plasma
   IL6R protein level</em>. A negative beta says genetically <strong>higher</strong> IL6R protein
-  goes with <strong>less</strong> coronary heart disease — so, I reasoned, the data licenses a
-  claim about raising the target, and the card recommended inhibiting it.</p>
+  goes with <strong>less</strong> coronary heart disease — so, I reasoned, the data supports a claim about raising the target, and the card recommended inhibiting it.</p>
 
   <p>That reading was wrong, and the way it was wrong is the point of this post.</p>
 
@@ -414,7 +410,7 @@ ld_check              null</code></pre>
   They are the same statement, once you know that the measured plasma species is a shed decoy
   rather than the signalling receptor.</p>
 
-  <p>The card had it right. And <strong>not one field it retrieved contained that
+  <p>The card had it right &#8212; and <strong>not one field it retrieved contained that
   mechanism.</strong> The model supplied it from memory, and happened to be correct.</p>
 
   <p>That is the failure mode I now worry about most: not a hallucinated fact, but a
@@ -422,8 +418,8 @@ ld_check              null</code></pre>
   because the sentence is true. The reviewer fills the gap from their own memory, exactly as the
   model did, and the reader's own expertise hides the pipeline's silence.</p>
 
-  <p>Next time the remembered answer will be stale, or wrong, or right for a different protein.
-  Nothing in the system can tell the difference.</p>
+  <p>Next time the remembered answer will be stale, or wrong, or right for a different protein, and nothing in the system will be able to tell the
+  difference.</p>
 
   <h2 id="measurable">The part I could measure</h2>
 
@@ -437,7 +433,7 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
   a causal effect from linkage disequilibrium with a neighbouring gene, or from reverse
   causation.</p>
 
-  <p><strong>Both cards used the same strength of language.</strong> "Supports a causal role",
+  <p><strong>Both cards used the same strength of language</strong> &#8212; "Supports a causal role",
   in both.</p>
 
   <p>That is a defect you can encode, so I did. The validator now fails any run that uses causal
@@ -484,15 +480,14 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
   progress actually looks like.</strong></p>
 
   <p>So the pipeline now reports <strong>claim density</strong> — checkable tokens per 100 words
-  of reasoning — beside the pass rate. Neither means much alone. Together they say something
-  real: how much did it claim, and how much of that held up? The run as this was written: 8/10
+  of reasoning — beside the pass rate. Neither means much alone; together they answer the real question: how much did it claim, and how much of that held up? The run as this was written: 8/10
   passed, 2 checkable tokens across 842 words, 0.20 per 100 words. That is worse than the run
   before it, and reporting it is the point.</p>
 
 
   <h2 id="external">Tested on data I did not pick</h2>
 
-  <p><em>Added 28 August 2026. The benchmark run described here is from 21 August.</em></p>
+  <p><em>The benchmark run described here is from 21 August 2026.</em></p>
 
   <p>The failure this post is about — the model supplying from memory what retrieval did not give
   it — is one I could not catch when I wrote this. So I built a check for it, and then went
@@ -525,7 +520,7 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
   supplied the shedding mechanism from memory, and was correct. I have been treating that
   as a near miss: right this time, wrong eventually.</p>
 
-  <p>It is worse than that. Here is what happened to the pathway that card backed.</p>
+  <p>It is worse than that, and the timeline below is what happened to the pathway that card backed.</p>
 
   <figure>
     <picture>
@@ -537,24 +532,22 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
     The phase 3 result did not follow.</figcaption>
   </figure>
 
-  <p>Two caveats before anyone over-reads this, because they are the difference between a
-  finding and a headline. Ziltivekimab targets <strong>IL-6, the ligand</strong> — one step
+  <p>Two caveats keep this a finding rather than a headline. Ziltivekimab targets <strong>IL-6, the ligand</strong> — one step
   upstream of the receptor the card was actually about — and ZEUS enrolled patients with
   atherosclerotic disease <em>and</em> chronic kidney disease, not the general coronary
   population the MR estimate describes. And a missed endpoint announced by press release is
   not a published trial. So this is evidence against the pathway, not proof that the card
   was wrong.</p>
 
-  <p>But it is enough to make the point sharper than I could make it in August.
+  <p>But it is enough to make the point sharper than I could when I first drafted this.
   <strong>The remembered answer was not merely unsupported by the retrieval &#8212; it did not
   even stay true.</strong> The mechanism was real, the target was engaged, hsCRP fell exactly
   as the biology said it should — and the outcome did not move. If the field's own consensus
   can be that far from the trial result, then a pipeline that stays silent and lets the reader
   fill the gap from memory is not borrowing a safe fact. It is borrowing a bet.</p>
 
-  <p>Which is the whole argument for making the silence visible. A card that prints
-  <code>Steiger / coloc / LD → NA / NA / NA</code> and refuses the causal sentence is not
-  being pedantic. It is declining to make that bet on the reader's behalf.</p>
+  <p>That is the whole argument for making the silence visible. A card that prints
+  <code>Steiger / coloc / LD → NA / NA / NA</code> and refuses the causal sentence is not being pedantic; it is declining to make that bet on the reader's behalf.</p>
 
   <p>The code, the 62 regression tests and the audit are open, in the repo built during the CABS
   2026 data science internship. The MR estimates throughout are <em>retrieved</em>: the exposure
