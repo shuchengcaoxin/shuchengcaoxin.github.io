@@ -450,6 +450,9 @@ h1 .cn { color: var(--ink-faint); font-size: .38em; letter-spacing: .03em; white
   border-bottom: 1px solid var(--rule);
 }
 
+.work-item[id],
+.publications li[id] { scroll-margin-top: 90px; }
+
 .work-meta { color: var(--ink-faint); }
 .work-meta strong { display: block; margin-bottom: 5px; color: var(--rust); font-weight: 600; }
 
@@ -461,6 +464,8 @@ h1 .cn { color: var(--ink-faint); font-size: .38em; letter-spacing: .03em; white
   font-size: 14px;
   font-weight: 600;
 }
+
+.work-status { color: var(--ink-faint); font-weight: 500; }
 
 .artifact {
   margin: 28px 0 0;
@@ -520,6 +525,16 @@ h1 .cn { color: var(--ink-faint); font-size: .38em; letter-spacing: .03em; white
 
 .pub-cite { display: block; margin-top: 5px; color: var(--ink-soft); font-size: 14px; }
 .me { color: var(--ink); font-weight: 700; }
+
+.pub-related {
+  display: block;
+  margin-top: 8px;
+  color: var(--ink-faint);
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
 
 .all-pubs { margin: 24px 0 0; font-size: 15px; }
 
@@ -655,8 +670,7 @@ footer {
 <header class="site-header shell">
   <a class="wordmark" href="#top" aria-label="Shucheng Cao, home">Shucheng Cao</a>
   <nav aria-label="Primary navigation">
-    <a href="#methods">methods</a>
-    <a href="#work">applications</a>
+    <a href="#work">work</a>
     <a href="#papers">papers</a>
     <a href="#notes">notes</a>
     <a href="assets/pdf/CV_EN.pdf" target="_blank" rel="noopener">cv ↗</a>
@@ -693,62 +707,30 @@ footer {
     </figure>
   </section>
 
-  <section id="methods" class="section" aria-labelledby="methods-title">
-    <p class="section-label"><span>01</span> Methods</p>
-    <div>
-      <h2 id="methods-title">The transferable core</h2>
-      <p class="section-intro">The methods come first—they are what transfers. Genetics, medicine, and molecular science are where I have tested them most deeply so far.</p>
-
-      <div class="now-grid">
-        <article class="now-item">
-          <p class="note-meta">Inference</p>
-          <h3>Causal inference from observational data</h3>
-          <p>I use natural experiments, instrumental-variable designs, replication, and sensitivity analysis to distinguish signals that may support decisions from associations that only look persuasive.</p>
-        </article>
-
-        <article class="now-item">
-          <p class="note-meta">Scale</p>
-          <h3>Statistical modelling at scale</h3>
-          <p>I build reproducible R and Python pipelines for high-dimensional data, where harmonisation, multiple-testing control, parallel computation on HPC, and explicit diagnostics matter as much as fitting the model itself.</p>
-        </article>
-
-        <article class="now-item">
-          <p class="note-meta">Evaluation</p>
-          <h3>Machine learning under distribution shift</h3>
-          <p>I turn raw data into reproducible PyTorch benchmarks, then test whether models retain performance outside familiar datasets—with explicit checks for leakage, distribution shift, random-seed sensitivity, and class imbalance.</p>
-        </article>
-
-        <article class="now-item">
-          <p class="note-meta">Systems</p>
-          <h3>Auditable AI and evidence pipelines</h3>
-          <p>I build research systems that preserve source provenance, separate retrieved evidence from generated interpretation, and expose unsupported claims rather than hiding them.</p>
-        </article>
-      </div>
-
-      <p class="working-note"><strong>A working rule</strong>If I cannot reconstruct the inputs, transformations, assumptions, validation checks, and failure modes behind a result, I do not regard it as finished. That rule applies to statistical analyses, machine-learning evaluations, and AI-assisted systems.</p>
-    </div>
-  </section>
-
   <section id="work" class="section" aria-labelledby="work-title">
-    <p class="section-label"><span>02</span> Applications</p>
+    <p class="section-label"><span>01</span> Selected work</p>
     <div>
-      <h2 id="work-title">Where I apply it</h2>
-      <p class="section-intro">Across these projects, the domain is the test bed—not the identity. I start with a computational question, build a reproducible system, measure what survives validation, and only then translate the result into a domain decision.</p>
+      <h2 id="work-title">Problems, systems, evidence</h2>
+      <p class="section-intro">The projects below began with different practical questions: which targets are causal, which AI claims are supported, whether a benchmark is trustworthy, whether a model will generalize, and which molecular mechanism should guide design. Each required a different method, but the same standard: make the result testable and useful to the next decision.</p>
 
       <div class="work-list">
-        <article class="work-item">
+        <article id="project-causal" class="work-item">
           <p class="work-meta"><strong>01</strong> Statistical inference<br>McGill</p>
           <div>
-            <h3>Signal selection under multiple testing</h3>
-            <p>To separate reproducible signal from high-dimensional noise, I built an end-to-end R/HPC pipeline over more than 790,000 samples, combining causal inference, multiple-testing control, colocalization, and replication across two independent measurement platforms. It reduced thousands of protein candidates to four high-confidence targets; metabolic liver disease is the current application.</p>
+            <h3>Causal targets for metabolic liver disease</h3>
+            <p>Many protein–disease associations do not survive checks for confounding, multiple testing, or changes in measurement platform. I built an R/HPC pipeline across more than 790,000 samples that estimates causal effects, tests colocalization, and requires replication on two independent proteomic platforms. Thousands of candidates narrowed to four high-confidence targets. The result gives drug-discovery teams a shorter, human-genetics-supported list to investigate instead of prioritizing proteins from association alone.</p>
+            <div class="work-links">
+              <span class="work-status">MASLD manuscript submitted</span>
+              <a href="#pub-causal">Related causal-inference paper ↓</a>
+            </div>
           </div>
         </article>
 
-        <article class="work-item">
+        <article id="project-opencausal" class="work-item">
           <p class="work-meta"><strong>02</strong> Applied AI<br>CABS 2026</p>
           <div>
-            <h3>Ledger-gated AI for evidence synthesis</h3>
-            <p>To keep an LLM from outrunning its evidence, I architected and shipped a Python/Streamlit system with nine tools across eight public databases. An append-only provenance ledger, deterministic rendering, claim validators, 62 offline regression tests, and a 10-pair benchmark make unsupported output visible. The same tool layer now serves 991 dossiers indexing 101,543 published estimates; drug-target prioritization is the application.</p>
+            <h3>Evidence-grounded LLM for drug-target prioritization</h3>
+            <p>Biomedical LLMs can produce fluent conclusions that are not supported by the evidence they retrieved. I architected and shipped OpenCausal, a Python/Streamlit system spanning eight public databases, with an append-only provenance ledger, deterministic report rendering, and claim validators. Sixty-two regression tests expose unsupported output before release. The same tool layer now serves 991 dossiers built from 101,543 published estimates, giving scientists an auditable starting point for drug-target prioritization.</p>
             <div class="work-links">
               <a href="https://github.com/ds4cabs/CausalSentinel" target="_blank" rel="noopener">Code and methods</a>
               <a href="https://ds4cabs.github.io/CausalSentinel/viewer/" target="_blank" rel="noopener">Card viewer</a>
@@ -762,58 +744,65 @@ footer {
           </div>
         </article>
 
-        <article class="work-item">
+        <article id="project-gnn" class="work-item">
           <p class="work-meta"><strong>03</strong> Geometric deep learning<br>McGill</p>
           <div>
-            <h3>Leakage-free benchmarking from raw 3D data</h3>
-            <p>To produce a defensible baseline from messy geometric data, I built a PyTorch pipeline that converts raw neuron reconstructions into 1,024-point clouds and benchmarked a graph neural network across three datasets. The audit exposed a mapping bug affecting 1,247 of 1,279 samples; after leakage checks, stratified splits, five-seed evaluation, and deterministic training, the corrected model reached 80.1 ± 1.0% balanced accuracy on the six-class BICCN benchmark.</p>
+            <h3>A reproducible GNN benchmark for neuron classification</h3>
+            <p>Could a neuron's 3D shape identify its cell type, and could a new training-free method beat a strong deep-learning baseline? I reproduced MorphoGNN and built a PyTorch pipeline that converts raw SWC files into point clouds across three datasets. An audit uncovered a silent mapping bug affecting 97% of samples; after leakage checks, stratified splits, five seeds, and deterministic training, the corrected baseline reached 80.1 ± 1.0% balanced accuracy, making the method comparison defensible.</p>
+            <div class="work-links"><span class="work-status">AAAI manuscript submitted</span></div>
           </div>
         </article>
 
-        <article class="work-item">
+        <article id="project-ood" class="work-item">
           <p class="work-meta"><strong>04</strong> Model evaluation<br>IEEE TPAMI</p>
           <div>
-            <h3>Out-of-distribution evaluation across institutions</h3>
-            <p>To test whether strong benchmark performance survives deployment conditions, I helped build a 1,112-case, 12-hospital CT dataset and used cross-hospital evaluation to measure model degradation across scanners, protocols, and patient populations. Multi-organ segmentation is the application; the open dataset and toolkit are now used by more than 4,000 teams and were published in IEEE TPAMI.</p>
+            <h3>Can medical AI generalize across hospitals?</h3>
+            <p>Medical-imaging models often perform well on curated benchmarks but fail when hospitals, scanners, and protocols change. I helped build AbdomenCT-1K, a 1,112-case dataset from 12 hospitals, and used cross-hospital evaluation to measure how leading multi-organ segmentation models degraded outside their training distribution. The study made deployment risk measurable rather than assumed. It was published in IEEE TPAMI, and its open dataset and toolkit have since been used by more than 4,000 teams.</p>
+            <div class="work-links">
+              <a href="#pub-ood">Paper ↓</a>
+              <a href="https://github.com/JunMa11/AbdomenCT-1K" target="_blank" rel="noopener">Dataset and toolkit</a>
+            </div>
           </div>
         </article>
 
-        <article class="work-item">
+        <article id="project-simulation" class="work-item">
           <p class="work-meta"><strong>05</strong> Computational simulation<br>KAUST</p>
           <div>
-            <h3>Controlled simulation and quantitative ranking</h3>
-            <p>To isolate the dominant driver in a complex physical system, I ran controlled molecular-dynamics comparisons on Linux/HPC and built a quantitative ranking model from six novel peptide designs. The Python/Shell workflow challenged a 20+ year assumption and produced a computable shortlist for inhibitor design; Alzheimer’s-linked aggregation is the application.</p>
+            <h3>Simulation-guided design for an aggregation inhibitor</h3>
+            <p>What physical interaction drives ultrashort peptides to self-assemble, and can that mechanism guide an inhibitor for Alzheimer’s-linked aggregation? I ran controlled molecular-dynamics experiments on Linux/HPC, changing hydrophobicity and aromaticity separately, then built a quantitative ranking of new peptide designs. The results challenged a 20-year field assumption and produced the first proof-of-concept simulation for this inhibitor class, replacing trial-and-error with a computable shortlist for experimental testing.</p>
+            <div class="work-links"><a href="#pub-simulation">MSc thesis ↓</a></div>
           </div>
         </article>
       </div>
 
-      <p class="methods-line"><strong>Reusable capabilities:</strong> high-dimensional signal selection · causal and statistical inference · multiple-testing control · out-of-sample and out-of-distribution validation · leakage-free ML benchmarking · deterministic AI evaluation · data provenance · controlled simulation and quantitative ranking · Python, R, PyTorch, Shell, Linux/HPC</p>
-      <p class="methods-line"><strong>Experimental grounding:</strong> Earlier work building 3D tumour and humanized models taught me not to assume that a convenient label or proxy endpoint represents the real objective. That perspective now shapes how I design computational benchmarks and validation.</p>
+      <p class="working-note"><strong>A working rule</strong>I treat traceability as part of the result: another person should be able to reconstruct the inputs, assumptions, checks, and failure modes behind it.</p>
+      <p class="methods-line"><strong>Tools used across these projects:</strong> Python, R, PyTorch, Shell, and Linux/HPC.</p>
+      <p class="methods-line"><strong>Experimental grounding:</strong> Earlier, I built 3D tumour and humanized models to test whether drug responses seen in simplified assays survived in more realistic systems. That experience taught me to treat every computational metric as a proxy that must be checked against the real objective.</p>
     </div>
   </section>
 
   <section id="papers" class="section" aria-labelledby="papers-title">
-    <p class="section-label"><span>03</span> Papers</p>
+    <p class="section-label"><span>02</span> Publications</p>
     <div>
-      <h2 id="papers-title">Selected publications</h2>
-      <p class="section-intro">My publications span molecular simulation, medical imaging, translational research, and statistical genetics; the common thread is quantitative modelling and rigorous evaluation.</p>
+      <h2 id="papers-title">Papers behind the work</h2>
+      <p class="section-intro">These are the durable outputs of the questions above: a human-genetics study for target prioritization, an open benchmark for clinical-AI robustness, a 3D platform for drug screening, and a simulation framework for molecular design.</p>
 
       <ol class="publications">
-        <li>
+        <li id="pub-causal">
           <span class="pub-year">2026</span>
-          <span><a class="pub-title" href="https://doi.org/10.1101/2025.09.23.25336398" target="_blank" rel="noopener">Disentangling osteoarthritis-specific genetic effects from obesity to identify novel therapeutic targets</a><span class="pub-cite">CY. Su, M. Hasebe, D. Tan, <span class="me">S. Cao</span>, et al., G. Butler-Laporte. <em>Nature Communications</em> — accepted; preprint available.</span></span>
+          <span><a class="pub-title" href="https://doi.org/10.1101/2025.09.23.25336398" target="_blank" rel="noopener">Disentangling osteoarthritis-specific genetic effects from obesity to identify novel therapeutic targets</a><span class="pub-cite">CY. Su, M. Hasebe, D. Tan, <span class="me">S. Cao</span>, et al., G. Butler-Laporte. <em>Nature Communications</em> — accepted; preprint available.</span><span class="pub-related"><a href="#project-causal">Related work: 01 · causal inference ↑</a></span></span>
         </li>
-        <li>
+        <li id="pub-experimental">
           <span class="pub-year">2023</span>
-          <span><a class="pub-title" href="https://doi.org/10.1002/advs.202302855" target="_blank" rel="noopener">A PDA-Functionalized 3D Lung Scaffold Bioplatform to Construct Complicated Breast Tumor Microenvironment for Anticancer Drug Screening and Immunotherapy</a><span class="pub-cite">W. Zhang, Y. Chen, M. Li, <span class="me">S. Cao</span>, et al. <em>Advanced Science</em>.</span></span>
+          <span><a class="pub-title" href="https://doi.org/10.1002/advs.202302855" target="_blank" rel="noopener">A PDA-Functionalized 3D Lung Scaffold Bioplatform to Construct Complicated Breast Tumor Microenvironment for Anticancer Drug Screening and Immunotherapy</a><span class="pub-cite">W. Zhang, Y. Chen, M. Li, <span class="me">S. Cao</span>, et al. <em>Advanced Science</em>.</span><span class="pub-related">Experimental grounding · proxy versus real response</span></span>
         </li>
-        <li>
+        <li id="pub-ood">
           <span class="pub-year">2022</span>
-          <span><a class="pub-title" href="https://doi.org/10.1109/TPAMI.2021.3100536" target="_blank" rel="noopener">AbdomenCT-1K: Is Abdominal Organ Segmentation a Solved Problem?</a><span class="pub-cite">J. Ma, <span class="me">S. Cao</span>, et al. <em>IEEE Transactions on Pattern Analysis and Machine Intelligence</em>.</span></span>
+          <span><a class="pub-title" href="https://doi.org/10.1109/TPAMI.2021.3100536" target="_blank" rel="noopener">AbdomenCT-1K: Is Abdominal Organ Segmentation a Solved Problem?</a><span class="pub-cite">J. Ma, <span class="me">S. Cao</span>, et al. <em>IEEE Transactions on Pattern Analysis and Machine Intelligence</em>.</span><span class="pub-related"><a href="#project-ood">Related work: 04 · OOD evaluation ↑</a></span></span>
         </li>
-        <li>
+        <li id="pub-simulation">
           <span class="pub-year">2022</span>
-          <span><span class="pub-title">MD simulations of amphiphilic ultrashort peptide self-assembly</span><span class="pub-cite"><span class="me">S. Cao</span>. MSc thesis, KAUST — ranked among the university's top ten theses of the year.</span></span>
+          <span><span class="pub-title">MD simulations of amphiphilic ultrashort peptide self-assembly</span><span class="pub-cite"><span class="me">S. Cao</span>. MSc thesis, KAUST — ranked among the university's top ten theses of the year.</span><span class="pub-related"><a href="#project-simulation">Related work: 05 · controlled simulation ↑</a></span></span>
         </li>
       </ol>
 
@@ -822,7 +811,7 @@ footer {
   </section>
 
   <section id="notes" class="section" aria-labelledby="notes-title">
-    <p class="section-label"><span>04</span> Notes</p>
+    <p class="section-label"><span>03</span> Notes</p>
     <div>
       <h2 id="notes-title">Writing and recent updates</h2>
       <div class="notes-grid">
@@ -845,7 +834,7 @@ footer {
   </section>
 
   <section id="contact" class="section" aria-labelledby="contact-title">
-    <p class="section-label"><span>05</span> Contact</p>
+    <p class="section-label"><span>04</span> Contact</p>
     <div>
       <h2 id="contact-title">Get in touch</h2>
       <p class="contact-copy">I am interested in quantitative research, applied AI, and research-engineering roles wherever model reliability and evidence quality matter—from finance and technology to bioinformatics and drug R&amp;D. My current domain experience is strongest in biomedicine. Email is the best way to reach me.</p>
