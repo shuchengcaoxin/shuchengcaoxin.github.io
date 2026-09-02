@@ -284,14 +284,29 @@ h1 .cn { color: var(--ink-faint); font-size: .38em; letter-spacing: .03em; white
 .hero-links a { font-weight: 600; }
 
 .availability {
-  margin: 30px 0 0;
-  padding-top: 18px;
-  border-top: 1px solid var(--rule);
-  color: var(--ink-soft);
-  font-size: 14px;
+  max-width: 680px;
+  margin: 28px 0 26px;
+  padding: 17px 20px 18px;
+  border-left: 3px solid var(--rust);
+  background: var(--accent-soft);
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", "Noto Serif SC", serif;
+  font-size: 18px;
+  line-height: 1.45;
 }
 
-.availability::before {
+.availability-label {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--rust);
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.availability-label::before {
   content: "";
   display: inline-block;
   width: 7px;
@@ -627,6 +642,10 @@ footer {
       <h1 id="page-title">Shucheng Cao <span class="cn">曹书诚</span></h1>
       <p class="published-name">Also known and published as <strong>Bangli Cao</strong></p>
       <p class="lead">My PhD asks which circulating proteins have a causal effect on metabolic disease.</p>
+      <aside class="availability" aria-label="Availability">
+        <span class="availability-label">Open to opportunities</span>
+        <strong>Graduating in 2027;</strong> available for 2026–27 internships and 2027 full-time roles.
+      </aside>
       <p>I am a Quantitative Life Sciences PhD candidate at McGill University. I mostly work with Mendelian randomization, colocalization, and large-scale GWAS and pQTL data. I also build research software when the evidence trail is difficult to inspect.</p>
 
       <div class="hero-links" aria-label="Profile links">
@@ -637,8 +656,6 @@ footer {
         <a href="https://www.linkedin.com/in/shucheng-bangli-cao" target="_blank" rel="me noopener">LinkedIn</a>
         <a href="assets/pdf/CV_EN.pdf" target="_blank" rel="noopener">CV</a>
       </div>
-
-      <p class="availability">Graduating in 2027; available for 2026–27 internships and 2027 full-time roles.</p>
     </div>
 
     <figure class="portrait">
