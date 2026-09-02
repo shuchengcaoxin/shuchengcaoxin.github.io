@@ -4,26 +4,24 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Shucheng (Bangli) Cao — Statistics &amp; machine learning for causal questions</title>
-<meta name="description" content="Shucheng (Bangli) Cao uses and builds statistical and machine learning methods for causal questions in large-scale human data — instrumental-variable and Bayesian inference, robustness evaluation of machine learning models, and LLM agents for auditable evidence. PhD candidate at McGill University, Montréal.">
+<title>Shucheng (Bangli) Cao — causal genetics and research software</title>
+<meta name="description" content="Shucheng (Bangli) Cao is a Quantitative Life Sciences PhD candidate at McGill University working in causal genetics, drug-target discovery, and auditable research software.">
 <meta name="author" content="Shucheng (Bangli) Cao">
 <link rel="canonical" href="https://shuchengcaoxin.github.io/">
 
-<!-- Link preview (LinkedIn / X / WeChat / Slack) -->
 <meta property="og:type" content="profile">
 <meta property="og:site_name" content="Shucheng (Bangli) Cao">
-<meta property="og:title" content="Shucheng (Bangli) Cao — Statistics &amp; machine learning for causal questions">
-<meta property="og:description" content="I use and build statistical and machine learning methods that separate correlation from causation in data on hundreds of thousands of people — and turn the answer into a decision.">
+<meta property="og:title" content="Shucheng (Bangli) Cao — causal genetics and research software">
+<meta property="og:description" content="PhD candidate at McGill studying the causal genetics of metabolic disease and building research tools whose evidence can be inspected.">
 <meta property="og:url" content="https://shuchengcaoxin.github.io/">
 <meta property="og:image" content="https://shuchengcaoxin.github.io/assets/img/og-card.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Shucheng (Bangli) Cao — Statistics &amp; machine learning for causal questions">
-<meta name="twitter:description" content="I use and build statistical and machine learning methods that separate correlation from causation in data on hundreds of thousands of people — and turn the answer into a decision.">
+<meta name="twitter:title" content="Shucheng (Bangli) Cao — causal genetics and research software">
+<meta name="twitter:description" content="Causal genetics, drug-target discovery, and research software that keeps the evidence visible.">
 <meta name="twitter:image" content="https://shuchengcaoxin.github.io/assets/img/og-card.png">
-
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+<meta name="theme-color" content="#f3f0e8">
 
 <script type="application/ld+json">
 {
@@ -34,7 +32,7 @@
   "url": "https://shuchengcaoxin.github.io/",
   "email": "mailto:shucheng.cao@mail.mcgill.ca",
   "jobTitle": "PhD Candidate in Quantitative Life Sciences",
-  "description": "Statistician and machine learning researcher working on causal inference in large-scale human data.",
+  "description": "Researcher in causal genetics, drug-target discovery, and auditable research software.",
   "affiliation": {
     "@type": "CollegeOrUniversity",
     "name": "McGill University",
@@ -48,15 +46,13 @@
   },
   "knowsAbout": [
     "Causal inference",
-    "Machine learning",
-    "Statistical modelling",
-    "Instrumental variable analysis",
-    "Bayesian methods",
-    "Biostatistics",
     "Mendelian randomization",
+    "Colocalization",
     "Statistical genetics",
     "Genome-wide association studies",
-    "Drug target discovery"
+    "Proteomics",
+    "Drug target discovery",
+    "Research software"
   ],
   "sameAs": [
     "https://scholar.google.com/citations?user=q1cAyE0AAAAJ",
@@ -67,470 +63,688 @@
 </script>
 
 <style>
-:root{
-  --bg:#fcfcfa;
-  --bg-soft:#f4f4f0;
-  --card:#ffffff;
-  --ink:#16191c;
-  --ink-2:#4a5158;
-  --ink-3:#767d85;
-  --line:#e3e3dd;
-  --accent:#0d6e68;
-  --accent-soft:#e6f2f1;
-  --accent-ink:#0a5450;
-  --amber:#b45309;
-  --amber-soft:#fdf3e3;
-  /* one column edge for the whole page — every block lines up against this */
-  --maxw:900px;
+:root {
+  color-scheme: light;
+  --paper: #f3f0e8;
+  --paper-deep: #ebe7dc;
+  --surface: #fbfaf6;
+  --ink: #1e2521;
+  --ink-soft: #565d57;
+  --ink-faint: #777b75;
+  --rule: #cbc7bb;
+  --accent: #23594c;
+  --accent-soft: #dfe8e2;
+  --rust: #94513f;
+  --max-width: 1060px;
 }
-@media (prefers-color-scheme: dark){
-  :root{
-    --bg:#0f1113;
-    --bg-soft:#161a1d;
-    --card:#161a1d;
-    --ink:#e9e8e4;
-    --ink-2:#adb4ba;
-    --ink-3:#828a92;
-    --line:#272c31;
-    --accent:#5fb9b2;
-    --accent-soft:#14302e;
-    --accent-ink:#8ad3cd;
-    --amber:#e0a760;
-    --amber-soft:#2c2115;
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --paper: #171b19;
+    --paper-deep: #1d231f;
+    --surface: #202622;
+    --ink: #ece9e1;
+    --ink-soft: #b9bcb5;
+    --ink-faint: #92978f;
+    --rule: #3c433e;
+    --accent: #83b8a5;
+    --accent-soft: #253c34;
+    --rust: #d2917c;
   }
 }
-*{box-sizing:border-box}
-html{scroll-behavior:smooth; scroll-padding-top:70px; -webkit-text-size-adjust:100%}
-body{
-  margin:0;
-  background:var(--bg);
-  color:var(--ink);
-  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Inter","Helvetica Neue",Arial,
-    "PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
-  font-size:17px;
-  line-height:1.65;
-  -webkit-font-smoothing:antialiased;
-}
-a{color:var(--accent-ink); text-decoration:none; border-bottom:1px solid transparent; transition:border-color .15s,color .15s}
-a:hover{border-bottom-color:currentColor}
-.wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px}
 
-/* ---------- sticky mini nav ---------- */
-.topbar{
-  position:sticky; top:0; z-index:50;
-  background:color-mix(in srgb, var(--bg) 88%, transparent);
-  backdrop-filter:saturate(180%) blur(12px);
-  -webkit-backdrop-filter:saturate(180%) blur(12px);
-  border-bottom:1px solid var(--line);
-}
-.topbar .wrap{display:flex; align-items:center; gap:20px; height:52px}
-.topbar .who{font-weight:640; font-size:15px; letter-spacing:-.01em; white-space:nowrap}
-.topbar nav{margin-left:auto; display:flex; gap:18px; overflow-x:auto; scrollbar-width:none}
-.topbar nav::-webkit-scrollbar{display:none}
-.topbar nav a{
-  font-size:14px; color:var(--ink-2); border:0; white-space:nowrap; font-weight:500;
-}
-.topbar nav a:hover{color:var(--accent-ink)}
-@media (max-width:620px){ .topbar .who{display:none} .topbar nav{margin-left:0} }
+* { box-sizing: border-box; }
 
-/* ---------- hero ---------- */
-header.hero{padding:60px 0 8px}
-.hero-top{display:flex; gap:28px; align-items:flex-start}
-.hero-text{flex:1; min-width:0}
-.name{
-  font-size:clamp(30px,5.2vw,42px); line-height:1.12; margin:0 0 4px;
-  letter-spacing:-.025em; font-weight:700;
-}
-.name .cn{font-size:.56em; font-weight:500; color:var(--ink-3); letter-spacing:.02em; margin-left:.45em; white-space:nowrap}
-.tagline{
-  font-size:clamp(18px,2.6vw,21px); line-height:1.4; color:var(--ink);
-  margin:14px 0 12px; font-weight:560; letter-spacing:-.012em;
-}
-.tagline em{color:var(--accent-ink); font-style:normal}
-.affil{color:var(--ink-2); font-size:15.5px; margin:0}
-.affil strong{color:var(--ink); font-weight:600}
-
-/* avatar with graceful monogram fallback */
-.avatar{
-  flex:0 0 132px; width:132px; height:132px; border-radius:14px; overflow:hidden;
-  background:linear-gradient(145deg,var(--accent) 0%, var(--accent-ink) 100%);
-  display:grid; place-items:center; box-shadow:0 1px 3px rgba(0,0,0,.10);
-}
-.avatar img{width:100%; height:100%; object-fit:cover; display:block}
-.avatar .mono{color:#fff; font-size:44px; font-weight:600; letter-spacing:.02em}
-@media (max-width:620px){
-  .hero-top{flex-direction:column-reverse; align-items:flex-start; gap:20px}
-  .avatar{flex-basis:96px; width:96px; height:96px}
-  .avatar .mono{font-size:32px}
-  header.hero{padding-top:36px}
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 24px;
+  -webkit-text-size-adjust: 100%;
 }
 
-/* status */
-.status{
-  display:flex; gap:11px; align-items:flex-start;
-  background:var(--amber-soft); border:1px solid color-mix(in srgb,var(--amber) 28%,transparent);
-  border-radius:10px; padding:12px 15px; margin:24px 0 0; font-size:15px; color:var(--ink);
-}
-.status .dot{
-  flex:0 0 8px; width:8px; height:8px; border-radius:50%; background:var(--amber);
-  margin-top:8px; box-shadow:0 0 0 3px color-mix(in srgb,var(--amber) 22%,transparent);
-}
-.status b{font-weight:640}
-
-/* links row */
-.links{display:flex; flex-wrap:wrap; gap:8px; margin:22px 0 0}
-.links a{
-  display:inline-flex; align-items:center; gap:6px;
-  font-size:14.5px; font-weight:520; color:var(--ink-2);
-  border:1px solid var(--line); border-radius:8px; padding:6px 12px; background:var(--card);
-}
-.links a:hover{color:var(--accent-ink); border-color:var(--accent); background:var(--accent-soft)}
-.links a svg{width:15px; height:15px; flex:0 0 15px}
-
-/* short bio + a plain facts line (no dashboard) */
-.bio{color:var(--ink-2); font-size:16.5px; line-height:1.62; margin:26px 0 0}
-.facts{color:var(--ink-3); font-size:14.5px; margin:14px 0 0}
-
-/* ---------- sections ---------- */
-section{padding:52px 0 0}
-h2{
-  font-size:13px; text-transform:uppercase; letter-spacing:.1em; font-weight:680;
-  color:var(--ink-3); margin:0 0 20px; display:flex; align-items:center; gap:12px;
-}
-h2::after{content:""; flex:1; height:1px; background:var(--line)}
-.lede{color:var(--ink-2); font-size:16px; margin:-8px 0 24px}
-
-/* news */
-.news{list-style:none; padding:0; margin:0}
-.news li{
-  display:flex; gap:16px; padding:13px 0; border-bottom:1px solid var(--line);
-  font-size:16px; line-height:1.55;
-}
-.news li:last-child{border-bottom:0}
-.news time{
-  flex:0 0 92px; color:var(--ink-3); font-size:13.5px; font-variant-numeric:tabular-nums;
-  padding-top:3px; font-weight:520;
-}
-.news .body{flex:1; min-width:0; color:var(--ink-2)}
-.news .body strong{color:var(--ink); font-weight:620}
-.tag{
-  display:inline-block; font-size:11px; font-weight:660; text-transform:uppercase; letter-spacing:.05em;
-  padding:1px 7px; border-radius:5px; background:var(--accent-soft); color:var(--accent-ink);
-  margin-right:8px; vertical-align:1.5px; border:1px solid color-mix(in srgb,var(--accent) 22%,transparent);
-}
-@media (max-width:620px){
-  .news li{flex-direction:column; gap:4px}
-  .news time{flex-basis:auto; padding-top:0}
-}
-.more-news{margin:16px 0 0; font-size:14.5px; color:var(--ink-3)}
-.more-news button{
-  font:inherit; font-size:14.5px; font-weight:560; color:var(--accent-ink); background:none;
-  border:0; border-bottom:1px solid color-mix(in srgb,var(--accent) 45%,transparent);
-  padding:0; cursor:pointer;
-}
-.hidden-news{display:none}
-.hidden-news.show{display:flex}
-
-/* method cards */
-.methods{display:grid; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:12px; overflow:hidden}
-@media (min-width:820px){ .methods{grid-template-columns:repeat(2,1fr)} }
-.method{background:var(--bg); padding:20px 22px}
-.method h3{margin:0 0 6px; font-size:16.5px; font-weight:660; letter-spacing:-.01em; color:var(--ink)}
-.method p{margin:0; color:var(--ink-2); font-size:15.5px; line-height:1.6}
-.method .kit{margin:9px 0 0; font-size:13px; color:var(--ink-3); letter-spacing:.005em}
-
-/* domains */
-.domain{padding:20px 0; border-bottom:1px solid var(--line)}
-.domain:last-of-type{border-bottom:0}
-.domain h3{margin:0 0 5px; font-size:16.5px; font-weight:660; letter-spacing:-.01em}
-.domain h3 .where{font-weight:480; color:var(--ink-3); font-size:14px; margin-left:8px}
-.domain p{margin:0; color:var(--ink-2); font-size:15.5px}
-.domain .out{
-  display:block; margin-top:8px; font-size:14.5px; color:var(--ink);
-  padding-left:13px; border-left:2.5px solid var(--accent);
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial,
+    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  font-size: 17px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* publications */
-.pubs{list-style:none; padding:0; margin:0}
-.pubs li{padding:15px 0; border-bottom:1px solid var(--line); font-size:15.5px; line-height:1.55; color:var(--ink-2)}
-.pubs li:last-child{border-bottom:0}
-.pubs .t{color:var(--ink); font-weight:600; display:block; margin-bottom:3px}
-.pubs .me{color:var(--ink); font-weight:660}
-.pubs .venue{font-style:italic}
-.badge{
-  display:inline-block; font-size:11px; font-weight:660; letter-spacing:.04em; text-transform:uppercase;
-  padding:1px 7px; border-radius:5px; margin-left:7px; vertical-align:1.5px;
-  background:var(--bg-soft); color:var(--ink-3); border:1px solid var(--line);
-}
-.badge.first{background:var(--accent-soft); color:var(--accent-ink); border-color:color-mix(in srgb,var(--accent) 25%,transparent)}
+::selection { background: var(--accent-soft); }
 
-/* talks */
-.talks{list-style:none;padding:0;margin:0}
-.talks li{display:flex; gap:16px; padding:10px 0; border-bottom:1px solid var(--line); font-size:15.5px}
-.talks li:last-child{border-bottom:0}
-.talks time{flex:0 0 92px; color:var(--ink-3); font-size:13.5px; font-variant-numeric:tabular-nums; padding-top:2px}
-.talks .body{flex:1; color:var(--ink-2)}
-.talks .body strong{color:var(--ink); font-weight:600}
-@media (max-width:620px){ .talks li{flex-direction:column; gap:3px} .talks time{flex-basis:auto} }
-
-/* contact */
-.contact-box{
-  background:var(--bg-soft); border:1px solid var(--line); border-radius:12px;
-  padding:24px 26px; margin-top:4px;
-}
-.contact-box p{margin:0 0 14px; color:var(--ink-2); font-size:16px}
-.contact-box p:last-child{margin-bottom:0}
-.mail{
-  font-size:18px; font-weight:640; letter-spacing:-.01em;
-  color:var(--accent-ink); border-bottom:1.5px solid color-mix(in srgb,var(--accent) 40%,transparent);
+a {
+  color: inherit;
+  text-decoration-color: color-mix(in srgb, var(--accent) 58%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
 }
 
-footer{
-  margin-top:56px; padding:24px 0 44px; border-top:1px solid var(--line);
-  color:var(--ink-3); font-size:13.5px; display:flex; flex-wrap:wrap; gap:10px 18px; align-items:center;
+a:hover { color: var(--accent); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+
+.shell {
+  width: min(calc(100% - 48px), var(--max-width));
+  margin-inline: auto;
 }
-footer a{color:var(--ink-3)}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  min-height: 72px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.wordmark {
+  font-family: Georgia, "Times New Roman", "Noto Serif SC", serif;
+  font-size: 18px;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: -.015em;
+}
+
+.site-header nav {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.site-header nav::-webkit-scrollbar { display: none; }
+
+.site-header nav a {
+  color: var(--ink-soft);
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.site-header nav a:hover { color: var(--accent); }
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 224px;
+  gap: clamp(48px, 8vw, 96px);
+  align-items: start;
+  padding: clamp(64px, 9vw, 104px) 0 62px;
+}
+
+.eyebrow,
+.section-label,
+.work-meta,
+.portrait figcaption,
+.note-meta {
+  font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  line-height: 1.55;
+  letter-spacing: .035em;
+}
+
+.eyebrow {
+  margin: 0 0 18px;
+  color: var(--accent);
+}
+
+h1,
+h2,
+h3,
+.lead {
+  font-family: Georgia, "Times New Roman", "Noto Serif SC", serif;
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(42px, 6.6vw, 68px);
+  line-height: 1.02;
+  letter-spacing: -.045em;
+  font-weight: 500;
+}
+
+h1 .middle { color: var(--ink-soft); font-weight: 400; }
+h1 .cn { color: var(--ink-faint); font-size: .38em; letter-spacing: .03em; white-space: nowrap; }
+
+.lead {
+  max-width: 720px;
+  margin: 30px 0 18px;
+  font-size: clamp(27px, 3.8vw, 39px);
+  line-height: 1.25;
+  letter-spacing: -.025em;
+}
+
+.hero-copy > p:not(.eyebrow):not(.lead):not(.availability) {
+  max-width: 680px;
+  color: var(--ink-soft);
+}
+
+.hero-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+  margin-top: 28px;
+  font-size: 15px;
+}
+
+.hero-links a { font-weight: 600; }
+
+.availability {
+  margin: 30px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid var(--rule);
+  color: var(--ink-soft);
+  font-size: 14px;
+}
+
+.availability::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  margin: 0 9px 1px 0;
+  border-radius: 50%;
+  background: var(--rust);
+}
+
+.portrait { margin: 4px 0 0; }
+
+.portrait img {
+  display: block;
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  object-position: center 23%;
+  border: 1px solid var(--rule);
+  filter: saturate(.84) contrast(.98);
+}
+
+.portrait figcaption {
+  margin-top: 12px;
+  color: var(--ink-faint);
+}
+
+.section {
+  display: grid;
+  grid-template-columns: 142px minmax(0, 1fr);
+  gap: clamp(34px, 6vw, 70px);
+  padding: 56px 0 66px;
+  border-top: 1px solid var(--rule);
+}
+
+.section-label {
+  margin: 7px 0 0;
+  color: var(--ink-faint);
+}
+
+.section-label span {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--rust);
+}
+
+.section h2 {
+  margin: 0 0 16px;
+  font-size: clamp(31px, 4.2vw, 43px);
+  line-height: 1.12;
+  letter-spacing: -.025em;
+  font-weight: 500;
+}
+
+.section-intro {
+  max-width: 720px;
+  margin: 0 0 36px;
+  color: var(--ink-soft);
+  font-size: 18px;
+}
+
+.now-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 44px;
+}
+
+.now-item {
+  padding-top: 18px;
+  border-top: 2px solid var(--ink);
+}
+
+.now-item .note-meta { margin: 0 0 12px; color: var(--accent); }
+
+.now-item h3,
+.work-item h3,
+.featured-note h3 {
+  margin: 0;
+  font-size: 24px;
+  line-height: 1.25;
+  letter-spacing: -.015em;
+  font-weight: 600;
+}
+
+.now-item p,
+.work-item p,
+.featured-note p {
+  margin: 12px 0 0;
+  color: var(--ink-soft);
+}
+
+.working-note {
+  margin: 44px 0 0;
+  padding: 20px 0 0 22px;
+  border-top: 1px solid var(--rule);
+  border-left: 3px solid var(--accent);
+  color: var(--ink-soft);
+}
+
+.working-note strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 18px;
+}
+
+.work-list { border-top: 1px solid var(--ink); }
+
+.work-item {
+  display: grid;
+  grid-template-columns: 126px minmax(0, 1fr);
+  gap: 28px;
+  padding: 34px 0 38px;
+  border-bottom: 1px solid var(--rule);
+}
+
+.work-meta { color: var(--ink-faint); }
+.work-meta strong { display: block; margin-bottom: 5px; color: var(--rust); font-weight: 600; }
+
+.work-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+  margin-top: 17px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.artifact {
+  margin: 28px 0 0;
+  padding: 10px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+}
+
+.artifact img {
+  display: block;
+  width: 100%;
+  height: 290px;
+  object-fit: cover;
+  object-position: top;
+}
+
+.artifact figcaption {
+  padding: 10px 4px 2px;
+  color: var(--ink-faint);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.methods-line {
+  margin: 32px 0 0;
+  color: var(--ink-soft);
+  font-size: 14px;
+}
+
+.methods-line strong { color: var(--ink); }
+
+.publications { list-style: none; margin: 12px 0 0; padding: 0; border-top: 1px solid var(--ink); }
+
+.publications li {
+  display: grid;
+  grid-template-columns: 78px minmax(0, 1fr);
+  gap: 24px;
+  padding: 22px 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.pub-year {
+  color: var(--ink-faint);
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 12px;
+  padding-top: 3px;
+}
+
+.pub-title {
+  display: block;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.pub-cite { display: block; margin-top: 5px; color: var(--ink-soft); font-size: 14px; }
+.me { color: var(--ink); font-weight: 700; }
+
+.all-pubs { margin: 24px 0 0; font-size: 15px; }
+
+.notes-grid {
+  display: grid;
+  grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr);
+  gap: 48px;
+}
+
+.featured-note {
+  padding-left: 22px;
+  border-left: 3px solid var(--rust);
+}
+
+.featured-note .note-meta { margin: 0 0 10px; color: var(--rust); }
+.featured-note .read { display: inline-block; margin-top: 17px; font-size: 14px; font-weight: 600; }
+
+.updates { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
+
+.updates li {
+  display: grid;
+  grid-template-columns: 82px minmax(0, 1fr);
+  gap: 18px;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--rule);
+  color: var(--ink-soft);
+  font-size: 15px;
+}
+
+.updates time {
+  color: var(--ink-faint);
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 11px;
+  padding-top: 3px;
+}
+
+.updates strong { color: var(--ink); font-weight: 600; }
+
+.contact-copy {
+  max-width: 700px;
+  color: var(--ink-soft);
+  font-size: 18px;
+}
+
+.contact-mail {
+  display: inline-block;
+  margin-top: 18px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(24px, 4vw, 36px);
+  line-height: 1.3;
+  letter-spacing: -.02em;
+}
+
+footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 18px 30px;
+  padding: 28px 0 44px;
+  border-top: 1px solid var(--rule);
+  color: var(--ink-faint);
+  font-size: 13px;
+}
+
+.footer-links { display: flex; flex-wrap: wrap; gap: 16px; }
+
+@media (max-width: 760px) {
+  .shell { width: min(calc(100% - 34px), var(--max-width)); }
+
+  .site-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 11px;
+    padding: 18px 0 14px;
+  }
+
+  .site-header nav {
+    width: 100%;
+    gap: 18px;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 38px;
+    padding: 54px 0 48px;
+  }
+
+  h1 .cn { display: block; margin-top: 12px; font-size: .42em; }
+
+  .portrait {
+    display: grid;
+    grid-template-columns: 112px minmax(0, 1fr);
+    gap: 16px;
+    align-items: end;
+    margin: 0;
+  }
+
+  .portrait img { width: 112px; height: 140px; }
+  .portrait figcaption { margin: 0 0 2px; }
+
+  .section {
+    grid-template-columns: 1fr;
+    gap: 22px;
+    padding: 46px 0 54px;
+  }
+
+  .section-label span { display: inline; margin-right: 8px; }
+  .now-grid, .notes-grid { grid-template-columns: 1fr; gap: 36px; }
+
+  .work-item { grid-template-columns: 1fr; gap: 12px; padding: 28px 0 32px; }
+
+  .work-meta strong { display: inline; margin-right: 9px; }
+
+  .artifact img { height: 230px; }
+}
+
+@media (max-width: 470px) {
+  body { font-size: 16px; }
+  .hero-links { gap: 8px 16px; }
+  .lead { font-size: 28px; }
+  .publications li { grid-template-columns: 52px minmax(0, 1fr); gap: 14px; }
+  .updates li { grid-template-columns: 70px minmax(0, 1fr); gap: 12px; }
+  .contact-mail { overflow-wrap: anywhere; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
 </style>
 </head>
+
 <body>
-
-<div class="topbar">
-  <div class="wrap">
-    <span class="who">Shucheng (Bangli) Cao</span>
-    <nav>
-      <a href="#news">News</a>
-      <a href="#methods">Methods</a>
-      <a href="#work">Applications</a>
-      <a href="#publications">Publications</a>
-      <a href="/blog/">Blog</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </div>
-</div>
-
-<div class="wrap">
-
-<header class="hero">
-  <div class="hero-top">
-    <div class="hero-text">
-      <h1 class="name">Shucheng <span style="font-weight:500;color:var(--ink-2)">(Bangli)</span> Cao<span class="cn">曹书诚</span></h1>
-      <p class="tagline">I use and build <em>statistical and machine learning methods for causal questions</em> — separating what merely correlates from what actually causes it, in data on hundreds of thousands of people.</p>
-      <p class="affil">PhD Candidate, Quantitative Life Sciences · <strong>McGill University</strong> · Montréal, Canada</p>
-    </div>
-
-    <!-- To use a real photo: save it as assets/img/profile.jpg in this repo. Until then, a monogram shows. -->
-    <div class="avatar">
-      <img src="assets/img/profile.jpg" alt="Shucheng (Bangli) Cao"
-           onerror="this.parentNode.innerHTML='<span class=&quot;mono&quot;>SC</span>'">
-    </div>
-  </div>
-
-  <div class="status">
-    <span class="dot"></span>
-    <span><b>Open to opportunities.</b> Graduating 2027 — looking for full-time roles and 2026–27 internships where causal inference and large-scale statistical modelling drive real decisions: machine learning, data science, quantitative research, and computational biology.</span>
-  </div>
-
-  <div class="links">
-    <a href="mailto:shucheng.cao@mail.mcgill.ca">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>Email</a>
-    <a href="https://scholar.google.com/citations?user=q1cAyE0AAAAJ" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2 1 8.5l11 6.5 9-5.32V17h2V8.5L12 2Z"/><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82Z"/></svg>Google Scholar</a>
-    <a href="https://github.com/shuchengcaoxin" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.8 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.4 11.4 0 0 1 6 0C17.5 4.7 18.5 5 18.5 5c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.5-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5Z"/></svg>GitHub</a>
-    <a href="https://www.linkedin.com/in/shucheng-bangli-cao" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-.95 1.83-1.95 3.75-1.95 4 0 4.4 2.5 4.4 5.8V21h-4v-5.6c0-1.35-.03-3.1-1.9-3.1s-2.2 1.45-2.2 3v5.7h-4V9Z"/></svg>LinkedIn</a>
-    <a href="assets/pdf/CV_EN.pdf" target="_blank" rel="noopener">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>CV</a>
-  </div>
-
-  <!-- ============================================================
-       THIS PARAGRAPH IS THE ONE YOU SHOULD REWRITE IN YOUR OWN WORDS.
-       It is the only place on the page where a reader hears you talk
-       instead of reading a description of you. Keep it plain.
-       ============================================================ -->
-  <p class="bio">I focus on one question: is this effect real, or is it an artefact of the data, the pipeline, or the confounding? I work on it with molecular dynamics trajectories, with multi-hospital CT scans, and now with genotypes and plasma proteomes at biobank scale — using whatever the failure mode calls for: causal inference when confounding is the problem, robustness evaluation when the model is.</p>
-
-  <p class="facts">1,000+ citations · h-index 6 · CA$350K+ in competitive funding · peer reviewer for eight journals</p>
+<header class="site-header shell">
+  <a class="wordmark" href="#top" aria-label="Shucheng Cao, home">Shucheng Cao</a>
+  <nav aria-label="Primary navigation">
+    <a href="#now">now</a>
+    <a href="#work">work</a>
+    <a href="#papers">papers</a>
+    <a href="#notes">notes</a>
+    <a href="assets/pdf/CV_EN.pdf" target="_blank" rel="noopener">cv ↗</a>
+  </nav>
 </header>
 
+<main id="top" class="shell">
+  <section class="hero" aria-labelledby="page-title">
+    <div class="hero-copy">
+      <p class="eyebrow">Causal genetics / research software</p>
+      <h1 id="page-title">Shucheng <span class="middle">(Bangli)</span> Cao <span class="cn">曹书诚</span></h1>
+      <p class="lead">My PhD asks which circulating proteins have a causal effect on metabolic disease.</p>
+      <p>I am a Quantitative Life Sciences PhD candidate at McGill University. I mostly work with Mendelian randomization, colocalization, and large-scale GWAS and pQTL data. I also build research software when the evidence trail is difficult to inspect.</p>
 
-<section id="news">
-  <h2>News</h2>
-  <ul class="news">
-<!-- ============================================================
-     NEWS — ADD A NEW ITEM AT THE TOP OF THIS LIST.
-     Copy one <li> block, change the date and the text. That's it.
-     Anything past the 6th item is hidden behind "Show earlier" automatically.
-     ============================================================ -->
+      <div class="hero-links" aria-label="Profile links">
+        <a href="mailto:shucheng.cao@mail.mcgill.ca">Email</a>
+        <a href="https://scholar.google.com/citations?user=q1cAyE0AAAAJ" target="_blank" rel="noopener">Google Scholar</a>
+        <a href="https://github.com/shuchengcaoxin" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://www.linkedin.com/in/shucheng-bangli-cao" target="_blank" rel="noopener">LinkedIn</a>
+        <a href="assets/pdf/CV_EN.pdf" target="_blank" rel="noopener">CV</a>
+      </div>
 
-    <li>
-      <time datetime="2026-08-28">Aug 2026</time>
-      <div class="body"><span class="tag">Blog</span><a href="/blog/what-the-agent-gets-wrong/"><strong>Building an AI agent that can&#8217;t fake drug-target evidence</strong></a></div>
-    </li>
-
-    <li>
-      <time datetime="2026-07">Jul 2026</time>
-      <div class="body"><span class="tag">Paper</span><strong>Accepted at Nature Communications.</strong>
-      Our study disentangling osteoarthritis-specific genetic effects from obesity.</div>
-    </li>
-
-    <li>
-      <time datetime="2026-06-13">Jun 2026</time>
-      <div class="body"><span class="tag">Talk</span>Presented a poster at <strong>ESHG 2026</strong> in Gothenburg on proteome-wide causal inference for metabolic liver disease.</div>
-    </li>
-
-    <li>
-      <time datetime="2026-02-03">Feb 2026</time>
-      <div class="body"><span class="tag">Talk</span>Gave an oral presentation at <strong>McGill QLS Research Day</strong>.</div>
-    </li>
-
-    <li>
-      <time datetime="2025-12-24">Dec 2025</time>
-      <div class="body"><span class="tag">Talk</span>Invited talk at the <strong>Cardiovascular &amp; Metabolic Innovation Centre, Guangdong Medical University</strong>, Dongguan.</div>
-    </li>
-
-    <li>
-      <time datetime="2025-11-06">Nov 2025</time>
-      <div class="body"><span class="tag">Talk</span>Invited speaker — and host — at the <strong>Lady Davis Institute Epidemiology Round Table</strong>.</div>
-    </li>
-
-    <li class="hidden-news">
-      <time datetime="2025-09">Sep 2025</time>
-      <div class="body"><span class="tag">Award</span>Awarded the <strong>FRQNT Doctoral Scholarship</strong> (CA$25,000/year).</div>
-    </li>
-
-
-<!-- ===================== END OF NEWS LIST ===================== -->
-  </ul>
-  <p class="more-news"><button onclick="document.querySelectorAll('.hidden-news').forEach(function(e){e.classList.add('show')});this.parentNode.remove()">Show earlier news ↓</button></p>
-</section>
-
-
-<section id="methods">
-  <h2>What I actually do</h2>
-  <p class="lede">The methods come first — they are what transfers. The domain is where I have used them so far.</p>
-  <div class="methods">
-
-    <div class="method">
-      <h3>Causal inference from observational data</h3>
-      <p>Association is cheap; causation is what decisions need. I use genetic variants as natural experiments — Mendelian randomization, colocalization, and instrumental-variable designs — to estimate causal effects where a randomized trial is impossible, and I stress-test every estimate before believing it.</p>
-      <p class="kit">Two-sample MR · colocalization (PWCoCo, SharePro) · pleiotropy &amp; sensitivity analysis · replication across independent platforms</p>
+      <p class="availability">Graduating in 2027; available for 2026–27 internships and 2027 full-time roles.</p>
     </div>
 
-    <div class="method">
-      <h3>Statistical modelling at biobank scale</h3>
-      <p>Working across cohorts of hundreds of thousands of people, where the hard part is not fitting the model but keeping the data honest: harmonizing sources, catching silent errors, and controlling error rates across tens of thousands of tests.</p>
-      <p class="kit">GWAS &amp; GWAS-by-subtraction · proteome-wide scans · survival &amp; mixed-effects models · Bayesian methods · multiple-testing control · Linux/HPC</p>
+    <figure class="portrait">
+      <img src="assets/img/profile.jpg" alt="Portrait of Shucheng Cao" width="448" height="560">
+      <figcaption>PhD candidate<br>McGill University<br>Montréal, Canada</figcaption>
+    </figure>
+  </section>
+
+  <section id="now" class="section" aria-labelledby="now-title">
+    <p class="section-label"><span>01</span> Now</p>
+    <div>
+      <h2 id="now-title">What is on my desk</h2>
+      <p class="section-intro">I currently split my time between a proteome-wide causal analysis for my thesis and OpenCausal, the research tool I led during my CABS internship.</p>
+
+      <div class="now-grid">
+        <article class="now-item">
+          <p class="note-meta">Thesis / 2024–present</p>
+          <h3>Proteins and metabolic disease</h3>
+          <p>I am screening circulating proteins for causal effects on MASLD and obesity-related disease. The analysis spans data from more than 790,000 people. A signal stays only if it reproduces across two independent proteomic platforms and survives colocalization and sensitivity checks.</p>
+        </article>
+
+        <article class="now-item">
+          <p class="note-meta">CABS / 2026</p>
+          <h3>CausalSentinel / OpenCausal</h3>
+          <p>During my CABS internship, I led the engineering of an agent that joins published MR estimates with nine public biomedical databases. It now serves 991 protein dossiers, with the source evidence kept alongside each result.</p>
+          <p class="work-links"><a href="https://github.com/ds4cabs/CausalSentinel" target="_blank" rel="noopener">Repository</a> <a href="https://ds4cabs.github.io/CausalSentinel/dossiers/" target="_blank" rel="noopener">Dossiers</a></p>
+        </article>
+      </div>
+
+      <p class="working-note"><strong>A working rule</strong>If I cannot reconstruct which file entered a pipeline, which variants survived, and why a step was skipped, I do not regard the analysis as finished. That preference shapes both my genetics workflows and the tools I build.</p>
     </div>
+  </section>
 
-    <div class="method">
-      <h3>Machine learning, evaluated properly</h3>
-      <p>I build models, but I am most useful at breaking them: measuring how much accuracy is lost between a benchmark and the real world, and finding the data bugs and leakage that make results look better than they are.</p>
-      <p class="kit">PyTorch · graph &amp; point-cloud networks · out-of-distribution and robustness evaluation · multi-seed reproducible benchmarks</p>
+  <section id="work" class="section" aria-labelledby="work-title">
+    <p class="section-label"><span>02</span> Selected work</p>
+    <div>
+      <h2 id="work-title">Selected projects</h2>
+      <p class="section-intro">These four projects trace how my work moved from molecular simulation and medical imaging into causal genetics and research software.</p>
+
+      <div class="work-list">
+        <article class="work-item">
+          <p class="work-meta"><strong>01</strong> PhD research<br>McGill</p>
+          <div>
+            <h3>Proteome-wide causal screen</h3>
+            <p>I built a multi-stage MR and colocalization workflow for metabolic liver disease, then required promising proteins to reproduce on independent measurement platforms. Four candidates remained after those checks; the manuscript is in revision.</p>
+          </div>
+        </article>
+
+        <article class="work-item">
+          <p class="work-meta"><strong>02</strong> Research tool<br>CABS 2026</p>
+          <div>
+            <h3>CausalSentinel / OpenCausal</h3>
+            <p>The public system combines 101,543 published MR estimates with evidence from genetics and drug-development databases. The output is rendered from a structured ledger; if model-written prose contradicts the retrieved evidence, the card is marked as failed rather than quietly published.</p>
+            <div class="work-links">
+              <a href="https://github.com/ds4cabs/CausalSentinel" target="_blank" rel="noopener">Code and methods</a>
+              <a href="https://ds4cabs.github.io/CausalSentinel/viewer/" target="_blank" rel="noopener">Card viewer</a>
+              <a href="/blog/what-the-agent-gets-wrong/">Technical note</a>
+            </div>
+
+            <figure class="artifact">
+              <img src="assets/blog/il6r-card.jpg" alt="An OpenCausal IL6R evidence card marked validation failed because the generated interpretation contradicted the retrieved estimate" loading="lazy">
+              <figcaption>A real failed run. The evidence card remains readable, but the validator exposes two unsupported claims before the page can pass.</figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <article class="work-item">
+          <p class="work-meta"><strong>03</strong> Medical imaging<br>IEEE TPAMI</p>
+          <div>
+            <h3>AbdomenCT-1K</h3>
+            <p>I helped build and evaluate a public abdominal CT benchmark with more than 1,000 scans from 12 medical centres. The study measured how much leading segmentation systems lost when they met data from hospitals outside their training distribution.</p>
+          </div>
+        </article>
+
+        <article class="work-item">
+          <p class="work-meta"><strong>04</strong> Molecular simulation<br>KAUST</p>
+          <div>
+            <h3>Ultrashort peptide self-assembly</h3>
+            <p>For my MSc, I used controlled molecular-dynamics simulations to separate the effects of hydrophobicity and aromaticity on peptide assembly, then used the resulting mechanism to rank new designs.</p>
+          </div>
+        </article>
+      </div>
+
+      <p class="methods-line"><strong>Methods used across these projects:</strong> Mendelian randomization, colocalization, GWAS and pQTL analysis, survival and mixed-effects models, PyTorch, molecular dynamics, R, Python, and Linux/HPC.</p>
     </div>
+  </section>
 
-    <div class="method">
-      <h3>LLM agents for auditable evidence</h3>
-      <p>Turning a week of manual literature and database review into a single traceable call. I lead the engineering on <strong>OpenCausal</strong>, an open-source agent that queries eight public biomedical databases and returns a cited go/no-go evidence card in about a minute — built on the rule that every conclusion must link back to its source.</p>
-      <p class="kit">RAG · function calling · MCP · Python</p>
+  <section id="papers" class="section" aria-labelledby="papers-title">
+    <p class="section-label"><span>03</span> Papers</p>
+    <div>
+      <h2 id="papers-title">Selected publications</h2>
+      <p class="section-intro">My publication record began in medical imaging and translational biology; my current work is in causal genetics.</p>
+
+      <ol class="publications">
+        <li>
+          <span class="pub-year">2026</span>
+          <span><a class="pub-title" href="https://doi.org/10.1101/2025.09.23.25336398" target="_blank" rel="noopener">Disentangling osteoarthritis-specific genetic effects from obesity to identify novel therapeutic targets</a><span class="pub-cite">CY. Su, M. Hasebe, D. Tan, <span class="me">S. Cao</span>, et al., G. Butler-Laporte. <em>Nature Communications</em> — accepted; preprint available.</span></span>
+        </li>
+        <li>
+          <span class="pub-year">2023</span>
+          <span><a class="pub-title" href="https://doi.org/10.1002/advs.202302855" target="_blank" rel="noopener">A PDA-Functionalized 3D Lung Scaffold Bioplatform to Construct Complicated Breast Tumor Microenvironment for Anticancer Drug Screening and Immunotherapy</a><span class="pub-cite">W. Zhang, Y. Chen, M. Li, <span class="me">S. Cao</span>, et al. <em>Advanced Science</em>.</span></span>
+        </li>
+        <li>
+          <span class="pub-year">2022</span>
+          <span><a class="pub-title" href="https://doi.org/10.1109/TPAMI.2021.3100536" target="_blank" rel="noopener">AbdomenCT-1K: Is Abdominal Organ Segmentation a Solved Problem?</a><span class="pub-cite">J. Ma, <span class="me">S. Cao</span>, et al. <em>IEEE Transactions on Pattern Analysis and Machine Intelligence</em>.</span></span>
+        </li>
+        <li>
+          <span class="pub-year">2022</span>
+          <span><span class="pub-title">MD simulations of amphiphilic ultrashort peptide self-assembly</span><span class="pub-cite"><span class="me">S. Cao</span>. MSc thesis, KAUST — ranked among the university's top ten theses of the year.</span></span>
+        </li>
+      </ol>
+
+      <p class="all-pubs"><a href="https://scholar.google.com/citations?user=q1cAyE0AAAAJ" target="_blank" rel="noopener">See the full publication record on Google Scholar ↗</a></p>
     </div>
+  </section>
 
-  </div>
-</section>
+  <section id="notes" class="section" aria-labelledby="notes-title">
+    <p class="section-label"><span>04</span> Notes</p>
+    <div>
+      <h2 id="notes-title">Writing and recent updates</h2>
+      <div class="notes-grid">
+        <article class="featured-note">
+          <p class="note-meta">Technical note / Aug 2026</p>
+          <h3>When the model's explanation disagrees with the evidence</h3>
+          <p>A walkthrough of the narrow role an LLM plays in OpenCausal, the checks around it, and a real example in which the validator rejects a confident-sounding conclusion.</p>
+          <a class="read" href="/blog/what-the-agent-gets-wrong/">Read the note →</a>
+        </article>
 
+        <ul class="updates" aria-label="Recent updates">
+          <li><time datetime="2026-07">Jul 2026</time><span>Our osteoarthritis genetics study was <strong>accepted at Nature Communications</strong>.</span></li>
+          <li><time datetime="2026-06-13">Jun 2026</time><span>Presented the MASLD proteome-wide causal-inference work at <strong>ESHG 2026</strong> in Gothenburg.</span></li>
+          <li><time datetime="2026-02-03">Feb 2026</time><span>Gave an oral presentation at <strong>McGill QLS Research Day</strong>.</span></li>
+          <li><time datetime="2025-12-24">Dec 2025</time><span>Invited talk at the <strong>Cardiovascular &amp; Metabolic Innovation Centre</strong>, Guangdong Medical University.</span></li>
+          <li><time datetime="2025-09">Sep 2025</time><span>Awarded the <strong>FRQNT Doctoral Scholarship</strong>.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-<section id="work">
-  <h2>Where I apply it</h2>
+  <section id="contact" class="section" aria-labelledby="contact-title">
+    <p class="section-label"><span>05</span> Contact</p>
+    <div>
+      <h2 id="contact-title">Get in touch</h2>
+      <p class="contact-copy">I am happy to compare notes on MR and colocalization, auditable research pipelines, or work where those methods are useful. Email is the best way to reach me.</p>
+      <a class="contact-mail" href="mailto:shucheng.cao@mail.mcgill.ca">shucheng.cao@mail.mcgill.ca</a>
+    </div>
+  </section>
+</main>
 
-  <div class="domain">
-    <h3>Drug target discovery <span class="where">PhD, Butler-Laporte lab, McGill</span></h3>
-    <p>Picking the wrong target wastes an entire drug programme. I screen for causal proteins across 790K+ individuals, require every hit to replicate on two independent proteomics platforms, and then rank survivors by how druggable they actually are.</p>
-    <span class="out">Narrowed thousands of candidates down to four high-confidence causal targets in a disease with a historical success rate near 5%.</span>
-  </div>
-
-  <div class="domain">
-    <h3>Medical AI that survives contact with hospitals <span class="where">IEEE TPAMI</span></h3>
-    <p>Segmentation models that top leaderboards often fail in clinics. I helped build what was then the largest multi-hospital abdominal CT dataset — more than 1,000 CT scans from 12 medical centres — and quantified how much performance leading models lose on real multi-centre data.</p>
-    <span class="out">Released publicly as AbdomenCT-1K, with the annotations and evaluation code open-sourced under Apache 2.0.</span>
-  </div>
-
-  <div class="domain">
-    <h3>Molecular simulation for peptide design</h3>
-    <p>Controlled molecular dynamics experiments to isolate what really drives ultrashort peptide self-assembly, and turn that mechanism into a ranking model for new designs.</p>
-    <span class="out">Showed hydrophobicity — not aromaticity — is the driver, overturning a two-decade consensus, and produced a first proof of concept for blocking amyloid aggregation.</span>
-  </div>
-</section>
-
-
-<section id="publications">
-  <h2>Selected publications</h2>
-  <p class="lede">Full list on <a href="https://scholar.google.com/citations?user=q1cAyE0AAAAJ" target="_blank" rel="noopener">Google Scholar</a>.</p>
-  <ul class="pubs">
-
-    <li>
-      <span class="t">Disentangling osteoarthritis-specific genetic effects from obesity to identify novel therapeutic targets</span>
-      CY. Su, M. Hasebe, D. Tan, <span class="me">S. Cao</span>, et al., G. Butler-Laporte.
-      <span class="venue">Nature Communications</span> — accepted, 2026
-    </li>
-
-    <li>
-      <span class="t">AbdomenCT-1K: Is Abdominal Organ Segmentation a Solved Problem?</span>
-      J. Ma, <span class="me">S. Cao</span>, et al.
-      <span class="venue">IEEE Transactions on Pattern Analysis and Machine Intelligence</span>, 2021
-    </li>
-
-    <li>
-      <span class="t">Tropical Algebraic Geometry for Neuronal Representations: An Arakelov–Green Measure Based Descriptor for Graph Learning</span>
-      Y. Zhang, W. Xu, <span class="me">S. Cao</span>, et al.
-      <span class="venue">Submitted to AAAI</span>
-    </li>
-
-    <li>
-      <span class="t">PDA-functionalized 3D decellularized matrices for tumour microenvironment reconstruction</span>
-      W. Zhang, Y. Chen, M. Li, <span class="me">S. Cao</span>, et al.
-      <span class="venue">Advanced Science</span>, 2023
-    </li>
-
-    <li>
-      <span class="t">MD simulations of amphiphilic ultrashort peptide self-assembly</span>
-      <span class="me">S. Cao</span>. MSc thesis, KAUST, 2022 — ranked in the top ten theses of the year.
-    </li>
-
-  </ul>
-</section>
-
-
-<section id="talks">
-  <h2>Talks &amp; presentations</h2>
-  <ul class="talks">
-    <li><time datetime="2026-06-13">Jun 2026</time><div class="body"><strong>ESHG 2026</strong>, Gothenburg — poster</div></li>
-    <li><time datetime="2026-02-03">Feb 2026</time><div class="body"><strong>QLS Research Day</strong>, McGill — oral</div></li>
-    <li><time datetime="2025-12-24">Dec 2025</time><div class="body"><strong>Guangdong Medical University</strong>, Dongguan — invited talk</div></li>
-    <li><time datetime="2025-11-06">Nov 2025</time><div class="body"><strong>Lady Davis Institute Epidemiology Round Table</strong> — invited talk, and host</div></li>
-    <li><time datetime="2024-11-08">Nov 2024</time><div class="body"><strong>ASHG Annual Meeting</strong> — poster</div></li>
-  </ul>
-</section>
-
-
-<section id="contact">
-  <h2>Get in touch</h2>
-  <div class="contact-box">
-    <p>The fastest way to reach me is email — I read everything and reply to anything specific.</p>
-    <p><a class="mail" href="mailto:shucheng.cao@mail.mcgill.ca">shucheng.cao@mail.mcgill.ca</a></p>
-    <p style="font-size:15px;color:var(--ink-3);margin-top:16px">Happy to talk about causal inference, evaluating machine learning models honestly, Mendelian randomization methodology, or a role where this toolkit would be useful. Based in Montréal; open to relocating.</p>
-  </div>
-</section>
-
-<footer>
-  <span>© <span id="yr">2026</span> Shucheng (Bangli) Cao</span>
-  <a href="https://scholar.google.com/citations?user=q1cAyE0AAAAJ" target="_blank" rel="noopener">Scholar</a>
-  <a href="https://github.com/shuchengcaoxin" target="_blank" rel="noopener">GitHub</a>
-  <a href="https://www.linkedin.com/in/shucheng-bangli-cao" target="_blank" rel="noopener">LinkedIn</a>
-  <a href="mailto:shucheng.cao@mail.mcgill.ca">Email</a>
+<footer class="shell">
+  <span>© <span id="year">2026</span> Shucheng (Bangli) Cao</span>
+  <span class="footer-links">
+    <a href="https://scholar.google.com/citations?user=q1cAyE0AAAAJ" target="_blank" rel="noopener">Scholar</a>
+    <a href="https://github.com/shuchengcaoxin" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://www.linkedin.com/in/shucheng-bangli-cao" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="mailto:shucheng.cao@mail.mcgill.ca">Email</a>
+  </span>
 </footer>
 
-</div>
-
-<script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
 </body>
 </html>
