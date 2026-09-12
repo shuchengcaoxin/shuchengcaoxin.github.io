@@ -290,6 +290,7 @@ h1 .cn {
 
 .portrait {
   position: relative;
+  isolation: isolate;
   margin: 2px 0 0;
 }
 
