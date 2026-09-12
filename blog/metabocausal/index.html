@@ -16,8 +16,8 @@
 <meta property="og:url" content="https://shuchengcaoxin.github.io/blog/metabocausal/">
 <meta property="og:image" content="https://shuchengcaoxin.github.io/assets/blog/metabocausal-cetp-timeline.png">
 <meta property="og:image:width" content="1126">
-<meta property="og:image:height" content="665">
-<meta property="og:image:alt" content="A MetaboCausal timeline tracing CETP and torcetrapib from clinical development through genetic interpretation.">
+<meta property="og:image:height" content="814">
+<meta property="og:image:alt" content="A MetaboCausal timeline tracing CETP from human genetics and preclinical evidence through clinical development, later interpretation and current status.">
 <meta property="article:published_time" content="2026-09-12">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://shuchengcaoxin.github.io/assets/blog/metabocausal-cetp-timeline.png">
@@ -75,6 +75,12 @@ figcaption{font-size:14px;line-height:1.5;color:var(--ink-3);margin-top:9px}
 .steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:22px 0}
 .step{background:var(--card);border:1px solid var(--line);border-radius:9px;padding:14px}
 .step b{display:block;color:var(--accent-ink);margin-bottom:5px}.step span{font-size:15px;line-height:1.5;color:var(--ink-2)}
+.roadmap{display:grid;gap:10px;margin:22px 0}
+.stage{background:var(--card);border:1px solid var(--line);border-radius:9px;padding:15px 17px}
+.stage b{display:block;font-family:var(--display);font-size:18px;margin-bottom:4px}
+.stage p{font-size:15px;line-height:1.55;color:var(--ink-2);margin:0}
+.stage .label{font-family:var(--sans);font-size:11.5px;letter-spacing:1.1px;text-transform:uppercase;color:var(--accent);margin-bottom:5px}
+.principles{padding-left:21px;margin:18px 0 24px}.principles li{margin-bottom:8px}
 .team{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:22px 0}
 .person{background:var(--card);border:1px solid var(--line);border-radius:9px;padding:14px}
 .person:first-child{grid-column:1/-1}
@@ -99,7 +105,7 @@ footer a{color:var(--ink-2);text-decoration:none}
 <article>
   <div class="kicker">MetaboCausal · Hackathon build</div>
   <h1>When a better blood marker is not a better medicine</h1>
-  <p class="standfirst">MetaboCausal connects genetic evidence to disease and drug-development history, helping teams decide what to test next.</p>
+  <p class="standfirst">MetaboCausal connects genetic evidence to disease and drug-development history, helping research and drug teams choose the next question worth testing.</p>
   <p class="byline">By <a href="/" rel="author">Shucheng Cao (Bangli Cao)</a> with the MetaboCausal team · 12 September 2026 · 4 min read</p>
 
   <h2>The problem</h2>
@@ -111,12 +117,13 @@ footer a{color:var(--ink-2);text-decoration:none}
   </div>
 
   <h2>A failure worth tracing</h2>
-  <p>Torcetrapib was designed to block CETP and raise HDL cholesterol, often called “good cholesterol.” The blood marker moved in the expected direction. But <a href="https://doi.org/10.1056/NEJMoa0706628" target="_blank" rel="noopener">the large trial was stopped ↗</a> after more deaths and cardiovascular events in the treatment group.</p>
+  <p>The story began before Phase 3. In 1989, <a href="https://pubmed.ncbi.nlm.nih.gov/2586614/" target="_blank" rel="noopener">an inherited CETP change ↗</a> was linked to much higher HDL. Target-level experiments in rabbits then <a href="https://pubmed.ncbi.nlm.nih.gov/9478952/" target="_blank" rel="noopener">reduced atherosclerotic lesions in 1998 ↗</a>, and <a href="https://pubmed.ncbi.nlm.nih.gov/10910363/" target="_blank" rel="noopener">another CETP inhibitor showed benefit in 2000 ↗</a>. These findings supported the biology, but they did not establish that torcetrapib itself would be safe or help patients.</p>
+  <p>Torcetrapib was designed to block CETP and raise HDL cholesterol, often called “good cholesterol.” A <a href="https://pubmed.ncbi.nlm.nih.gov/14739125/" target="_blank" rel="noopener">Phase 1 study published in 2004 ↗</a> showed that the blood marker moved in the expected direction. But <a href="https://doi.org/10.1056/NEJMoa0706628" target="_blank" rel="noopener">the large Phase 3 trial was stopped ↗</a> after more deaths and cardiovascular events in the treatment group.</p>
   <p>Later genetic studies helped separate two questions. One <a href="https://pubmed.ncbi.nlm.nih.gov/20026784/" target="_blank" rel="noopener">suggested that the rise in blood pressure ↗</a> was probably a drug-specific side effect. Another <a href="https://doi.org/10.1016/S0140-6736(12)60312-2" target="_blank" rel="noopener">challenged the assumption ↗</a> that raising HDL alone would automatically prevent heart attacks. A different CETP drug later <a href="https://doi.org/10.1056/NEJMoa1706444" target="_blank" rel="noopener">reduced coronary events ↗</a>. The lesson is more useful than a simple “target failed” label: <strong>the marker, the biological target and the drug itself are related, but they are not interchangeable.</strong></p>
 
   <figure>
-    <img src="/assets/blog/metabocausal-cetp-timeline.png" alt="Timeline of CETP and torcetrapib clinical development with later genetic interpretation" width="1126" height="665">
-    <figcaption>Our current recording example keeps the clinical events and later genetic interpretation on one source-linked timeline. Later evidence is labelled as later evidence; it is not presented as an earlier prediction.</figcaption>
+    <img src="/assets/blog/metabocausal-cetp-timeline.png" alt="Timeline of CETP human genetics, preclinical evidence, clinical development, later genetics and current class status" width="1126" height="814">
+    <figcaption>The corrected lifecycle view begins with human genetics and preclinical evidence, then follows clinical development, later interpretation and the target class’s current status. Target-level evidence is kept separate from evidence about one drug.</figcaption>
   </figure>
 
   <h2>What MetaboCausal does</h2>
@@ -130,15 +137,46 @@ footer a{color:var(--ink-2);text-decoration:none}
 
   <p>The system uses public research sources, including genetic databases, Europe PMC, Semantic Scholar, Open Targets and clinical-trial records. An AI model can explain the result in plain language, but the sources, numbers and dates remain visible for checking. The current integration supports OpenAI and Claude.</p>
 
-  <h2>What exists today</h2>
-  <p>For the hackathon, we built a working evidence-card pipeline, a browser demo and Slack-ready output. The first version starts from an existing table of molecule–disease results. We are now widening that evidence base through two independent literature searches, adding gene and pathway context, and turning the clinical timeline into a reusable step.</p>
+  <h2>How the product is improving</h2>
+  <p>We split the work into three MVPs—small, usable versions that each add one clear capability.</p>
+
+  <div class="roadmap" aria-label="MetaboCausal MVP roadmap">
+    <div class="stage">
+      <span class="label">MVP1 · Working core</span>
+      <b>Make one result understandable</b>
+      <p>Turn reviewed molecule–disease pairs into source-linked evidence cards, with browser and Slack output.</p>
+    </div>
+    <div class="stage">
+      <span class="label">MVP2 · Broader coverage</span>
+      <b>Find more useful questions</b>
+      <p>Expand the starting table from large studies and two independent literature searches, then match and remove repeated results before they move downstream.</p>
+    </div>
+    <div class="stage">
+      <span class="label">MVP3 · Deeper context</span>
+      <b>Connect the result to biology and development</b>
+      <p>Add gene, pathway, drug and clinical context, including Human-GEM, and rerun the same pipeline on the combined evidence.</p>
+    </div>
+  </div>
+
+  <p>This staged plan gives managers a visible product at every step, while letting technical contributors test each layer before the next one is added.</p>
+
+  <h2>What the technical design protects</h2>
+  <ul class="principles">
+    <li><strong>Traceability:</strong> dates, numbers and claims point back to sources.</li>
+    <li><strong>Separation:</strong> retrieval builds the evidence record; the AI model explains it.</li>
+    <li><strong>Challenge testing:</strong> in one Slack test, a teammate supplied a deliberately false premise. The system rejected the unsupported claim instead of inventing evidence. This passed test shows the safeguard working in that case; it is not a claim that any AI can never hallucinate.</li>
+    <li><strong>Reproducibility:</strong> the same structured pipeline can run again when new pairs arrive.</li>
+    <li><strong>Practical access:</strong> OpenAI and Claude are supported now, with user-provided model keys planned.</li>
+  </ul>
+
+  <p>The public description stays at the product level. The team’s prompts, matching rules, internal data structure and deployment details remain in the private working repository.</p>
 
   <div class="note">
     <p><strong>What it does not claim:</strong> MetaboCausal does not prove that a drug will work. It helps a team see the available evidence—and the gaps—before choosing the next test.</p>
   </div>
 
   <h2>Meet the team</h2>
-  <p>Five people are building different parts of the same evidence trail. We will add each member’s project repository as their work is published.</p>
+  <p>Five people are building different parts of the same evidence trail. The links below lead to each member’s GitHub profile; project repositories can be added as their work is published.</p>
 
   <div class="team">
     <div class="person">
@@ -149,17 +187,17 @@ footer a{color:var(--ink-2);text-decoration:none}
     <div class="person">
       <h3>Jingrui Mu</h3>
       <p>Molecule and disease matching, plus literature expansion through Europe PMC.</p>
-      <span class="soon">Project link coming soon</span>
+      <a href="https://github.com/Mujingrui" target="_blank" rel="noopener">GitHub ↗</a>
     </div>
     <div class="person">
       <h3>Ziwei He</h3>
       <p>Gene context and an independent literature search through Semantic Scholar.</p>
-      <span class="soon">Project link coming soon</span>
+      <a href="https://github.com/David-He-1998" target="_blank" rel="noopener">GitHub ↗</a>
     </div>
     <div class="person">
       <h3>Zipeng Sun</h3>
       <p>Drug and clinical context, with a Human-GEM pathway extension.</p>
-      <span class="soon">Project link coming soon</span>
+      <a href="https://github.com/zpointS" target="_blank" rel="noopener">GitHub ↗</a>
     </div>
     <div class="person">
       <h3>YinZhangHao Zhou</h3>
