@@ -296,7 +296,10 @@ h1 .cn {
 .portrait::before {
   content: "";
   position: absolute;
-  inset: 11px -11px -11px 11px;
+  top: 11px;
+  right: -11px;
+  left: 11px;
+  height: 268px;
   z-index: -1;
   border: 1px solid color-mix(in srgb, var(--forest) 40%, var(--line));
   background: var(--forest-soft);
@@ -950,8 +953,11 @@ h1 .cn {
   }
 
   .portrait::before {
-    inset: 8px auto -8px 8px;
+    top: 8px;
+    right: auto;
+    left: 8px;
     width: 110px;
+    height: 138px;
   }
 
   .portrait img {
