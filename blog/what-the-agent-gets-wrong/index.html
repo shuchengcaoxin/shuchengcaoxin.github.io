@@ -32,7 +32,7 @@
   "description": "A blog case study on keeping source evidence visible and rejecting unsupported model-written claims in CausalSentinel.",
   "image": "https://shuchengcaoxin.github.io/assets/blog/og-share.png",
   "datePublished": "2026-08-28",
-  "dateModified": "2026-09-11",
+  "dateModified": "2026-09-15",
   "author": {
     "@type": "Person",
     "@id": "https://shuchengcaoxin.github.io/#person",
@@ -233,6 +233,12 @@ h2{scroll-margin-top:64px}
   confident wrong sentence costs a multi-year programme, not a wrong answer. So I built the
   agent, then spent the summer trying to make it fail.</p>
 
+  <p><strong>If none of this biology is yours:</strong> the shape is an agent that retrieves
+  from a fixed set of sources and then writes a conclusion over them. What has to be checked is
+  not whether the sentence is true &#8212; it is whether the retrieval supports it. Those two
+  come apart quietly, and nothing downstream notices. The rest of this post is a worked example
+  of that, in a domain where being wrong is expensive.</p>
+
   <div class="findings">
     <span class="h">What this post found</span>
     <ul>
@@ -297,6 +303,15 @@ h2{scroll-margin-top:64px}
     (a pQTL &#8212; the natural experiment the causal test needs), so that test cannot be
     run. Absence of an estimate is not evidence of no effect.</figcaption>
   </figure>
+
+  <p><strong>What it helps with, and what it does not.</strong> It retrieves published MR
+  estimates and computes none, so it does not stand in for an analysis. It answers the question
+  that comes before one: does an estimate already exist for this protein and this outcome, did
+  that estimate carry its direction and shared-variant checks, and if nothing comes back, is
+  that because no instrument exists or because nobody has run it. The same sweep covers 991
+  proteins; restricted to each protein&#8217;s fifteen strongest disease associations, 7,524
+  protein&#8211;disease pairs carry a genetic association with no MR estimate in the resource
+  behind this tool. That set is a list of analyses nobody has run, not a list of results.</p>
 
   <div class="try">
     <span class="h">See it yourself</span>
