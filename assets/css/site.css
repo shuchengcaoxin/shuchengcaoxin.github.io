@@ -876,6 +876,27 @@ h1 .cn {
   text-decoration: none;
 }
 
+.title-sub {
+  display: block;
+  margin-top: 7px;
+  font-family: var(--sans);
+  font-weight: 400;
+  line-height: 1.4;
+  letter-spacing: 0;
+  color: var(--ink-soft);
+}
+
+.blog-list-copy h2 .title-sub,
+.blog-card h3 .title-sub {
+  font-size: 0.55em;
+}
+
+.news-copy .title-sub {
+  margin-top: 4px;
+  font-size: 14px;
+  color: var(--ink-faint);
+}
+
 .blog-list-copy > p:not(.post-meta) {
   margin: 11px 0 0;
   color: var(--ink-soft);
