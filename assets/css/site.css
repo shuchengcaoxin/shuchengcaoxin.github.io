@@ -889,12 +889,12 @@ h1 .cn {
 
 .blog-list-copy h2 .title-sub,
 .blog-card h3 .title-sub {
-  font-size: 0.62em;
+  font-size: 0.7em;
 }
 
 .news-copy .title-sub {
   margin-top: 4px;
-  font-size: 15px;
+  font-size: 16px;
   color: var(--ink-faint);
 }
 
