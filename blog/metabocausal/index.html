@@ -4,15 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>When a better blood marker is not a better medicine — Shucheng (Bangli) Cao</title>
-<meta name="description" content="MetaboCausal connects genetic evidence to disease and drug-development history, helping teams decide what to test next.">
+<title>Building an AI agent that can’t fake drug-target evidence: from a metabolite in blood to the gene behind it — Shucheng (Bangli) Cao</title>
+<meta name="description" content="The second evidence agent: what carried over from the first, what a metabolite broke, and what I added—including an evidence state computed by a function that no model can change.">
 <meta name="author" content="Shucheng Cao (Bangli Cao)">
 <link rel="canonical" href="https://shuchengcaoxin.github.io/blog/metabocausal/">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='6' fill='%231f5b4d'/><text x='32' y='41' text-anchor='middle' font-family='Georgia' font-size='25' fill='%23f5f6f2'>SC</text></svg>">
 
 <meta property="og:type" content="article">
-<meta property="og:title" content="When a better blood marker is not a better medicine">
-<meta property="og:description" content="Meet MetaboCausal: a source-linked path from molecules in blood to genes, disease and drug history.">
+<meta property="og:title" content="Building an AI agent that can’t fake drug-target evidence: from a metabolite in blood to the gene behind it">
+<meta property="og:description" content="What carried over from the first agent, what a metabolite broke, and what I added—including a verdict no model is allowed to write.">
 <meta property="og:url" content="https://shuchengcaoxin.github.io/blog/metabocausal/">
 <meta property="og:image" content="https://shuchengcaoxin.github.io/assets/blog/metabocausal-cetp-timeline.png">
 <meta property="og:image:width" content="1126">
@@ -26,11 +26,11 @@
 {
   "@context": "https://schema.org",
   "@type": "Article",
-  "headline": "When a better blood marker is not a better medicine",
-  "description": "MetaboCausal connects genetic evidence to disease and drug-development history, helping teams decide what to test next.",
+  "headline": "Building an AI agent that can’t fake drug-target evidence: from a metabolite in blood to the gene behind it",
+  "description": "The second evidence agent: what carried over from the first, what a metabolite broke, and what was added—including an evidence state computed by a function rather than written by a model.",
   "image": "https://shuchengcaoxin.github.io/assets/blog/metabocausal-cetp-timeline.png",
   "datePublished": "2026-09-12",
-  "dateModified": "2026-09-12",
+  "dateModified": "2026-09-15",
   "author": {
     "@type": "Person",
     "name": "Shucheng Cao",
@@ -103,10 +103,12 @@ footer a{color:var(--ink-2);text-decoration:none}
 
 <div class="wrap">
 <article>
-  <div class="kicker">MetaboCausal · Hackathon build</div>
-  <h1>When a better blood marker is not a better medicine</h1>
-  <p class="standfirst">MetaboCausal connects genetic evidence to disease and drug-development history, helping research and drug teams choose the next question worth testing.</p>
-  <p class="byline">By <a href="/" rel="author">Shucheng Cao (Bangli Cao)</a> with the MetaboCausal team · 12 September 2026 · 4 min read</p>
+  <div class="kicker">MetaboCausal · Evidence agents, part 2</div>
+  <h1>Building an AI agent that can’t fake drug-target evidence: from a metabolite in blood to the gene behind it</h1>
+  <p class="standfirst">A blood marker that moves is not yet a target worth pursuing. MetaboCausal goes from a molecule in blood to the gene acting behind it, and on to what the clinic has already tried—and computes its verdict with a function instead of letting a model write one.</p>
+  <p class="byline">By <a href="/" rel="author">Shucheng Cao (Bangli Cao)</a> with the MetaboCausal team · 12 September 2026 · 6 min read</p>
+
+  <p>This is the second agent I have built this way. <a href="/blog/what-the-agent-gets-wrong/">The first one</a> answers protein–disease questions and is where the recording-and-rendering core comes from. That core carried over unchanged. Almost everything else is new, because a metabolite is a harder place to start than a protein: its identity has to be resolved first, and the gene acting behind it has to be nominated before there is a target question at all. On top of that sit a literature layer, a biochemical-context module, and a classifier that decides the verdict so that no model writes it. If none of this biology is yours, <a href="#carried">that section</a> is the one to read.</p>
 
   <h2>The problem</h2>
   <p>A treatment can improve a number in a blood test and still fail to help patients. That gap matters to scientists choosing experiments, and to drug teams deciding where to spend years of work.</p>
@@ -136,6 +138,27 @@ footer a{color:var(--ink-2);text-decoration:none}
   </div>
 
   <p>The system uses public research sources, including genetic databases, Europe PMC, Semantic Scholar, Open Targets and clinical-trial records. An AI model can explain the result in plain language, but the sources, numbers and dates remain visible for checking. The current integration supports OpenAI and Claude.</p>
+
+  <h2 id="carried">What carried over, what broke, and what I added</h2>
+
+  <p>Three things carried over from the previous agent without change. Every tool call is recorded together with its return, word for word. The card is then built from those stored returns by code—tables, numbers, caveats, sources—so nothing a reader might want to check is written by a model. And whatever prose a model does add is compared against those same stored returns, and the run fails when the prose outruns them.</p>
+
+  <p>Two things had to be rebuilt, both because a metabolite is not a protein. <strong>Identity:</strong> a protein arrives with one accession, while a metabolite arrives as a common name, a synonym or a database id—so a run begins by resolving it through OLS4 and PubChem, and prints what it resolved to, because you cannot audit a resolution you cannot see. <strong>The effector gene:</strong> a protein is its own gene and a metabolite is not, so the gene has to be nominated—from an atlas or a paper where one exists, and otherwise from Human-GEM’s enzymes. That step is where a metabolite question becomes a target question, and everything downstream—druggability, population constraint, what the clinic already tried—hangs on which gene was named, so the nomination is printed together with the source it came from rather than quietly assumed.</p>
+
+  <p>The verdict is computed rather than written. A pure function reads the returns a run collected and assigns one of three states, and no model writes that sentence or can change it. In the two examples bundled with the public repository, urate × gout comes back <strong>State A</strong>—22 retrieved estimates, each carrying an effect size, an uncertainty and a p-value, retrieved from published sources and not computed here. Glycine × coronary artery disease comes back <strong>State B</strong>: no retrieved estimate exists, but the best exposure dataset carries 49 genome-wide significant hits and three outcome datasets are available, so that analysis is feasible and simply has not been run. State C is an evidence gap in the sources queried. None of the three, on its own, establishes causality.</p>
+
+  <p>Two decisions inside that classifier are the ones I would keep in any domain.</p>
+
+  <ul class="principles">
+    <li><strong>A later signal cannot rewrite an earlier judgement.</strong> Colocalisation runs after the state is assigned and its result is never handed back to the classifier, so nothing it returns can move a pair between states. It qualifies the evidence rather than quietly re-deciding it.</li>
+    <li><strong>A failed request is not a negative answer.</strong> In the bundled glycine run, the GWAS Catalog call ran past its deadline with the response still arriving. The card prints that the request failed, says plainly that this is not the same statement as the Catalog holding no association for that trait, and the state does not move.</li>
+  </ul>
+
+  <p>Two further layers sit on top of that core, and neither existed in the first agent. A literature layer widens the set of metabolite–disease pairs beyond the ones the MR resource already holds, through two independent searches whose overlapping results are matched and de-duplicated before anything moves downstream. A biochemical-context module built on Human-GEM nominates effector genes for metabolites where no atlas or paper names one, which is the case far more often than it is for proteins.</p>
+
+  <p>Both run in the working repository. The public snapshot linked above is the 12 September build and predates them, so its notes still describe those two as unfinished—worth saying plainly, because a reader who opens the repository should not have to reconcile it with this page on their own.</p>
+
+  <p>The interface is a Slack bot rather than one more standalone app, because the brief was agents that live where people already work. What the system does not do is held as firmly as what it does: it computes no MR and fits no colocalisation, and the public snapshot ships <strong>agent.py</strong> as an unfinished template rather than a finished model loop.</p>
 
   <h2>How the product is improving</h2>
   <p>We split the work into three MVPs—small, usable versions that each add one clear capability.</p>
@@ -170,6 +193,8 @@ footer a{color:var(--ink-2);text-decoration:none}
   </ul>
 
   <p>The public description stays at the product level. The team’s prompts, matching rules, internal data structure and deployment details remain in the private working repository.</p>
+
+  <p>The <a href="https://github.com/shuchengcaoxin/metabocausal" target="_blank" rel="noopener">public demo repository ↗</a> holds the runnable part. It regenerates two example cards from a bundled snapshot of earlier API responses, needing no account, key or Slack install—a historical replay rather than a live query. The repository also states which modules are unfinished, so a reader can separate what runs today from what is planned.</p>
 
   <div class="note">
     <p><strong>What it does not claim:</strong> MetaboCausal does not prove that a drug will work. It helps a team see the available evidence—and the gaps—before choosing the next test.</p>
@@ -206,9 +231,15 @@ footer a{color:var(--ink-2);text-decoration:none}
     </div>
   </div>
 
+  <p>With thanks to <strong>Baowen Qi</strong>, who took part in the planning and review discussions remotely from China, and whose questions on data sources and commercial boundaries shaped how we drew the public/private line above.</p>
+
   <h2>Related work and what comes next</h2>
   <p>MetaboCausal is a separate hackathon project related to <a href="https://github.com/shuchengcaoxin/OpenCausal" target="_blank" rel="noopener">OpenCausal ↗</a>, my earlier work on source-linked evidence cards for proteins and diseases. Here, the starting point is a molecule in blood.</p>
-  <p>Next we will merge the wider literature results, add pathway context, run the pipeline again on the combined table, and record a two-minute demo. The longer-term goal is a secure tool that lets teams bring their own data and model key while keeping every conclusion tied to evidence they can inspect.</p>
+  <p>The literature layer and the biochemical-context module are built; the next step is to publish them in the open snapshot, so that the public repository matches what actually runs. The longer-term goal is unchanged: a tool that lets a team bring their own data and their own model key, while every conclusion stays tied to evidence they can inspect.</p>
+
+  <div class="note">
+    <p><strong>Update — 15 September 2026.</strong> This post went up on 12 September under the title “When a better blood marker is not a better medicine”, framed around the CETP case and the product. I have retitled it as the second in a series on these agents, rewritten the standfirst and opening paragraph so that the question they pose ends at a target rather than at a marker, and added the section on what carried over, what broke and what I added, because the architecture is the part that transfers between domains. I also corrected the closing paragraph: the literature and biochemical-context layers are built, and the earlier wording still described them as work to come. The link to the public demo repository and the acknowledgement to Baowen Qi were added at the same time. The CETP account and the timeline above are unchanged.</p>
+  </div>
 
 </article>
 
