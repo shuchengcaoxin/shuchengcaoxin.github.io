@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1090 330" width="1090" height="330" role="img"
+     aria-label="How a task enters the benchmark, in five steps. One: propose a problem from your own field. Two: automated checks on format and completeness. Three, highlighted: review by people in that field, asked whether it is scientifically worth anything and whether the answer can be verified; a task with no checkable answer is rejected here. Four: a structured pull request, public and in a fixed shape. Five: frontier agents are run and how far they get enters a versioned release.">
+  <defs>
+    <style>
+      .box  { fill:#fffefb; stroke:#d5dad3; stroke-width:1.5 }
+      .boxk { fill:#1f5b4d; stroke:#1f5b4d; stroke-width:1.5 }
+      .n    { font-family:Charter,"Iowan Old Style",Palatino,Georgia,serif; font-size:19px; font-weight:700;
+              fill:#1f5b4d; text-anchor:middle }
+      .nk   { font-family:Charter,"Iowan Old Style",Palatino,Georgia,serif; font-size:19px; font-weight:700;
+              fill:#a4cfbf; text-anchor:middle }
+      .t    { font-family:Aptos,"Segoe UI",Helvetica,Arial,sans-serif; font-size:16px; font-weight:650;
+              fill:#17231f; text-anchor:middle }
+      .tk   { font-family:Aptos,"Segoe UI",Helvetica,Arial,sans-serif; font-size:16px; font-weight:650;
+              fill:#ffffff; text-anchor:middle }
+      .c    { font-family:Aptos,"Segoe UI",Helvetica,Arial,sans-serif; font-size:13px;
+              fill:#737e78; text-anchor:middle }
+      .ck   { font-family:Aptos,"Segoe UI",Helvetica,Arial,sans-serif; font-size:13px;
+              fill:#dfece6; text-anchor:middle }
+      .rej  { font-family:Aptos,"Segoe UI",Helvetica,Arial,sans-serif; font-size:13px; font-weight:650;
+              fill:#9a5b42; text-anchor:middle }
+      .hd   { font-family:Aptos,"Segoe UI",Helvetica,Arial,sans-serif; font-size:12px; font-weight:700;
+              letter-spacing:1.6px; fill:#737e78 }
+    </style>
+    <marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#aeb8b0"/>
+    </marker>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9a5b42"/>
+    </marker>
+  </defs>
+
+  <rect width="1090" height="330" fill="#f5f6f2"/>
+  <text class="hd" x="20" y="28">HOW A TASK GETS IN</text>
+
+  <!-- 1 -->
+  <rect class="box" x="20" y="58" width="170" height="104" rx="10"/>
+  <text class="n" x="105" y="88">1</text>
+  <text class="t" x="105" y="112">Propose</text>
+  <text class="c" x="105" y="134">a problem from</text>
+  <text class="c" x="105" y="150">your own field</text>
+  <line x1="196" y1="110" x2="238" y2="110" stroke="#aeb8b0" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- 2 -->
+  <rect class="box" x="245" y="58" width="170" height="104" rx="10"/>
+  <text class="n" x="330" y="88">2</text>
+  <text class="t" x="330" y="112">Automated checks</text>
+  <text class="c" x="330" y="134">format and</text>
+  <text class="c" x="330" y="150">completeness</text>
+  <line x1="421" y1="110" x2="463" y2="110" stroke="#aeb8b0" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- 3 highlighted -->
+  <rect class="boxk" x="470" y="48" width="170" height="124" rx="10"/>
+  <text class="nk" x="555" y="80">3</text>
+  <text class="tk" x="555" y="104">Domain review</text>
+  <text class="ck" x="555" y="126">worth anything?</text>
+  <text class="ck" x="555" y="143">verifiable?</text>
+  <text class="ck" x="555" y="160">by people in the field</text>
+  <line x1="646" y1="110" x2="688" y2="110" stroke="#aeb8b0" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- rejection branch -->
+  <line x1="555" y1="178" x2="555" y2="222" stroke="#9a5b42" stroke-width="2" marker-end="url(#ar)"/>
+  <text class="rej" x="555" y="248">no checkable answer,</text>
+  <text class="rej" x="555" y="266">no entry</text>
+
+  <!-- 4 -->
+  <rect class="box" x="695" y="58" width="170" height="104" rx="10"/>
+  <text class="n" x="780" y="88">4</text>
+  <text class="t" x="780" y="112">Pull request</text>
+  <text class="c" x="780" y="134">public, in a</text>
+  <text class="c" x="780" y="150">fixed shape</text>
+  <line x1="871" y1="110" x2="913" y2="110" stroke="#aeb8b0" stroke-width="2" marker-end="url(#a)"/>
+
+  <!-- 5 -->
+  <rect class="box" x="920" y="58" width="150" height="104" rx="10"/>
+  <text class="n" x="995" y="88">5</text>
+  <text class="t" x="995" y="112">Run &amp; release</text>
+  <text class="c" x="995" y="134">how far frontier</text>
+  <text class="c" x="995" y="150">agents get</text>
+
+  <line x1="20" y1="300" x2="1070" y2="300" stroke="#d5dad3" stroke-width="1"/>
+  <text class="c" x="545" y="322" style="font-size:13.5px">Review happens on GitHub, in public. Reviewers are credited permanently.</text>
+</svg>

@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 760" width="560" height="760" role="img"
+     aria-label="How a task enters the benchmark, in five steps, stacked. One: propose a problem from your own field. Two: automated checks on format and completeness. Three, highlighted: review by people in that field, asked whether it is scientifically worth anything and whether the answer can be verified; a task with no checkable answer does not get in. Four: a structured pull request, public and in a fixed shape. Five: frontier agents are run and how far they get enters a versioned release.">
+  <defs>
+    <style>
+      .box  { fill:#fffefb; stroke:#d5dad3; stroke-width:1.5 }
+      .boxk { fill:#1f5b4d; stroke:#1f5b4d; stroke-width:1.5 }
+      .n    { font-family:Charter,"Iowan Old Style",Palatino,Georgia,serif; font-size:20px; font-weight:700; fill:#1f5b4d }
+      .nk   { font-family:Charter,"Iowan Old Style",Palatino,Georgia,serif; font-size:20px; font-weight:700; fill:#a4cfbf }
+      .t    { font-family:Aptos,"Segoe UI",Helvetica,Arial,sans-serif; font-size:19px; font-weight:650; fill:#17231f }
+      .tk   { font-family:Aptos,"Segoe UI",Helvetica,Arial,sans-serif; font-size:19px; font-weight:650; fill:#ffffff }
+      .c    { font-family:Aptos,"Segoe UI",Helvetica,Arial,sans-serif; font-size:15px; fill:#737e78 }
+      .ck   { font-family:Aptos,"Segoe UI",Helvetica,Arial,sans-serif; font-size:15px; fill:#dfece6 }
+      .rej  { font-family:Aptos,"Segoe UI",Helvetica,Arial,sans-serif; font-size:15px; font-weight:650; fill:#9a5b42 }
+      .hd   { font-family:Aptos,"Segoe UI",Helvetica,Arial,sans-serif; font-size:13px; font-weight:700;
+              letter-spacing:1.6px; fill:#737e78 }
+    </style>
+    <marker id="b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#aeb8b0"/>
+    </marker>
+    <marker id="br" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#9a5b42"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="760" fill="#f5f6f2"/>
+  <text class="hd" x="24" y="32">HOW A TASK GETS IN</text>
+
+  <rect class="box" x="24" y="52" width="400" height="86" rx="10"/>
+  <text class="n" x="44" y="82">1</text>
+  <text class="t" x="70" y="82">Propose</text>
+  <text class="c" x="70" y="108">a problem from your own field</text>
+  <line x1="120" y1="142" x2="120" y2="172" stroke="#aeb8b0" stroke-width="2" marker-end="url(#b)"/>
+
+  <rect class="box" x="24" y="178" width="400" height="86" rx="10"/>
+  <text class="n" x="44" y="208">2</text>
+  <text class="t" x="70" y="208">Automated checks</text>
+  <text class="c" x="70" y="234">format and completeness</text>
+  <line x1="120" y1="268" x2="120" y2="298" stroke="#aeb8b0" stroke-width="2" marker-end="url(#b)"/>
+
+  <rect class="boxk" x="24" y="304" width="400" height="112" rx="10"/>
+  <text class="nk" x="44" y="334">3</text>
+  <text class="tk" x="70" y="334">Domain review</text>
+  <text class="ck" x="70" y="360">worth anything? verifiable?</text>
+  <text class="ck" x="70" y="386">by people in the field</text>
+
+  <line x1="120" y1="420" x2="120" y2="450" stroke="#aeb8b0" stroke-width="2" marker-end="url(#b)"/>
+  <line x1="330" y1="420" x2="330" y2="450" stroke="#9a5b42" stroke-width="2" marker-end="url(#br)"/>
+  <text class="rej" x="252" y="476">no checkable answer, no entry</text>
+
+  <rect class="box" x="24" y="496" width="400" height="86" rx="10"/>
+  <text class="n" x="44" y="526">4</text>
+  <text class="t" x="70" y="526">Pull request</text>
+  <text class="c" x="70" y="552">public, in a fixed shape</text>
+  <line x1="120" y1="586" x2="120" y2="616" stroke="#aeb8b0" stroke-width="2" marker-end="url(#b)"/>
+
+  <rect class="box" x="24" y="622" width="400" height="86" rx="10"/>
+  <text class="n" x="44" y="652">5</text>
+  <text class="t" x="70" y="652">Run &amp; release</text>
+  <text class="c" x="70" y="678">how far frontier agents get</text>
+
+  <text class="c" x="24" y="740">Review happens on GitHub, in public.</text>
+</svg>
