@@ -121,7 +121,7 @@ footer a{color:var(--ink-2);text-decoration:none}
   <p class="standfirst">LLMs hallucinate, and this is the second agent I built to stop one from doing it. This one starts from a molecule in blood (a metabolite) rather than a protein, so before it can say anything about a drug target it has to find the gene behind that molecule. The verdict itself is computed by a function, not written by a model.</p>
   <p class="byline">By <a href="/" rel="author">Shucheng Cao (Bangli Cao)</a> with the MetaboCausal team · 12 September 2026 · 6 min read</p>
 
-  <p>This is the second agent I have built this way. <a href="/blog/what-the-agent-gets-wrong/">The first one</a> answers protein–disease questions and is where the recording-and-rendering core comes from. That core carried over unchanged. Almost everything else is new, because a metabolite is a harder place to start than a protein: its identity has to be resolved first, and the gene acting behind it has to be nominated before there is a target question at all. On top of that sit a literature layer, a biochemical-context module, and a classifier that decides the verdict so that no model writes it. If none of this biology is yours, <a href="#carried">that section</a> is the one to read.</p>
+  <p>This is the second agent I have built this way. <a href="/blog/what-the-agent-gets-wrong/">The first one</a> answers protein–disease questions, and its core came over unchanged: every tool call is recorded, the card is written by code, and the model is held to two sentences. Everything else here is new — pinning down which molecule you mean, naming the gene behind it, a literature layer, a module for biochemical context, and a classifier that settles the verdict so that no model writes it. If none of this biology is yours, <a href="#carried">that part</a> is the one to read.</p>
 
   <nav class="toc" aria-label="Contents">
     <div class="h">Contents</div>
@@ -135,6 +135,7 @@ footer a{color:var(--ink-2);text-decoration:none}
       <li><a href="#protects">How I keep it from making things up (reducing hallucination)</a></li>
       <li><a href="#team">Meet the team</a></li>
       <li><a href="#next">Related work and what comes next</a></li>
+      <li><a href="#learned">What building the second one taught me</a></li>
     </ol>
   </nav>
 
@@ -310,6 +311,16 @@ footer a{color:var(--ink-2);text-decoration:none}
   <h2 id="next">Related work and what comes next</h2>
   <p>MetaboCausal is a separate hackathon project related to <a href="https://github.com/shuchengcaoxin/OpenCausal" target="_blank" rel="noopener">OpenCausal ↗</a>, my earlier work on source-linked evidence cards for proteins and diseases. Here, the starting point is a molecule in blood.</p>
   <p>The literature layer and the biochemical-context module are built; the next step is to publish them in the open snapshot, so that the public repository matches what actually runs. The longer-term goal is unchanged: a tool that lets a team bring their own data and their own model key, while every conclusion stays tied to evidence they can inspect.</p>
+
+  <h2 id="learned">What building the second one taught me</h2>
+
+  <ol>
+    <li><strong>The plumbing travels; the science does not.</strong> The ledger, the code-written card and the validator moved across without argument. Everything that makes a field what it is — what counts as an identity, what counts as a target, which checks a claim needs before it may use the word causal — had to be built again from nothing.</li>
+    <li><strong>The cheapest place to stop a wrong answer is the input.</strong> The first agent spent its effort on the output check, catching the model after it had written. Refusing a question that cannot be read costs one line and prevents the whole chain.</li>
+    <li><strong>A late signal must not rewrite an early judgement.</strong> Colocalisation runs after the evidence state is assigned and is never handed back to the classifier. A number that arrives late can qualify what was decided; it cannot quietly re-decide it.</li>
+  </ol>
+
+  <p><strong>Questions and corrections are both welcome.</strong> If you run it on a molecule you care about and the card gets something wrong, that is the most useful message I can get. Write to <a href="mailto:shucheng.cao@mail.mcgill.ca">shucheng.cao@mail.mcgill.ca</a>.</p>
 
   <div class="note">
     <p><strong>Update — 15 September 2026.</strong> This post went up on 12 September under the title “When a better blood marker is not a better medicine”, written around the CETP case and the product rather than the agent. It has since been retitled and reopened to match <a href="/blog/what-the-agent-gets-wrong/">the first post in this pair</a>, and a section was added on what carried over from that agent, what a metabolite broke, and what is new here.</p>
