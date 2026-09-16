@@ -278,7 +278,6 @@ h2{scroll-margin-top:64px}
     <ol>
       <li><a href="#background">Background</a></li>
       <li><a href="#why">What the agent does</a></li>
-      <li><a href="#lessons">What I learned</a></li>
       <li><a href="#product">What it ships</a></li>
       <li><a href="#asks">What it asks each database</a></li>
       <li><a href="#nofake">How I keep it from making things up</a></li>
@@ -289,23 +288,9 @@ h2{scroll-margin-top:64px}
       <li><a href="#vanity">Why a perfect pass rate meant nothing</a></li>
       <li><a href="#external">Tested on data I did not pick</a></li>
       <li><a href="#phase3">The pharmacology was right, and it still did not work</a></li>
+      <li><a href="#lessons">What I learned</a></li>
     </ol>
   </nav>
-
-  <h2 id="lessons">What I learned</h2>
-
-  <ol>
-    <li><strong>"The model was right" is not the same as "the pipeline supported it."</strong>
-    Track the second one, because the first will keep being true until it suddenly isn't, and you will
-    have built no way to notice.</li>
-    <li><strong>An estimate existing is not an estimate being validated.</strong> If your sources carry their own quality checks, make the language your system is allowed to use depend on them.</li>
-    <li><strong>Ask what your measurement is actually measuring.</strong> For plasma proteins the answer is often how much broken-off protein is floating in blood, not how much is working on cells &#8212; shedding (receptors cut loose into the blood) and clearance can dominate the number &#8212; and whether a protein does this is recorded in the UniProt annotations the pipeline already retrieves.</li>
-    <li><strong>Report how much was checkable, not just how much passed.</strong> A pass rate
-    without claim density measures caution, not accuracy.</li>
-    <li><strong>Attack your own guardrails before trusting them.</strong> I would have shipped
-    mine with a clean conscience. Recall 0/18 is not a number you discover by staring at your own
-    code.</li>
-  </ol>
 
   <h2 id="product">What it ships</h2>
 
@@ -671,6 +656,21 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
 
   <p>Making the silence visible is the whole argument. A card that prints
   <code>Steiger / coloc / LD → NA / NA / NA</code> and refuses the causal sentence is not being fussy; it is refusing to make that bet on the reader&#8217;s behalf.</p>
+
+  <h2 id="lessons">What I learned</h2>
+
+  <ol>
+    <li><strong>"The model was right" is not the same as "the pipeline supported it."</strong>
+    Track the second one, because the first will keep being true until it suddenly isn't, and you will
+    have built no way to notice.</li>
+    <li><strong>An estimate existing is not an estimate being validated.</strong> If your sources carry their own quality checks, make the language your system is allowed to use depend on them.</li>
+    <li><strong>Ask what your measurement is actually measuring.</strong> For plasma proteins the answer is often how much broken-off protein is floating in blood, not how much is working on cells &#8212; shedding (receptors cut loose into the blood) and clearance can dominate the number &#8212; and whether a protein does this is recorded in the UniProt annotations the pipeline already retrieves.</li>
+    <li><strong>Report how much was checkable, not just how much passed.</strong> A pass rate
+    without claim density measures caution, not accuracy.</li>
+    <li><strong>Attack your own guardrails before trusting them.</strong> I would have shipped
+    mine with a clean conscience. Recall 0/18 is not a number you discover by staring at your own
+    code.</li>
+  </ol>
 
   <p>The code, the 62 regression tests holding the validator&#8217;s rules in place, and the
   audit are open, in the repo built during the CABS 2026 data science internship. Every MR
