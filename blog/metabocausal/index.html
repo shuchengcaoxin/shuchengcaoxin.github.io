@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Building an AI agent that can’t fake drug-target evidence: from a metabolite in blood, through the gene behind it, to whether it is worth a drug — Shucheng (Bangli) Cao</title>
-<meta name="description" content="LLMs hallucinate. The second agent I built to make that harder, this time starting from a molecule in blood: it finds the gene behind the molecule, and computes its verdict with a function rather than letting a model write one.">
+<meta name="description" content="LLMs hallucinate. The second agent I built so that a made-up claim would not reach the page, this time starting from a molecule in blood: it finds the gene behind the molecule, and computes its verdict with a function rather than letting a model write one.">
 <meta name="author" content="Shucheng Cao (Bangli Cao)">
 <link rel="canonical" href="https://shuchengcaoxin.github.io/blog/metabocausal/">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='6' fill='%231f5b4d'/><text x='32' y='41' text-anchor='middle' font-family='Georgia' font-size='25' fill='%23f5f6f2'>SC</text></svg>">
@@ -118,7 +118,7 @@ footer a{color:var(--ink-2);text-decoration:none}
 <article>
   <div class="kicker">MetaboCausal · Evidence agents, part 2</div>
   <h1>Building an AI agent that can’t fake drug-target evidence<span class="title-sub">from a metabolite in blood, through the gene behind it, to whether it is worth a drug</span></h1>
-  <p class="standfirst">LLMs hallucinate, and this is the second agent I built to make that harder. This one starts from a molecule in blood (a metabolite) rather than a protein, so before it can say anything about a drug target it has to find the gene behind that molecule. The verdict itself is computed by a function, not written by a model.</p>
+  <p class="standfirst">LLMs hallucinate, and this is the second agent I built so that a made-up claim would not reach the page. This one starts from a molecule in blood (a metabolite) rather than a protein, so before it can say anything about a drug target it has to find the gene behind that molecule. The verdict itself is computed by a function, not written by a model.</p>
   <p class="byline">By <a href="/" rel="author">Shucheng Cao (Bangli Cao)</a> with the MetaboCausal team · 12 September 2026 · 6 min read</p>
 
   <p>This is the second agent I have built this way. <a href="/blog/what-the-agent-gets-wrong/">The first one</a> answers protein–disease questions, and its core came over unchanged: every tool call is recorded, the card is written by code, and the model is held to two sentences. Everything else here is new — pinning down which molecule you mean, naming the gene behind it, a literature layer, a module for biochemical context, and a classifier that settles the verdict so that no model writes it. If none of this biology is yours, <a href="#carried">that part</a> is the one to read.</p>
