@@ -78,5 +78,5 @@
   <text class="c" x="995" y="150">agents get</text>
 
   <line x1="20" y1="300" x2="1070" y2="300" stroke="#d5dad3" stroke-width="1"/>
-  <text class="c" x="545" y="322" style="font-size:13.5px">Review happens on GitHub, in public. Reviewers are credited permanently.</text>
+  <text class="c" x="545" y="322" style="font-size:13.5px">Reviews are written on the website and synced to GitHub. Reviewers are credited permanently.</text>
 </svg>
