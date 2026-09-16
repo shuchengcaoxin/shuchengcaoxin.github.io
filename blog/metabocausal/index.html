@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Building an AI agent that can’t fake drug-target evidence: from a metabolite in blood, through the gene behind it, to whether it is worth a drug — Shucheng (Bangli) Cao</title>
-<meta name="description" content="The second evidence agent: what carried over from the first, what a metabolite broke, and what I added—including an evidence state computed by a function that no model can change.">
+<meta name="description" content="LLMs hallucinate. The second agent I built to stop one from doing it, this time starting from a molecule in blood: it finds the gene behind the molecule, and computes its verdict with a function rather than letting a model write one.">
 <meta name="author" content="Shucheng Cao (Bangli Cao)">
 <link rel="canonical" href="https://shuchengcaoxin.github.io/blog/metabocausal/">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='6' fill='%231f5b4d'/><text x='32' y='41' text-anchor='middle' font-family='Georgia' font-size='25' fill='%23f5f6f2'>SC</text></svg>">
 
 <meta property="og:type" content="article">
 <meta property="og:title" content="Building an AI agent that can’t fake drug-target evidence: from a metabolite in blood, through the gene behind it, to whether it is worth a drug">
-<meta property="og:description" content="What carried over from the first agent, what a metabolite broke, and what I added—including a verdict no model is allowed to write.">
+<meta property="og:description" content="The second agent, starting from a molecule in blood: it finds the gene behind the molecule, and its verdict is computed by a function rather than written by a model.">
 <meta property="og:url" content="https://shuchengcaoxin.github.io/blog/metabocausal/">
 <meta property="og:image" content="https://shuchengcaoxin.github.io/assets/blog/metabocausal-cetp-timeline.png">
 <meta property="og:image:width" content="1126">
@@ -27,7 +27,7 @@
   "@context": "https://schema.org",
   "@type": "Article",
   "headline": "Building an AI agent that can’t fake drug-target evidence: from a metabolite in blood, through the gene behind it, to whether it is worth a drug",
-  "description": "The second evidence agent: what carried over from the first, what a metabolite broke, and what was added—including an evidence state computed by a function rather than written by a model.",
+  "description": "The second agent built against hallucination, this time starting from a molecule in blood: it finds the gene behind the molecule, and its evidence state is computed by a function rather than written by a model.",
   "image": "https://shuchengcaoxin.github.io/assets/blog/metabocausal-cetp-timeline.png",
   "datePublished": "2026-09-12",
   "dateModified": "2026-09-15",
@@ -87,7 +87,7 @@ figcaption{font-size:14px;line-height:1.5;color:var(--ink-3);margin-top:9px}
 .person:first-child{grid-column:1/-1}
 .person h3{font-family:var(--display);font-size:18px;margin:0 0 4px}.person p{font-size:14.5px;line-height:1.5;color:var(--ink-2);margin:0 0 7px}
 .person a,.soon{font-size:13px}.soon{color:var(--ink-3)}
-.note{background:var(--amber-soft);border:1px solid var(--amber);border-radius:10px;padding:15px 17px;margin:24px 0}.note p{margin:0}
+.note{background:var(--amber-soft);border:1px solid var(--amber);border-radius:10px;padding:15px 17px;margin:24px 0}.note p{margin:0 0 12px}.note p:last-child{margin:0}
 footer{border-top:1px solid var(--line);margin-top:44px;padding:20px 0 40px;font-size:14px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:16px}
 footer a{color:var(--ink-2);text-decoration:none}
 @media(max-width:640px){body{font-size:16px}h1{font-size:29px}h1 .title-sub{font-size:17px;margin-top:9px}h2{font-size:21px}.standfirst{font-size:17px}.steps,.team{grid-template-columns:1fr}}
@@ -106,12 +106,17 @@ footer a{color:var(--ink-2);text-decoration:none}
 <article>
   <div class="kicker">MetaboCausal · Evidence agents, part 2</div>
   <h1>Building an AI agent that can’t fake drug-target evidence<span class="title-sub">from a metabolite in blood, through the gene behind it, to whether it is worth a drug</span></h1>
-  <p class="standfirst">A blood marker that moves is not yet a target worth pursuing. MetaboCausal goes from a molecule in blood to the gene acting behind it, and on to what the clinic has already tried—and computes its verdict with a function instead of letting a model write one.</p>
+  <p class="standfirst">LLMs hallucinate, and this is the second agent I built to stop one from doing it. This one starts from a molecule in blood rather than a protein, so before it can say anything about a drug target it has to find the gene behind that molecule. The verdict itself is computed by a function, not written by a model.</p>
   <p class="byline">By <a href="/" rel="author">Shucheng Cao (Bangli Cao)</a> with the MetaboCausal team · 12 September 2026 · 6 min read</p>
 
   <p>This is the second agent I have built this way. <a href="/blog/what-the-agent-gets-wrong/">The first one</a> answers protein–disease questions and is where the recording-and-rendering core comes from. That core carried over unchanged. Almost everything else is new, because a metabolite is a harder place to start than a protein: its identity has to be resolved first, and the gene acting behind it has to be nominated before there is a target question at all. On top of that sit a literature layer, a biochemical-context module, and a classifier that decides the verdict so that no model writes it. If none of this biology is yours, <a href="#carried">that section</a> is the one to read.</p>
 
-  <h2>The problem</h2>
+  <h2 id="background">Background</h2>
+
+  <p>Think of the body as a production line. DNA is the blueprint, RNA the work order, a protein is the machine, and a metabolite is the finished goods on the shelf — glucose, LDL cholesterol, creatinine, the numbers on an ordinary blood test. How you feel depends on what is on the shelf. Diet, medication and gut bacteria put things on it directly, without passing through the genes at all, so a metabolite is the one reading that sums up both what you inherited and what happened to you, and it sits one step from the disease.</p>
+
+  <p>But you cannot make a drug out of the shelf. A statin lowers cholesterol by blocking HMGCR, the enzyme that makes it — an enzyme being a protein whose job is to build or break one metabolite. So a question that starts at a metabolite still has to end at a gene, and finding that gene is the step this agent had to add.</p>
+
   <p>A treatment can improve a number in a blood test and still fail to help patients. That gap matters to scientists choosing experiments, and to drug teams deciding where to spend years of work.</p>
   <p>Useful evidence is scattered across genetic studies, papers, drug records and clinical trials. Each source tells only part of the story. Reading them separately makes it easy to miss a warning—or mistake a promising marker for a useful treatment.</p>
 
@@ -239,7 +244,8 @@ footer a{color:var(--ink-2);text-decoration:none}
   <p>The literature layer and the biochemical-context module are built; the next step is to publish them in the open snapshot, so that the public repository matches what actually runs. The longer-term goal is unchanged: a tool that lets a team bring their own data and their own model key, while every conclusion stays tied to evidence they can inspect.</p>
 
   <div class="note">
-    <p><strong>Update — 15 September 2026.</strong> This post went up on 12 September under the title “When a better blood marker is not a better medicine”, framed around the CETP case and the product. I have retitled it as the second in a series on these agents, rewritten the standfirst and opening paragraph so that the question they pose ends at a target rather than at a marker, and added the section on what carried over, what broke and what I added, because the architecture is the part that transfers between domains. I also corrected the closing paragraph: the literature and biochemical-context layers are built, and the earlier wording still described them as work to come. The link to the public demo repository and the acknowledgement to Baowen Qi were added at the same time. The CETP account and the timeline above are unchanged.</p>
+    <p><strong>Update — 15 September 2026.</strong> This post went up on 12 September under the title “When a better blood marker is not a better medicine”, written around the CETP case and the product rather than the agent. It has since been retitled and reopened to match <a href="/blog/what-the-agent-gets-wrong/">the first post in this pair</a>, and a section was added on what carried over from that agent, what a metabolite broke, and what is new here.</p>
+    <p><strong>One correction:</strong> the closing paragraph described the literature and biochemical-context layers as work still to come. They are built; what remains is publishing them in the open snapshot. The CETP account, the timeline and the team section are unchanged.</p>
   </div>
 
 </article>
