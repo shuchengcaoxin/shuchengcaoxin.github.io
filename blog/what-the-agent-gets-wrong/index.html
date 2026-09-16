@@ -259,19 +259,19 @@ h2{scroll-margin-top:64px}
   chemical is known to hit it, and whether switching it off is likely to be safe. None of them
   needs an account or a paid key.</p>
 
-  <p>This is exactly the kind of work people now hand to a model: <strong>cheap labour that
-  never gets bored.</strong></p>
+  <p><strong>Handing this job to a model is the obvious move.</strong> It is cheap labour that
+  never gets bored, and there are thousands of proteins to get through.</p>
 
-  <p><strong>This is why hallucination is dangerous here.</strong> A model answers fluently whether
-  or not it has grounds to, and cheap labour that invents its evidence is not cheap: a
-  confident wrong sentence costs a multi-year programme, not a wrong answer. So I built the
-  agent, then spent the summer trying to make it fail.</p>
+  <p><strong>It is also the dangerous one.</strong> A model answers fluently whether or not it
+  has grounds to, and cheap labour that invents its evidence is not cheap: here a confident
+  wrong sentence costs years of work, not just a wrong answer.</p>
 
-  <p><strong>If none of this biology is yours:</strong> the shape is an agent that retrieves
-  from a fixed set of sources and then writes a conclusion over them. What has to be checked is
-  not whether the sentence is true &#8212; it is whether the retrieval supports it. Those two
-  come apart quietly, and nothing downstream notices. The rest of this post is a worked example
-  of that, in a domain where being wrong is expensive.</p>
+  <p>So the question the whole design turns on is not whether the card&#8217;s sentences are
+  true. It is whether anything the agent retrieved actually supports them. Those two things come
+  apart quietly, and nothing downstream notices.</p>
+
+  <p>That is why I spent the summer attacking my own agent rather than adding to it. The rest of
+  this post is what the attacks found.</p>
 
   <nav class="toc" aria-label="Contents">
     <div class="h">Contents</div>
