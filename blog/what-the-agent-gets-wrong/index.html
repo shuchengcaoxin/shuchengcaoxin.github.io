@@ -313,8 +313,7 @@ h2{scroll-margin-top:64px}
 
   <p>Down the side is the list of databases, each with a tick. Not everyone wants all of them.
   Un-tick the ones you do not need and the run is faster; where they would have been, the card
-  says <code>tool not called in this run</code>. The same thing runs from the command line if you
-  prefer.</p>
+  says <code>tool not called in this run</code>.</p>
 
   <p>Under the card sit two figures drawn from the same tool output: the retrieved MR estimates,
   and where the gene sits on the knock-out-tolerance scale.</p>
@@ -443,10 +442,10 @@ h2{scroll-margin-top:64px}
     independent agent fails to knock the claim down.</figcaption>
   </figure>
 
-  <p><strong>My validator flagged 0 of the 18 &#8212; a recall of zero.</strong> Every check I had written was necessary, and none of them covered the failures that mattered.</p>
+  <p><strong>My validator flagged 0 of the 18.</strong> Every check I had written was necessary,
+  and none of them covered the failures that mattered.</p>
 
-  <p><em>What follows is the engineering story behind those numbers, for readers who want
-  it. The conclusions above stand without it.</em></p>
+  <p><em>What follows is the engineering story behind that number, for readers who want it.</em></p>
 
   <h2 id="case">The case: IL6R &#215; coronary heart disease</h2>
 
@@ -479,10 +478,10 @@ ld_check              null</code></pre>
   <p>One piece of biology resolves it, in four steps.</p>
 
   <ol>
-    <li>The genetic variant behind this estimate &#8212; rs4129267, a near-perfect stand-in
-    (r&#178; &#8776; 0.96&#8211;0.99 in Europeans) for the missense variant rs2228145 &#8212;
-    changes the IL-6 receptor so that it is <strong>more easily cut off the cell
-    surface</strong>. The cutting is done by an enzyme (ADAM17), and the process is called
+    <li>The genetic variant behind this estimate &#8212; rs4129267, which is inherited together
+    with rs2228145 almost every time, so one stands in for the other (r&#178; &#8776;
+    0.96&#8211;0.99 in Europeans) &#8212; changes the IL-6 receptor so that it is
+    <strong>more easily cut off the cell surface</strong>. The cutting is done by an enzyme (ADAM17), and the process is called
     shedding.</li>
     <li>The cut-off piece drifts in the blood &#8212; and <strong>that drifting piece is
     what the plasma assay measures</strong>. So people who carry the variant show
