@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Building an AI agent that can&#8217;t fake drug-target evidence: from a protein to whether it is worth a drug — Shucheng (Bangli) Cao</title>
-<meta name="description" content="The most dangerous failure was not a made-up number. It was a correct conclusion that nothing the agent had retrieved supported — every check came back clean, and every expert who read it nodded.">
+<meta name="description" content="LLMs hallucinate. Researchers in academia and industry still search by hand for the mechanism behind their results. So I built an agent for biomedicine that only prints what its sources returned.">
 <meta name="author" content="Shucheng Cao (Bangli Cao)">
 <link rel="canonical" href="https://shuchengcaoxin.github.io/blog/what-the-agent-gets-wrong/">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='6' fill='%231f5b4d'/><text x='32' y='41' text-anchor='middle' font-family='Georgia' font-size='25' fill='%23f5f6f2'>SC</text></svg>">
 
 <meta property="og:type" content="article">
 <meta property="og:title" content="Building an AI agent that can&#8217;t fake drug-target evidence: from a protein to whether it is worth a drug">
-<meta property="og:description" content="The most dangerous failure was not a made-up number. It was a correct conclusion that nothing the agent had retrieved supported.">
+<meta property="og:description" content="LLMs hallucinate. Researchers still search by hand for the mechanism behind their results. I built an agent for biomedicine that only prints what its sources returned.">
 <meta property="og:url" content="https://shuchengcaoxin.github.io/blog/what-the-agent-gets-wrong/">
 <meta property="og:image" content="https://shuchengcaoxin.github.io/assets/blog/og-share.png">
 <meta property="og:image:width" content="1200">
@@ -213,8 +213,36 @@ h2{scroll-margin-top:64px}
 
   <div class="kicker">Engineering</div>
   <h1>Building an AI agent that can&#8217;t fake drug-target evidence<span class="title-sub">from a protein to whether it is worth a drug</span></h1>
-  <p class="standfirst">The most dangerous failure was not a made-up number. It was a correct answer that nothing the agent had retrieved supported &#8212; every check came back clean, and every expert who read it nodded. This is how I learned to catch it.</p>
+  <p class="standfirst">LLMs hallucinate. Researchers in academia and industry still search by hand for the mechanism behind their results, and it takes a great deal of human labour. So I built an agent for biomedicine that only prints what its sources returned.</p>
   <p class="byline">By <a href="/" rel="author">Shucheng Cao (Bangli Cao)</a> · 28 August 2026 · <span id="rt">11 min read</span></p>
+
+  <h2 id="background">Background</h2>
+
+  <p>To make a new drug, you first decide which protein in the body it should act on. That
+  protein is called the target. Pick the wrong one and everything after it is wasted:
+  designing a molecule that acts on that protein, testing it in animals, then testing it in
+  people (a clinical trial). You usually find that out years later.</p>
+
+  <p>For most of the last century that choice came out of the lab. You put a chemical on
+  cells, or give it to mice, and see if anything improves. That shows the chemical does
+  something. It does not show that the protein is why people get the disease.</p>
+
+  <p>This goes wrong often. About nine in ten drugs that reach trials in people are never
+  approved. Drugs aimed at a protein that human genetics also points to do better &#8212; about
+  2.6 times more likely to be approved (<a href="https://doi.org/10.1038/s41586-024-07316-0" target="_blank" rel="noopener">Minikel
+  et al., <em>Nature</em> 2024</a>).</p>
+
+  <p>To get that kind of evidence, scientists use a method for telling cause from coincidence
+  in genetic data (Mendelian randomization). It uses the gene versions a person is born with to
+  test whether a protein actually causes a disease, instead of just appearing alongside it.</p>
+
+  <p>That evidence is already public and free. Collecting it is the problem. For one protein
+  and one disease you open seven or eight websites, each calling the same gene something
+  different, and piece it together by hand. That is about a day&#8217;s work, and there are
+  thousands of proteins.</p>
+
+  <p>This post is about the agent I built to do that in minutes, and what it took to make its
+  answers checkable.</p>
 
   <h2 id="why">What this agent does, and why people want AI to do it</h2>
 
@@ -259,6 +287,7 @@ h2{scroll-margin-top:64px}
   <nav class="toc" aria-label="Contents">
     <div class="h">Contents</div>
     <ol>
+      <li><a href="#background">Background</a></li>
       <li><a href="#why">What this agent does, and why people want AI to do it</a></li>
       <li><a href="#lessons">What I learned</a></li>
       <li><a href="#product">What it ships</a></li>
@@ -659,12 +688,17 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
   <div class="callout">
     <span class="h">Update — 15 September 2026</span>
     <p>This post appeared on 28 August under the bare title &#8220;Building an AI agent that
-    can&#8217;t fake drug-target evidence&#8221;. It now carries a subtitle, so that it and
-    <a href="/blog/metabocausal/">the metabolite post</a> read as the pair they are. I also added
-    two passages: one naming the general shape of the problem for readers who do not work in
-    biology, and one stating what the tool answers, what it does not, and how many
-    protein&#8211;disease pairs in the sweep carry a genetic association with no MR estimate
-    behind them. Nothing above was altered &#8212; no claim, no number, no conclusion.</p>
+    can&#8217;t fake drug-target evidence&#8221;, and opened on the failure rather than on the
+    problem the failure came out of. Four things have changed since. The title now carries a
+    subtitle, so that it and <a href="/blog/metabocausal/">the metabolite post</a> read as the
+    pair they are. A <a href="#background">Background</a> section was added in front, for readers
+    who do not work on drugs. Two passages were added further down: one naming the general shape
+    of the problem for readers outside biology, one stating what the tool answers and what it
+    does not. And the opening summary was rewritten to say plainly what the problem is and what
+    I built; it originally read: &#8220;The most dangerous failure was not a made-up number. It
+    was a correct answer that nothing the agent had retrieved supported &#8212; every check came
+    back clean, and every expert who read it nodded. This is how I learned to catch it.&#8221;
+    The argument, the numbers and the conclusions below are unchanged.</p>
   </div>
 
 </article>
