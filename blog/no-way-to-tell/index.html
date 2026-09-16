@@ -224,7 +224,21 @@ footer a:hover{color:var(--accent)}
 
   <p>Rather than build a third agent and grade it myself, I became one of the initiators of <a href="https://ai4sbench.org/" target="_blank" rel="noopener">AI4S-Benchmark</a>, an interdisciplinary benchmark for AI agents in science, and wrote the first three tasks in my own area.</p>
 
-  <p>The idea is narrow on purpose: scientists contribute hard, open problems from their own fields, and those get turned into tasks with a verifiable answer, which frontier agents are then run against. A task travels through a fixed pipeline — a proposal, automated checks, review by people in the domain for whether it is scientifically worth anything and whether it can actually be verified, a structured pull request, then a run and a versioned release.</p>
+  <p>It is worth being exact about what that is, because most things called benchmarks are a fixed set of questions that one team wrote. This is not that. It is a process for turning real scientific problems into tasks that can be scored, and the problems come from working scientists in their own fields rather than from whoever is assembling the benchmark.</p>
+
+  <p>A task goes through five steps before it counts:</p>
+
+  <ol>
+    <li>Somebody proposes a problem out of their own work, through a form.</li>
+    <li>Automated checks run over the proposal.</li>
+    <li><strong>People in that field review it</strong>, and they are asked two separate questions: is this scientifically worth anything, and can the answer actually be verified? A hard problem with no checkable answer does not get in.</li>
+    <li>It becomes a structured pull request &#8212; the task, in a fixed shape, in public.</li>
+    <li>Frontier agents are run against it, how far they get is recorded, and it enters a versioned release.</li>
+  </ol>
+
+  <p>Step three is the one I care about, and it is why I am spending time on this rather than on a third agent. Somebody other than the author has to be willing to say that a task is unverifiable, or too easy, or measuring something other than what it claims.</p>
+
+  <p>The three tasks I wrote are in my own area:</p>
 
   <ul>
     <li><strong>Protein evidence.</strong> Given a protein and a disease, rebuild the human-genetic causal evidence — the estimate, its direction, the checks that travel with it — and be scored on whether each piece traces to a source, not on whether the conclusion sounds right.</li>
@@ -232,9 +246,7 @@ footer a:hover{color:var(--accent)}
     <li><strong>Reaction rules.</strong> Checking and repairing the gene-to-reaction rules inside a human metabolic model, where the answer is a formal expression that can be verified edge by edge and then run.</li>
   </ul>
 
-  <p>Tasks are reviewed before they are accepted, by people with a claim to judge them, and reviewers are credited permanently for the work. The whole thing is open, and the review happens on GitHub in public — so the argument about whether a task is sound is itself readable, not a decision taken in a room.</p>
-
-  <p>That review step is the part that makes any of it worth something. It is what stops a benchmark from being one more system graded by the person who built it.</p>
+  <p>Reviewers are credited permanently for that work. The whole thing is open, and the review happens on GitHub, where the argument about whether a task is sound can be read by anyone rather than settled in a room. That is what keeps a benchmark from turning into one more system graded by the person who built it.</p>
 
   <h2 id="state">The honest state of it</h2>
 
