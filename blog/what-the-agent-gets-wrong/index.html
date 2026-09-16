@@ -244,20 +244,32 @@ h2{scroll-margin-top:64px}
   <p>This post is about the agent I built to do that in minutes, and what it took to make its
   answers checkable.</p>
 
-  <h2 id="why">What this agent does, and why people want AI to do it</h2>
+  <h2 id="why">What the agent does</h2>
 
-  <p><strong>The job is target prioritization.</strong> Before anyone commits years to a
-  target, somebody reads everything known about it &#8212; genetics, variants, chemistry,
-  trials already run &#8212; and ranks it against the alternatives. A day of a trained
-  person&#8217;s reading, per target, across thousands of targets. Exactly the work people now
-  hand to an LLM agent: <strong>cheap labour that never gets bored.</strong></p>
+  <p>It is for anyone who wants to know whether a protein has anything to do with a disease: a
+  researcher working out the mechanism behind their own results, someone whose job is finding
+  new drugs and choosing which protein to work on next, or anyone who would rather read the
+  evidence in one place than across eight websites.</p>
 
-  <p><strong>A wrong call is expensive.</strong> About nine in ten programmes that reach
-  the clinic never reach approval, and genetic support is one of the few things known to
-  move that number — targets that have it are roughly <strong>2.6&#215; likelier to
-  succeed</strong> (<a href="https://doi.org/10.1038/s41586-024-07316-0" target="_blank" rel="noopener">Minikel
-  et al., <em>Nature</em> 2024</a>). So prioritization is a decision, not a summarising
-  task.</p>
+  <p><strong>You give it two things: a protein and a disease.</strong> It gives back one page
+  &#8212; an evidence card &#8212; showing what is known about that pair, where every fact came
+  from, and whether the protein looks worth going after.</p>
+
+  <p>To build that page it asks nine questions across eight free public databases: EpiGraphDB,
+  Open Targets, ChEMBL, gnomAD, ClinVar, the GWAS Catalog, UniProt and ClinPGx. Between them
+  they cover whether anyone has shown the protein causes the disease, how strongly the two are
+  linked, whether a drug against it has already been tried and what happened, whether any
+  chemical is known to hit it, and whether switching it off is likely to be safe. None of them
+  needs an account or a paid key.</p>
+
+  <p><strong>One rule shapes the whole design: the model writes as little as possible.</strong>
+  Every number, every table and every source link on the card is written by code, from exactly
+  what the databases returned. The model writes two things only &#8212; a one-line verdict and a
+  short paragraph. A checker then compares those two against the stored answers, and fails the
+  run if they claim anything the databases did not.</p>
+
+  <p>This is exactly the kind of work people now hand to a model: <strong>cheap labour that
+  never gets bored.</strong></p>
 
   <p><strong>This is why hallucination is dangerous here.</strong> A model answers fluently whether
   or not it has grounds to, and cheap labour that invents its evidence is not cheap: a
@@ -288,7 +300,7 @@ h2{scroll-margin-top:64px}
     <div class="h">Contents</div>
     <ol>
       <li><a href="#background">Background</a></li>
-      <li><a href="#why">What this agent does, and why people want AI to do it</a></li>
+      <li><a href="#why">What the agent does</a></li>
       <li><a href="#lessons">What I learned</a></li>
       <li><a href="#product">What it ships</a></li>
       <li><a href="#design">How it works: the model writes as little as possible</a></li>
@@ -689,12 +701,15 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
     <span class="h">Update — 15 September 2026</span>
     <p>This post appeared on 28 August under the bare title &#8220;Building an AI agent that
     can&#8217;t fake drug-target evidence&#8221;, and opened on the failure rather than on the
-    problem the failure came out of. Four things have changed since. The title now carries a
-    subtitle, so that it and <a href="/blog/metabocausal/">the metabolite post</a> read as the
-    pair they are. A <a href="#background">Background</a> section was added in front, for readers
-    who do not work on drugs. Two passages were added further down: one naming the general shape
-    of the problem for readers outside biology, one stating what the tool answers and what it
-    does not. And the opening summary was rewritten to say plainly what the problem is and what
+    problem the failure came out of. The opening has been reorganised since. The title now
+    carries a subtitle, so that it and <a href="/blog/metabocausal/">the metabolite post</a> read
+    as the pair they are. A <a href="#background">Background</a> section was added in front, for
+    readers who do not work on drugs. <a href="#why">What the agent does</a> was rewritten to say
+    who it is for, which databases it queries and how it is built, and the two passages it used
+    to open with — the failure rate and the day of reading per target — came out of it, because
+    the new Background section already carries them. Two passages were added further down: one
+    naming the general shape of the problem for readers outside biology, one stating what the
+    tool answers and what it does not. And the opening summary was rewritten to say plainly what the problem is and what
     I built; it originally read: &#8220;The most dangerous failure was not a made-up number. It
     was a correct answer that nothing the agent had retrieved supported &#8212; every check came
     back clean, and every expert who read it nodded. This is how I learned to catch it.&#8221;
