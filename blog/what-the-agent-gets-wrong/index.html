@@ -516,21 +516,23 @@ ld_check              null</code></pre>
 <pre><code>IL6R   beta -0.0442  p 2.21e-07  n_snp 1  steiger NA    ld_check null  coloc null
 LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc null</code></pre>
 
-  <p>Three quality checks travel with an estimate like this. Steiger asks whether the
-  variant moves the protein first and the disease second, not the reverse. Colocalization and
-  the LD check ask whether both signals trace to the same variant, not to two neighbours
-  inherited together.</p>
+  <p>Two questions travel with an estimate like this, under three names. The first: does the
+  variant move the protein first and the disease second, rather than the other way round? That
+  check is called Steiger. The second: do both signals trace to the same variant, rather than to
+  two neighbours inherited together? That one is answered either by colocalization or, where the
+  data colocalization needs is missing, by an LD check. The two are alternatives and never appear
+  together &#8212; across all 101,543 estimates in this resource, not one carries both.</p>
 
-  <p>LPA&#8217;s estimate passed Steiger and LD. IL6R&#8217;s carried none of the three
-  &#8212; Steiger NA, LD null, no colocalization: <em>not run</em>, rather than failed.
-  Without them, a single-variant estimate cannot tell a causal effect from a neighbouring
+  <p>LPA&#8217;s estimate answered both questions: Steiger, and the LD check. IL6R&#8217;s
+  answered neither &#8212; Steiger NA, LD null, no colocalization: <em>not run</em>, rather than
+  failed. Without them, a single-variant estimate cannot tell a causal effect from a neighbouring
   gene&#8217;s, or from cause and effect running backwards.</p>
 
   <p><strong>Both cards used the same strength of language</strong> &#8212; "Supports a causal role",
   in both.</p>
 
   <p>That is a defect you can encode, so I did: the validator now fails any run using causal
-  wording on a single-variant estimate with all three checks absent. Re-running the benchmark
+  wording on a single-variant estimate with neither question answered. Re-running the benchmark
   &#8212; a fixed batch of ten cards I score after every change &#8212; it fired on exactly
   the card it was built for. Each run regenerates the model&#8217;s two sentences, and this
   time the wording came back <em>more</em> confident, not less:</p>
@@ -700,7 +702,10 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
     readers who do not work on drugs. <a href="#why">What the agent does</a> was rewritten to say
     who it is for, which databases it queries and how it is built, and the two passages it used
     to open with — the failure rate and the day of reading per target — came out of it, because
-    the new Background section already carries them. The old section on how the agent works was
+    the new Background section already carries them. One correction of substance: the sensitivity
+    checks were described as three, when they are two questions under three names — colocalization
+    and the LD check are alternative answers to the same question and never occur together, which
+    is why the scale in the code is 0&#8211;3 and not 0&#8211;4. The old section on how the agent works was
     split in two, <a href="#asks">what it asks each database</a> and
     <a href="#nofake">how I keep it from making things up</a>, and that design had been described
     three times over in three different places; it is now in one. Two passages were added further down: one
