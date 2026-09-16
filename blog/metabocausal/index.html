@@ -87,6 +87,18 @@ figcaption{font-size:14px;line-height:1.5;color:var(--ink-3);margin-top:9px}
 .person:first-child{grid-column:1/-1}
 .person h3{font-family:var(--display);font-size:18px;margin:0 0 4px}.person p{font-size:14.5px;line-height:1.5;color:var(--ink-2);margin:0 0 7px}
 .person a,.soon{font-size:13px}.soon{color:var(--ink-3)}
+.toc{border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin:26px 0;background:var(--bg-soft)}
+.toc .h{font-size:11.5px;letter-spacing:1.4px;text-transform:uppercase;font-weight:700;color:var(--ink-3);margin-bottom:8px}
+.toc ol{margin:0;padding-left:20px;font-size:15px}
+.toc li{margin:0 0 5px}
+.toc a{color:var(--ink-2);text-decoration:none}
+.toc a:hover{color:var(--accent);text-decoration:underline}
+@media (min-width:1180px){
+  .toc{position:fixed;top:96px;left:calc(50% - 600px);width:210px;margin:0;
+       max-height:calc(100vh - 140px);overflow-y:auto;font-size:14px}
+  .toc ol{font-size:13.5px}
+}
+h2{scroll-margin-top:64px}
 .note{background:var(--amber-soft);border:1px solid var(--amber);border-radius:10px;padding:15px 17px;margin:24px 0}.note p{margin:0 0 12px}.note p:last-child{margin:0}
 footer{border-top:1px solid var(--line);margin-top:44px;padding:20px 0 40px;font-size:14px;color:var(--ink-3);display:flex;flex-wrap:wrap;gap:16px}
 footer a{color:var(--ink-2);text-decoration:none}
@@ -111,6 +123,21 @@ footer a{color:var(--ink-2);text-decoration:none}
 
   <p>This is the second agent I have built this way. <a href="/blog/what-the-agent-gets-wrong/">The first one</a> answers protein–disease questions and is where the recording-and-rendering core comes from. That core carried over unchanged. Almost everything else is new, because a metabolite is a harder place to start than a protein: its identity has to be resolved first, and the gene acting behind it has to be nominated before there is a target question at all. On top of that sit a literature layer, a biochemical-context module, and a classifier that decides the verdict so that no model writes it. If none of this biology is yours, <a href="#carried">that section</a> is the one to read.</p>
 
+  <nav class="toc" aria-label="Contents">
+    <div class="h">Contents</div>
+    <ol>
+      <li><a href="#background">Background</a></li>
+      <li><a href="#cetp">A failure worth tracing</a></li>
+      <li><a href="#does">What the agent does</a></li>
+      <li><a href="#ships">What it ships</a></li>
+      <li><a href="#carried">What carried over, what broke, and what I added</a></li>
+      <li><a href="#mvp">How the product is improving</a></li>
+      <li><a href="#protects">What the technical design protects</a></li>
+      <li><a href="#team">Meet the team</a></li>
+      <li><a href="#next">Related work and what comes next</a></li>
+    </ol>
+  </nav>
+
   <h2 id="background">Background</h2>
 
   <p>Think of the body as a production line. DNA is the blueprint, RNA the work order, a protein is the machine, and a metabolite is the finished goods on the shelf — glucose, LDL cholesterol, creatinine, the numbers on an ordinary blood test. How you feel depends on what is on the shelf. Diet, medication and gut bacteria put things on it directly, without passing through the genes at all, so a metabolite is the one reading that sums up both what you inherited and what happened to you, and it sits one step from the disease.</p>
@@ -124,7 +151,7 @@ footer a{color:var(--ink-2);text-decoration:none}
     <p><strong>Our question:</strong> can we trace a path from a molecule in blood, through genetics and biology, to what happened in the clinic?</p>
   </div>
 
-  <h2>A failure worth tracing</h2>
+  <h2 id="cetp">A failure worth tracing</h2>
   <p>The story began before Phase 3. In 1989, <a href="https://pubmed.ncbi.nlm.nih.gov/2586614/" target="_blank" rel="noopener">an inherited CETP change ↗</a> was linked to much higher HDL. Target-level experiments in rabbits then <a href="https://pubmed.ncbi.nlm.nih.gov/9478952/" target="_blank" rel="noopener">reduced atherosclerotic lesions in 1998 ↗</a>, and <a href="https://pubmed.ncbi.nlm.nih.gov/10910363/" target="_blank" rel="noopener">another CETP inhibitor showed benefit in 2000 ↗</a>. These findings supported the biology, but they did not establish that torcetrapib itself would be safe or help patients.</p>
   <p>Torcetrapib was designed to block CETP and raise HDL cholesterol, often called “good cholesterol.” A <a href="https://pubmed.ncbi.nlm.nih.gov/14739125/" target="_blank" rel="noopener">Phase 1 study published in 2004 ↗</a> showed that the blood marker moved in the expected direction. But <a href="https://doi.org/10.1056/NEJMoa0706628" target="_blank" rel="noopener">the large Phase 3 trial was stopped ↗</a> after more deaths and cardiovascular events in the treatment group.</p>
   <p>Later genetic studies helped separate two questions. One <a href="https://pubmed.ncbi.nlm.nih.gov/20026784/" target="_blank" rel="noopener">suggested that the rise in blood pressure ↗</a> was probably a drug-specific side effect. Another <a href="https://doi.org/10.1016/S0140-6736(12)60312-2" target="_blank" rel="noopener">challenged the assumption ↗</a> that raising HDL alone would automatically prevent heart attacks. A different CETP drug later <a href="https://doi.org/10.1056/NEJMoa1706444" target="_blank" rel="noopener">reduced coronary events ↗</a>. The lesson is more useful than a simple “target failed” label: <strong>the marker, the biological target and the drug itself are related, but they are not interchangeable.</strong></p>
@@ -134,16 +161,46 @@ footer a{color:var(--ink-2);text-decoration:none}
     <figcaption>The corrected lifecycle view begins with human genetics and preclinical evidence, then follows clinical development, later interpretation and the target class’s current status. Target-level evidence is kept separate from evidence about one drug.</figcaption>
   </figure>
 
-  <h2>What MetaboCausal does</h2>
-  <p>A user starts with a small molecule measured in blood and a disease. MetaboCausal then builds a compact evidence trail:</p>
+  <h2 id="does">What the agent does</h2>
+
+  <p>It is for people who have a molecule in blood and a disease in mind and want to know whether the two are connected: someone holding a biobank result they cannot yet explain, someone in pharma R&amp;D deciding what to chase next, or anyone curious about the link.</p>
+
+  <p>You ask it in Slack. Type <code>@MetaboCausal</code>, a metabolite and a disease, and the answer comes back in the thread. There is nothing to install and no page to learn — the point of putting it there is that asking should cost no more than typing a message to a colleague.</p>
 
   <div class="steps" aria-label="MetaboCausal workflow">
-    <div class="step"><b>1 · Ask</b><span>Choose one molecule and one disease.</span></div>
-    <div class="step"><b>2 · Trace</b><span>Connect genetic results, possible genes and drug history.</span></div>
-    <div class="step"><b>3 · Decide</b><span>See what supports the idea, what conflicts and what is missing.</span></div>
+    <div class="step"><b>1 · Ask</b><span>One molecule, one disease.</span></div>
+    <div class="step"><b>2 · Trace</b><span>Genetic results, the genes behind the molecule, drug history.</span></div>
+    <div class="step"><b>3 · Decide</b><span>What supports the idea, what conflicts, what is missing.</span></div>
   </div>
 
-  <p>The system uses public research sources, including genetic databases, Europe PMC, Semantic Scholar, Open Targets and clinical-trial records. An AI model can explain the result in plain language, but the sources, numbers and dates remain visible for checking. The current integration supports OpenAI and Claude.</p>
+  <p>Behind that it reads public sources: EpiGraphDB for causal estimates other people have published, OpenGWAS for whether the genetic instruments exist, the GWAS Catalog for association background, Open Targets, ChEMBL and gnomAD for the genes, plus Europe PMC and Semantic Scholar for the literature. A model can explain the result in plain language afterwards, but the sources, numbers and dates stay on the page for checking.</p>
+
+  <h2 id="ships">What it ships</h2>
+
+  <p>The first thing it does is tell you what it thinks you meant. Ask about &#8220;HDL cholesterol&#8221; and it comes back as high-density lipoprotein cholesterol, CHEBI:47775, with the four spellings it will accept; &#8220;coronary artery disease&#8221; comes back as coronary artery disorder, MONDO:0005010. You see the substitution before anything is retrieved, because a wrong match makes every number under it answer a different question.</p>
+
+  <p>Then it asks which evidence you want, and waits. Not everyone needs all of it, and the slow parts say so: the GWAS Catalog arm adds about a hundred seconds, the gene arm five requests per gene.</p>
+
+  <figure>
+    <img src="/assets/blog/mc-slack-ask.png" alt="A Slack thread: the user types at-MetaboCausal HDL cholesterol vs coronary artery disease. The bot replies with the resolved identifiers — high-density lipoprotein cholesterol CHEBI:47775 with four spellings from the live resolver, coronary artery disorder MONDO:0005010 with eleven spellings — then four tick boxes for the evidence arms to run, a Generate card button, and a line saying nothing has been retrieved yet." width="982" height="859">
+    <figcaption><b>Ask, then choose.</b> The identifiers are shown back before any database is touched, and the arms are yours to pick. The bot says plainly that nothing has been retrieved yet.</figcaption>
+  </figure>
+
+  <p>What comes back is one card. For this pair it is <b>State A</b>: 48 published estimates carry an effect size, an uncertainty and a p-value, the smallest of them 1.08e-07. Retrieved colocalisation puts H4 at 1.000 for one pair of studies. Three genes are named as candidates behind the molecule — LIPG, ABCA1 and SCARB1 — each with its Open Targets score, its ChEMBL record and its gnomAD tolerance.</p>
+
+  <p>Two lines on the same card report failure. The instruments arm returned an error, so no hit count was retrieved, and it says so rather than printing a zero. Of nine matched outcome datasets only three came back. The footer records 19 ledger entries and the words <em>retrieved, not computed</em>.</p>
+
+  <figure>
+    <img src="/assets/blog/mc-slack-result.png" alt="The bot's result in Slack: State A, retrieved MR, 48 estimates with the smallest p-value 1.08e-07; retrieved colocalisation H4 1.000; an instruments line reporting that the tool returned an error envelope so no hit count was retrieved; outcomes three retrieved of nine matched; and dossiers for LIPG, ABCA1 and SCARB1 with Open Targets scores, ChEMBL records and gnomAD LOEUF values. The footer reads: retrieved, not computed, 19 ledger entries." width="964" height="870">
+    <figcaption><b>The answer, including the parts that failed.</b> The instruments arm errored and the card prints that it errored; three of nine outcome datasets came back and the card prints the denominator. Nothing is smoothed over on the way to the reader.</figcaption>
+  </figure>
+
+  <p>Figures are one press each, and each one says what it is for: the direction and uncertainty of every retrieved estimate, how many strong instruments exist, or when the genetics spoke against when the clinic decided.</p>
+
+  <figure>
+    <img src="/assets/blog/mc-slack-figures.png" alt="The evidence card expanded in Slack, showing a table of the requested pair and the resolved identifiers, followed by three buttons offering a forest plot, an instruments figure and a genetic insight timeline, and a Skip button." width="970" height="819">
+    <figcaption><b>One press, one figure.</b> Each button names the question it answers, and which evidence state it makes sense for.</figcaption>
+  </figure>
 
   <h2 id="carried">What carried over, what broke, and what I added</h2>
 
@@ -166,7 +223,7 @@ footer a{color:var(--ink-2);text-decoration:none}
 
   <p>The interface is a Slack bot rather than one more standalone app, because the brief was agents that live where people already work. What the system does not do is held as firmly as what it does: it computes no MR and fits no colocalisation, and the public snapshot ships <strong>agent.py</strong> as an unfinished template rather than a finished model loop.</p>
 
-  <h2>How the product is improving</h2>
+  <h2 id="mvp">How the product is improving</h2>
   <p>We split the work into three MVPs—small, usable versions that each add one clear capability.</p>
 
   <div class="roadmap" aria-label="MetaboCausal MVP roadmap">
@@ -189,7 +246,7 @@ footer a{color:var(--ink-2);text-decoration:none}
 
   <p>This staged plan gives managers a visible product at every step, while letting technical contributors test each layer before the next one is added.</p>
 
-  <h2>What the technical design protects</h2>
+  <h2 id="protects">What the technical design protects</h2>
   <ul class="principles">
     <li><strong>Traceability:</strong> dates, numbers and claims point back to sources.</li>
     <li><strong>Separation:</strong> retrieval builds the evidence record; the AI model explains it.</li>
@@ -206,7 +263,7 @@ footer a{color:var(--ink-2);text-decoration:none}
     <p><strong>What it does not claim:</strong> MetaboCausal does not prove that a drug will work. It helps a team see the available evidence—and the gaps—before choosing the next test.</p>
   </div>
 
-  <h2>Meet the team</h2>
+  <h2 id="team">Meet the team</h2>
   <p>Five people are building different parts of the same evidence trail. The links below lead to each member’s GitHub profile; project repositories can be added as their work is published.</p>
 
   <div class="team">
@@ -239,7 +296,7 @@ footer a{color:var(--ink-2);text-decoration:none}
 
   <p>With thanks to <strong>Baowen Qi</strong>, who took part in the planning and review discussions remotely from China, and whose questions on data sources and commercial boundaries shaped how we drew the public/private line above.</p>
 
-  <h2>Related work and what comes next</h2>
+  <h2 id="next">Related work and what comes next</h2>
   <p>MetaboCausal is a separate hackathon project related to <a href="https://github.com/shuchengcaoxin/OpenCausal" target="_blank" rel="noopener">OpenCausal ↗</a>, my earlier work on source-linked evidence cards for proteins and diseases. Here, the starting point is a molecule in blood.</p>
   <p>The literature layer and the biochemical-context module are built; the next step is to publish them in the open snapshot, so that the public repository matches what actually runs. The longer-term goal is unchanged: a tool that lets a team bring their own data and their own model key, while every conclusion stays tied to evidence they can inspect.</p>
 
