@@ -132,7 +132,7 @@ footer a{color:var(--ink-2);text-decoration:none}
       <li><a href="#ships">What it ships</a></li>
       <li><a href="#carried">What carried over, what broke, and what I added</a></li>
       <li><a href="#mvp">How the product is improving</a></li>
-      <li><a href="#protects">What the technical design protects</a></li>
+      <li><a href="#protects">How I keep it from making things up (reducing hallucination)</a></li>
       <li><a href="#team">Meet the team</a></li>
       <li><a href="#next">Related work and what comes next</a></li>
     </ol>
@@ -221,7 +221,7 @@ footer a{color:var(--ink-2);text-decoration:none}
 
   <p>Both run in the working repository. The public snapshot linked above is the 12 September build and predates them, so its notes still describe those two as unfinished—worth saying plainly, because a reader who opens the repository should not have to reconcile it with this page on their own.</p>
 
-  <p>The interface is a Slack bot rather than one more standalone app, because the brief was agents that live where people already work. What the system does not do is held as firmly as what it does: it computes no MR and fits no colocalisation, and the public snapshot ships <strong>agent.py</strong> as an unfinished template rather than a finished model loop.</p>
+  <p>The interface is a Slack bot rather than one more standalone app because research decisions get made in team discussion, and evidence is worth more where the arguing already happens. Slack is not the point; what matters is that a short conversational answer stays attached to a record someone can review. What the system does not do is held as firmly as what it does: it computes no MR and fits no colocalisation, and the public snapshot ships <strong>agent.py</strong> as an unfinished template rather than a finished model loop.</p>
 
   <h2 id="mvp">How the product is improving</h2>
   <p>We split the work into three MVPs—small, usable versions that each add one clear capability.</p>
@@ -246,14 +246,25 @@ footer a{color:var(--ink-2);text-decoration:none}
 
   <p>This staged plan gives managers a visible product at every step, while letting technical contributors test each layer before the next one is added.</p>
 
-  <h2 id="protects">What the technical design protects</h2>
+  <h2 id="protects">How I keep it from making things up (reducing hallucination)</h2>
+
+  <p>One rule sits under all of it: <strong>retrieval first, explanation second</strong>. The model explains material that was retrieved. It does not invent a number, a source, or causal support. Where the evidence is missing or thin, the answer has to say so.</p>
+
+  <p>That also fixes what the agent is allowed to be for. It does not answer &#8220;this molecule causes this disease&#8221;. It shows the edge of the evidence: what was found, what was not, which source produced it, and what somebody should check next.</p>
+
   <ul class="principles">
     <li><strong>Traceability:</strong> dates, numbers and claims point back to sources.</li>
-    <li><strong>Separation:</strong> retrieval builds the evidence record; the AI model explains it.</li>
-    <li><strong>Challenge testing:</strong> in one Slack test, a teammate supplied a deliberately false premise. The system rejected the unsupported claim instead of inventing evidence. This passed test shows the safeguard working in that case; it is not a claim that any AI can never hallucinate.</li>
-    <li><strong>Reproducibility:</strong> the same structured pipeline can run again when new pairs arrive.</li>
+    <li><strong>Separation:</strong> retrieval builds the evidence record; the model explains it.</li>
+    <li><strong>Reproducibility:</strong> the same pipeline runs again when new pairs arrive.</li>
     <li><strong>Practical access:</strong> OpenAI and Claude are supported now, with user-provided model keys planned.</li>
   </ul>
+
+  <p>The cheapest place to stop a hallucination turns out to be the input. Ask a chat model about a disease that does not exist and a metabolite that is not one, and it will usually guess: pick the nearest real disease, decide what the abbreviation probably meant, and write a confident answer on top of both guesses. Most hallucinations start there, with a model smoothing over an ambiguity instead of naming it.</p>
+
+  <figure>
+    <img src="/assets/blog/mc-slack-refused.png" alt="A Slack thread. The user writes: at-MetaboCausal check cardiovascular Ziweish symdrom and metabolite CEA. The bot replies that it could not read a pair out of that, and lists four example phrasings it does understand, plus how to quote a name containing the separator word." width="973" height="385">
+    <figcaption><b>It stops instead of guessing.</b> A garbled disease and a &#8220;metabolite&#8221; that is not one. The bot says it could not read a pair out of that and shows the phrasings it understands. One test of one failure mode &#8212; not proof that hallucination is impossible.</figcaption>
+  </figure>
 
   <p>The public description stays at the product level. The team’s prompts, matching rules, internal data structure and deployment details remain in the private working repository.</p>
 
