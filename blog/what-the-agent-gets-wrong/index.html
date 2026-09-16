@@ -296,24 +296,25 @@ h2{scroll-margin-top:64px}
 
   <p>Open the app and there is one screen: a box for the protein, a box for the disease, and a
   button. About twenty seconds later the card is on the page &#8212; a verdict at the top, then
-  one panel per database, each naming the release it was read from. The same thing runs from the
-  command line if you prefer.</p>
+  one panel per database.</p>
 
   <figure>
     <picture>
       <source media="(max-width: 700px)" srcset="../../assets/blog/pnpla3-card-narrow.jpg">
       <img src="../../assets/blog/pnpla3-card.jpg" alt="The evidence card for PNPLA3 and fatty liver disease: a green GO verdict banner, a validation PASS line naming the model, the model&#8217;s only paragraph validated against the ledger, then one panel per database — the MR panel honestly printing not available, the clinical development record, and the rule-based evidence concordance.">
     </picture>
-    <figcaption><b>The product.</b> PNPLA3 &#215; MASLD (fatty liver disease). GO (as in
-    go / no-go), validation PASS &#8212; and the causal-evidence panel prints &#8220;not
-    available&#8221;: no genetic variant is known to shift this protein&#8217;s level in blood
-    (a pQTL &#8212; the natural experiment the causal test needs), so that test cannot be
-    run. Absence of an estimate is not evidence of no effect.</figcaption>
+    <figcaption><b>The product.</b> PNPLA3 &#215; MASLD (fatty liver disease). The green banner
+    is the model&#8217;s call. The causal panel under it prints &#8220;not available&#8221;: no
+    genetic variant is known to shift this protein&#8217;s level in blood, so that test cannot be
+    run at all, and an absent estimate is not evidence of no effect. Now read the grey line under
+    the banner: validation PASS, <b>0 claim tokens checked</b>. Nothing the model wrote could be
+    checked, so passing cost it nothing &#8212; which is what a later section is about.</figcaption>
   </figure>
 
   <p>Down the side is the list of databases, each with a tick. Not everyone wants all of them.
   Un-tick the ones you do not need and the run is faster; where they would have been, the card
-  says <code>tool not called in this run</code>.</p>
+  says <code>tool not called in this run</code>. The same thing runs from the command line if you
+  prefer.</p>
 
   <p>Under the card sit two figures drawn from the same tool output: the retrieved MR estimates,
   and where the gene sits on the knock-out-tolerance scale.</p>
