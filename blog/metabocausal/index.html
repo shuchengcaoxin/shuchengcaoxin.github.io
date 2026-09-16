@@ -130,7 +130,8 @@ footer a{color:var(--ink-2);text-decoration:none}
       <li><a href="#cetp">A failure worth tracing</a></li>
       <li><a href="#does">What the agent does</a></li>
       <li><a href="#ships">What it ships</a></li>
-      <li><a href="#carried">What carried over, what broke, and what I added</a></li>
+      <li><a href="#asks">What it asks each source</a></li>
+      <li><a href="#carried">How the card is held together</a></li>
       <li><a href="#mvp">How the product is improving</a></li>
       <li><a href="#protects">How I keep it from making things up (reducing hallucination)</a></li>
       <li><a href="#team">Meet the team</a></li>
@@ -203,11 +204,27 @@ footer a{color:var(--ink-2);text-decoration:none}
     <figcaption><b>One press, one figure.</b> Each button names the question it answers, and which evidence state it makes sense for.</figcaption>
   </figure>
 
-  <h2 id="carried">What carried over, what broke, and what I added</h2>
+  <h2 id="asks">What it asks each source</h2>
 
-  <p>Three things carried over from the previous agent without change. Every tool call is recorded together with its return, word for word. The card is then built from those stored returns by code—tables, numbers, caveats, sources—so nothing a reader might want to check is written by a model. And whatever prose a model does add is compared against those same stored returns, and the run fails when the prose outruns them.</p>
+  <p>Nine questions, all to free public databases, none of them needing an account:</p>
 
-  <p>Two things had to be rebuilt, both because a metabolite is not a protein. <strong>Identity:</strong> a protein arrives with one accession, while a metabolite arrives as a common name, a synonym or a database id—so a run begins by resolving it through OLS4 and PubChem, and prints what it resolved to, because you cannot audit a resolution you cannot see. <strong>The effector gene:</strong> a protein is its own gene and a metabolite is not, so the gene has to be nominated—from an atlas or a paper where one exists, and otherwise from Human-GEM’s enzymes. That step is where a metabolite question becomes a target question, and everything downstream—druggability, population constraint, what the clinic already tried—hangs on which gene was named, so the nomination is printed together with the source it came from rather than quietly assumed.</p>
+  <ul class="principles">
+    <li><strong>OLS4 and PubChem</strong> — which molecule and which disease did you actually mean?</li>
+    <li><strong>EpiGraphDB</strong> — has anyone already published a causal estimate for this pair?</li>
+    <li><strong>OpenGWAS</strong> — do the genetic instruments exist, and are they strong enough for the analysis to be worth running?</li>
+    <li><strong>GWAS Catalog</strong> — what else is this disease genetically associated with?</li>
+    <li><strong>An atlas, a paper, or Human-GEM</strong> — which gene makes or breaks this molecule?</li>
+    <li><strong>Open Targets</strong> — how strongly is that gene tied to the disease, and has a drug against it been tried?</li>
+    <li><strong>ChEMBL</strong> — is there already chemistry against it?</li>
+    <li><strong>gnomAD</strong> — how well do people tolerate losing that gene?</li>
+    <li><strong>Europe PMC and Semantic Scholar</strong> — what does the literature hold that the structured sources do not?</li>
+  </ul>
+
+  <h2 id="carried">How the card is held together</h2>
+
+  <p>Three rules. Every tool call is recorded together with its return, word for word. The card is then built from those stored returns by code—tables, numbers, caveats, sources—so nothing a reader might want to check is written by a model. And whatever prose a model does add is compared against those same stored returns, and the run fails when the prose outruns them.</p>
+
+  <p>Two things are harder here than they would be for a protein. <strong>Identity:</strong> a protein arrives with one accession, while a metabolite arrives as a common name, a synonym or a database id—so a run begins by resolving it through OLS4 and PubChem, and prints what it resolved to, because you cannot audit a resolution you cannot see. <strong>The effector gene:</strong> a protein is its own gene and a metabolite is not, so the gene has to be nominated—from an atlas or a paper where one exists, and otherwise from Human-GEM’s enzymes. That step is where a metabolite question becomes a target question, and everything downstream—druggability, population constraint, what the clinic already tried—hangs on which gene was named, so the nomination is printed together with the source it came from rather than quietly assumed.</p>
 
   <p>The verdict is computed rather than written. A pure function reads the returns a run collected and assigns one of three states, and no model writes that sentence or can change it. In the two examples bundled with the public repository, urate × gout comes back <strong>State A</strong>—22 retrieved estimates, each carrying an effect size, an uncertainty and a p-value, retrieved from published sources and not computed here. Glycine × coronary artery disease comes back <strong>State B</strong>: no retrieved estimate exists, but the best exposure dataset carries 49 genome-wide significant hits and three outcome datasets are available, so that analysis is feasible and simply has not been run. State C is an evidence gap in the sources queried. None of the three, on its own, establishes causality.</p>
 
@@ -218,11 +235,13 @@ footer a{color:var(--ink-2);text-decoration:none}
     <li><strong>A failed request is not a negative answer.</strong> In the bundled glycine run, the GWAS Catalog call ran past its deadline with the response still arriving. The card prints that the request failed, says plainly that this is not the same statement as the Catalog holding no association for that trait, and the state does not move.</li>
   </ul>
 
-  <p>Two further layers sit on top of that core, and neither existed in the first agent. A literature layer widens the set of metabolite–disease pairs beyond the ones the MR resource already holds, through two independent searches whose overlapping results are matched and de-duplicated before anything moves downstream. A biochemical-context module built on Human-GEM nominates effector genes for metabolites where no atlas or paper names one, which is the case far more often than it is for proteins.</p>
+  <p>Two further layers sit above all of that. A literature layer widens the set of metabolite–disease pairs beyond the ones the MR resource already holds, through two independent searches whose overlapping results are matched and de-duplicated before anything moves downstream. A biochemical-context module built on Human-GEM nominates effector genes for metabolites where no atlas or paper names one, which is the case far more often than it is for proteins.</p>
 
   <p>Both run in the working repository. The public snapshot linked above is the 12 September build and predates them, so its notes still describe those two as unfinished—worth saying plainly, because a reader who opens the repository should not have to reconcile it with this page on their own.</p>
 
   <p>The interface is a Slack bot rather than one more standalone app because research decisions get made in team discussion, and evidence is worth more where the arguing already happens. Slack is not the point; what matters is that a short conversational answer stays attached to a record someone can review. What the system does not do is held as firmly as what it does: it computes no MR and fits no colocalisation, and the public snapshot ships <strong>agent.py</strong> as an unfinished template rather than a finished model loop.</p>
+
+  <p>Those first three rules are not original to this project. They come from <a href="/blog/what-the-agent-gets-wrong/">the protein agent</a>, and carrying them across is most of the reason a second one existed at all. Everything else on this page had to be built again from nothing.</p>
 
   <h2 id="mvp">How the product is improving</h2>
   <p>We split the work into three MVPs—small, usable versions that each add one clear capability.</p>
