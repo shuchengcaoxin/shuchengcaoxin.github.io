@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 720" width="560" height="720" role="img"
+     aria-label="How I got here, stacked. First agent, protein to disease: 18 real defects found, my checks caught none. Second agent, metabolite to disease: the same kinds of failure in a new field. Then, highlighted: both times I wrote the checks, so passing only meant the system and the check agreed with each other. Therefore a benchmark, where someone else holds the answer. Today: three task specifications, no gold answers, no hidden test set, no scores yet.">
+  <defs>
+    <style>
+      .hd  { font-family:Aptos,"Segoe UI",Helvetica,Arial,sans-serif; font-size:13px; font-weight:700;
+             letter-spacing:1.6px; fill:#737e78 }
+      .box { fill:#fffefb; stroke:#d5dad3; stroke-width:1.5 }
+      .key { fill:#1f5b4d; stroke:#1f5b4d; stroke-width:1.5 }
+      .t   { font-family:Aptos,"Segoe UI",Helvetica,Arial,sans-serif; font-size:19px; font-weight:650; fill:#17231f }
+      .tk  { font-family:Aptos,"Segoe UI",Helvetica,Arial,sans-serif; font-size:19px; font-weight:650; fill:#ffffff }
+      .s   { font-family:Aptos,"Segoe UI",Helvetica,Arial,sans-serif; font-size:14px; fill:#737e78 }
+      .c   { font-family:Charter,"Iowan Old Style",Palatino,Georgia,serif; font-size:15px; fill:#9a5b42 }
+      .ck  { font-family:Charter,"Iowan Old Style",Palatino,Georgia,serif; font-size:15px; fill:#dfece6 }
+    </style>
+    <marker id="q" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#aeb8b0"/>
+    </marker>
+  </defs>
+
+  <rect width="560" height="720" fill="#f5f6f2"/>
+  <text class="hd" x="24" y="32">HOW I GOT HERE</text>
+
+  <rect class="box" x="24" y="52" width="420" height="108" rx="10"/>
+  <text class="t" x="48" y="84">First agent</text>
+  <text class="s" x="48" y="108">protein &#8594; disease</text>
+  <text class="c" x="48" y="138">18 real defects found — my checks caught 0</text>
+  <line x1="120" y1="164" x2="120" y2="192" stroke="#aeb8b0" stroke-width="2" marker-end="url(#q)"/>
+
+  <rect class="box" x="24" y="198" width="420" height="108" rx="10"/>
+  <text class="t" x="48" y="230">Second agent</text>
+  <text class="s" x="48" y="254">metabolite &#8594; disease</text>
+  <text class="c" x="48" y="284">the same kinds of failure, new field</text>
+  <line x1="120" y1="310" x2="120" y2="338" stroke="#aeb8b0" stroke-width="2" marker-end="url(#q)"/>
+
+  <rect class="key" x="24" y="344" width="420" height="140" rx="10"/>
+  <text class="tk" x="48" y="378">Both times, I wrote the checks</text>
+  <text class="ck" x="48" y="410">so passing only meant that</text>
+  <text class="ck" x="48" y="434">the system and the check</text>
+  <text class="ck" x="48" y="458">agreed with each other</text>
+  <line x1="120" y1="488" x2="120" y2="516" stroke="#aeb8b0" stroke-width="2" marker-end="url(#q)"/>
+
+  <rect class="box" x="24" y="522" width="420" height="108" rx="10"/>
+  <text class="t" x="48" y="554">A benchmark</text>
+  <text class="s" x="48" y="578">AI4S-Benchmark</text>
+  <text class="c" x="48" y="608">someone else holds the answer</text>
+
+  <line x1="24" y1="660" x2="536" y2="660" stroke="#d5dad3" stroke-width="1"/>
+  <text class="s" x="24" y="686">Today: three task specifications.</text>
+  <text class="s" x="24" y="706">No gold answers, no hidden test set, no scores yet.</text>
+</svg>

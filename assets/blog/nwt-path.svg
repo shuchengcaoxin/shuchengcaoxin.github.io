@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 300" width="1100" height="300" role="img"
+     aria-label="How I got here, in four steps. First agent, protein to disease: an audit found 18 real defects and my own checks caught none of them. Second agent, metabolite to disease: the same kinds of failure in a new field. Then the realisation, highlighted: I wrote the systems and I wrote the checks, so passing only meant the two agreed with each other. Therefore AI4S-Benchmark, where someone other than the author holds the answer.">
+  <defs>
+    <style>
+      .hd  { font-family:Aptos,"Segoe UI",Helvetica,Arial,sans-serif; font-size:12px; font-weight:700;
+             letter-spacing:1.6px; fill:#737e78 }
+      .box { fill:#fffefb; stroke:#d5dad3; stroke-width:1.5 }
+      .key { fill:#1f5b4d; stroke:#1f5b4d; stroke-width:1.5 }
+      .t   { font-family:Aptos,"Segoe UI",Helvetica,Arial,sans-serif; font-size:17px; font-weight:650;
+             fill:#17231f; text-anchor:middle }
+      .tk  { font-family:Aptos,"Segoe UI",Helvetica,Arial,sans-serif; font-size:17px; font-weight:650;
+             fill:#ffffff; text-anchor:middle }
+      .s   { font-family:Aptos,"Segoe UI",Helvetica,Arial,sans-serif; font-size:12.5px;
+             fill:#737e78; text-anchor:middle }
+      .c   { font-family:Charter,"Iowan Old Style",Palatino,Georgia,serif; font-size:14px;
+             fill:#9a5b42; text-anchor:middle }
+      .ck  { font-family:Charter,"Iowan Old Style",Palatino,Georgia,serif; font-size:14px;
+             fill:#dfece6; text-anchor:middle }
+    </style>
+    <marker id="p" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#aeb8b0"/>
+    </marker>
+  </defs>
+
+  <rect width="1100" height="300" fill="#f5f6f2"/>
+  <text class="hd" x="20" y="30">HOW I GOT HERE</text>
+
+  <!-- 1 -->
+  <rect class="box" x="20" y="58" width="240" height="132" rx="10"/>
+  <text class="t" x="140" y="92">First agent</text>
+  <text class="s" x="140" y="114">protein &#8594; disease</text>
+  <text class="c" x="140" y="146">18 real defects found</text>
+  <text class="c" x="140" y="166">my checks caught 0</text>
+  <line x1="266" y1="124" x2="294" y2="124" stroke="#aeb8b0" stroke-width="2" marker-end="url(#p)"/>
+
+  <!-- 2 -->
+  <rect class="box" x="300" y="58" width="240" height="132" rx="10"/>
+  <text class="t" x="420" y="92">Second agent</text>
+  <text class="s" x="420" y="114">metabolite &#8594; disease</text>
+  <text class="c" x="420" y="146">same kinds of failure,</text>
+  <text class="c" x="420" y="166">new field</text>
+  <line x1="546" y1="124" x2="574" y2="124" stroke="#aeb8b0" stroke-width="2" marker-end="url(#p)"/>
+
+  <!-- 3 the turn -->
+  <rect class="key" x="580" y="48" width="260" height="152" rx="10"/>
+  <text class="tk" x="710" y="86">Both times,</text>
+  <text class="tk" x="710" y="108">I wrote the checks</text>
+  <text class="ck" x="710" y="140">so passing only meant</text>
+  <text class="ck" x="710" y="160">the system and the check</text>
+  <text class="ck" x="710" y="180">agreed with each other</text>
+  <line x1="846" y1="124" x2="874" y2="124" stroke="#aeb8b0" stroke-width="2" marker-end="url(#p)"/>
+
+  <!-- 4 -->
+  <rect class="box" x="880" y="58" width="200" height="132" rx="10"/>
+  <text class="t" x="980" y="92">A benchmark</text>
+  <text class="s" x="980" y="114">AI4S-Benchmark</text>
+  <text class="c" x="980" y="146">someone else</text>
+  <text class="c" x="980" y="166">holds the answer</text>
+
+  <line x1="20" y1="244" x2="1080" y2="244" stroke="#d5dad3" stroke-width="1"/>
+  <text class="s" x="550" y="270" style="font-size:13.5px">Today: three task specifications. No gold answers, no hidden test set, no scores yet.</text>
+</svg>
