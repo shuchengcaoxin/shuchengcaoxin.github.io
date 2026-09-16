@@ -294,9 +294,10 @@ h2{scroll-margin-top:64px}
 
   <h2 id="product">What it ships</h2>
 
-  <p>One command &#8212; a protein and a disease &#8212; returns one evidence card: a verdict at
-  the top, then one panel per database, each naming the release of the database it was read
-  from.</p>
+  <p>Open the app and there is one screen: a box for the protein, a box for the disease, and a
+  button. About twenty seconds later the card is on the page &#8212; a verdict at the top, then
+  one panel per database, each naming the release it was read from. The same thing runs from the
+  command line if you prefer.</p>
 
   <figure>
     <picture>
@@ -309,6 +310,21 @@ h2{scroll-margin-top:64px}
     (a pQTL &#8212; the natural experiment the causal test needs), so that test cannot be
     run. Absence of an estimate is not evidence of no effect.</figcaption>
   </figure>
+
+  <p>Down the side is the list of databases, each with a tick. Not everyone wants all of them.
+  Un-tick the ones you do not need and the run is faster; where they would have been, the card
+  says <code>tool not called in this run</code>.</p>
+
+  <figure>
+    <img src="../../assets/blog/app-pick-sources.png" alt="The app with three of nine databases ticked in the sidebar — EpiGraphDB, UniProt and gnomAD — and the card beside it. A brown banner reads: no verdict, no model was called in this run, everything below was retrieved and rendered by code. The MR panel shows a retrieved beta, p-value and cis instrument; the panels for the unticked sources read tool not called in this run." width="1440" height="980">
+    <figcaption><b>Pick your databases.</b> Three of nine ticked here, and no key pasted in, so
+    no model ran at all &#8212; the banner says so. The sources that were not asked print
+    <code>tool not called in this run</code> rather than going blank, so a skipped database can
+    never be mistaken for one that answered with nothing.</figcaption>
+  </figure>
+
+  <p>Under the card sit two figures drawn from the same tool output: the retrieved MR estimates,
+  and where the gene sits on the knock-out-tolerance scale.</p>
 
   <p><strong>What it helps with, and what it does not.</strong> It retrieves published MR
   estimates and computes none, so it does not stand in for an analysis. It answers the question
@@ -390,6 +406,9 @@ h2{scroll-margin-top:64px}
   the only one of the nine that speaks to causality, which is why most of this post is about it.</p>
 
   <h2 id="nofake">How I keep it from making things up</h2>
+
+  <p><strong>The card used to be written by the model.</strong> Now it is built by code from
+  what the tools returned, and the model writes two sentences that a checker has to approve.</p>
 
   <p><strong>Nine good sources do nothing on their own.</strong> The model still has to turn
   them into a page, and that is the step where it can write past them &#8212; so the design
