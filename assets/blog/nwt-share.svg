@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img"
+     aria-label="Evidence agents, part 3. Headline: my own checks caught none of the eighteen. An audit funnel: 41 adversarial agents, 86 defects claimed, 27 surviving re-check, 18 confirmed, 0 caught by my own validator. Footer: so I stopped grading my own work.">
+  <defs>
+    <style>
+      .kick { font-family:Aptos,"Segoe UI",Helvetica,Arial,sans-serif; font-size:23px; font-weight:700;
+              letter-spacing:3.4px; fill:#737e78 }
+      .head { font-family:Charter,"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+              font-size:72px; font-weight:700; fill:#17231f; letter-spacing:-1px }
+      .num  { font-family:Charter,"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+              font-size:58px; font-weight:700; fill:#1f5b4d; text-anchor:middle }
+      .numz { font-family:Charter,"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+              font-size:58px; font-weight:700; fill:#9a5b42; text-anchor:middle }
+      .lab  { font-family:Aptos,"Segoe UI",Helvetica,Arial,sans-serif; font-size:17px;
+              fill:#737e78; text-anchor:middle }
+      .labz { font-family:Aptos,"Segoe UI",Helvetica,Arial,sans-serif; font-size:17px; font-weight:650;
+              fill:#9a5b42; text-anchor:middle }
+      .foot { font-family:Aptos,"Segoe UI",Helvetica,Arial,sans-serif; font-size:25px; font-weight:650;
+              fill:#1f5b4d }
+    </style>
+  </defs>
+
+  <rect width="1200" height="630" fill="#f5f6f2"/>
+  <rect x="0" y="0" width="14" height="630" fill="#1f5b4d"/>
+
+  <text class="kick" x="78" y="86">EVIDENCE AGENTS · PART 3</text>
+
+  <text class="head" x="78" y="200">My own checks caught</text>
+  <text class="head" x="78" y="282">none of the eighteen.</text>
+
+  <line x1="78" y1="344" x2="1122" y2="344" stroke="#d5dad3" stroke-width="1"/>
+
+  <g>
+    <text class="num" x="182" y="432">41</text><text class="lab" x="182" y="462">agents attacking</text>
+    <text class="num" x="392" y="432">86</text><text class="lab" x="392" y="462">defects claimed</text>
+    <text class="num" x="602" y="432">27</text><text class="lab" x="602" y="462">survived re-check</text>
+    <text class="num" x="812" y="432">18</text><text class="lab" x="812" y="462">confirmed real</text>
+    <text class="numz" x="1022" y="432">0</text><text class="labz" x="1022" y="462">my validator caught</text>
+  </g>
+
+  <line x1="78" y1="506" x2="1122" y2="506" stroke="#d5dad3" stroke-width="1"/>
+
+  <text class="foot" x="78" y="566">So I stopped grading my own work.</text>
+</svg>

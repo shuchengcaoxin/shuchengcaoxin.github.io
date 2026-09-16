@@ -8,9 +8,15 @@
   </url>
   <url>
     <loc>https://shuchengcaoxin.github.io/blog/</loc>
-    <lastmod>2026-09-12</lastmod>
+    <lastmod>2026-09-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://shuchengcaoxin.github.io/blog/no-way-to-tell/</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://shuchengcaoxin.github.io/blog/metabocausal/</loc>

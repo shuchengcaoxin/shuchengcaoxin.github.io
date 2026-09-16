@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Two agents, and no way to tell if either one worked — Shucheng (Bangli) Cao</title>
+<meta name="description" content="I built two evidence agents and wrote the checks that decided whether they had worked. That is a self-assessment, not a test. So I helped start a benchmark, and this is the honest state of it.">
+<meta name="author" content="Shucheng Cao (Bangli Cao)">
+<link rel="canonical" href="https://shuchengcaoxin.github.io/blog/no-way-to-tell/">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='6' fill='%231f5b4d'/><text x='32' y='41' text-anchor='middle' font-family='Georgia' font-size='25' fill='%23f5f6f2'>SC</text></svg>">
+
+<meta property="og:type" content="article">
+<meta property="og:title" content="Two agents, and no way to tell if either one worked">
+<meta property="og:description" content="I wrote the agents and I wrote the checks that graded them. That is a self-assessment, not a test — so I helped start a benchmark.">
+<meta property="og:url" content="https://shuchengcaoxin.github.io/blog/no-way-to-tell/">
+<meta property="og:image" content="https://shuchengcaoxin.github.io/assets/blog/nwt-share.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="My own checks caught none of the eighteen. 41 agents attacking, 86 defects claimed, 27 survived re-check, 18 confirmed real, 0 my validator caught.">
+<meta name="twitter:image" content="https://shuchengcaoxin.github.io/assets/blog/nwt-share.png">
+<meta property="article:published_time" content="2026-09-16">
+<meta name="twitter:card" content="summary_large_image">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Two agents, and no way to tell if either one worked",
+  "description": "Why building two evidence agents led to helping start a benchmark, and the honest state of that benchmark today.",
+  "image": "https://shuchengcaoxin.github.io/assets/blog/nwt-share.png",
+  "datePublished": "2026-09-16",
+  "author": {
+    "@type": "Person",
+    "name": "Shucheng Cao",
+    "alternateName": ["Bangli Cao", "Shucheng (Bangli) Cao", "曹书诚"],
+    "url": "https://shuchengcaoxin.github.io/",
+    "sameAs": [
+      "https://orcid.org/0000-0002-9115-6259",
+      "https://scholar.google.com/citations?user=q1cAyE0AAAAJ",
+      "https://github.com/shuchengcaoxin"
+    ]
+  },
+  "keywords": ["benchmark", "AI for science", "evaluation", "Mendelian randomization", "LLM agents"]
+}
+</script>
+
+<style>
+:root{
+  --bg:#f5f6f2; --bg-soft:#e9efea; --card:#fffefb;
+  --ink:#17231f; --ink-2:#4f5c56; --ink-3:#737e78;
+  --line:#d5dad3;
+  --accent:#1f5b4d; --accent-soft:#dfece6; --accent-ink:#173f36;
+  --amber:#9a5b42; --amber-soft:#f1e4dc;
+  --display:Charter,"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Noto Serif SC",serif;
+  --sans:Aptos,-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+  --maxw:760px;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --bg:#151a17; --bg-soft:#22312a; --card:#1c231f;
+    --ink:#ecefe9; --ink-2:#b8c0ba; --ink-3:#8f9a93;
+    --line:#35413a;
+    --accent:#83b8a5; --accent-soft:#263e34; --accent-ink:#a4cfbf;
+    --amber:#d5957b; --amber-soft:#3b2b25;
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans);
+     font-size:17px; line-height:1.68; overflow-wrap:break-word}
+.wrap{max-width:var(--maxw); margin:0 auto; padding:0 20px}
+.topbar{position:sticky; top:0; z-index:20; background:color-mix(in srgb, var(--bg) 88%, transparent);
+        backdrop-filter:saturate(1.4) blur(8px); border-bottom:1px solid var(--line)}
+.topbar .row{max-width:var(--maxw); margin:0 auto; padding:11px 20px; display:flex; gap:16px;
+             align-items:baseline; justify-content:space-between}
+.topbar a{color:var(--ink-2); text-decoration:none; font-size:14px}
+.topbar a:hover{color:var(--accent)}
+.topbar .who{font-weight:650; font-size:14.5px; color:var(--ink)}
+
+article{padding:40px 0 8px}
+.kicker{font-size:12.5px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink-3); font-weight:700}
+h1{font-family:var(--display); font-size:38px; line-height:1.16; letter-spacing:-0.5px; margin:10px 0 12px}
+h1 .title-sub{display:block; margin-top:10px; font-family:var(--display); font-style:italic;
+              font-size:24px; font-weight:400; line-height:1.34; letter-spacing:0; color:var(--ink-2)}
+.standfirst{font-size:19px; line-height:1.55; color:var(--ink-2); margin:0 0 18px}
+.byline{font-size:14px; color:var(--ink-3); border-bottom:1px solid var(--line); padding-bottom:20px; margin-bottom:8px}
+
+h2{font-family:var(--display); font-size:25px; line-height:1.3; letter-spacing:-0.2px; margin:38px 0 12px;
+   scroll-margin-top:64px}
+p{margin:0 0 17px}
+a{color:var(--accent-ink); text-underline-offset:2px}
+a:hover{color:var(--accent)}
+strong{font-weight:650}
+ol,ul{padding-left:22px; margin:0 0 17px}
+li{margin:0 0 9px}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:0.88em}
+p code, li code{background:var(--bg-soft); border:1px solid var(--line); border-radius:4px; padding:1px 5px}
+
+.spot{margin:34px 0; padding:18px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+      font-family:var(--display); font-size:25px; line-height:1.32; letter-spacing:-0.2px; color:var(--ink)}
+.spot b{font-weight:650}
+
+.callout{background:var(--amber-soft); border:1px solid var(--amber); border-radius:10px;
+         padding:16px 18px; margin:24px 0}
+.callout p{margin:0 0 12px}
+.callout p:last-child{margin:0}
+.callout .h{display:block; font-size:12px; letter-spacing:1.4px; text-transform:uppercase;
+            font-weight:700; color:var(--amber); margin-bottom:6px}
+
+.toc{border:1px solid var(--line); border-radius:10px; padding:14px 16px; margin:26px 0; background:var(--bg-soft)}
+.toc .h{font-size:11.5px; letter-spacing:1.4px; text-transform:uppercase; font-weight:700; color:var(--ink-3); margin-bottom:8px}
+.toc ol{margin:0; padding-left:20px; font-size:15px}
+.toc li{margin:0 0 5px}
+.toc a{color:var(--ink-2); text-decoration:none}
+.toc a:hover{color:var(--accent); text-decoration:underline}
+@media (min-width:1180px){
+  .toc{position:fixed; top:96px; left:calc(50% - 600px); width:210px; margin:0;
+       max-height:calc(100vh - 140px); overflow-y:auto; font-size:14px}
+  .toc ol{font-size:13.5px}
+}
+
+footer{border-top:1px solid var(--line); margin-top:44px; padding:20px 0 40px;
+       font-size:14px; color:var(--ink-3); display:flex; flex-wrap:wrap; gap:16px}
+footer a{color:var(--ink-2); text-decoration:none}
+footer a:hover{color:var(--accent)}
+
+@media (max-width:600px){
+  body{font-size:16px}
+  h1{font-size:27px}
+  h1 .title-sub{font-size:17px; margin-top:9px}
+  h2{font-size:20px}
+  .standfirst{font-size:17px}
+  .spot{font-size:19px; padding:15px 0; margin:26px 0}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="row">
+    <span class="who">Shucheng Cao · Bangli Cao</span>
+    <span><a href="/blog/">Blog</a> &nbsp; <a href="/">Home</a></span>
+  </div>
+</div>
+
+<div class="wrap">
+<article>
+
+  <div class="kicker">Evidence agents, part 3</div>
+  <h1>Two agents, and no way to tell if either one worked<span class="title-sub">why I helped start a benchmark instead of building a third</span></h1>
+  <p class="standfirst">LLMs hallucinate. I built two agents to stop that happening in biomedicine, and both times I wrote the checks that decided whether they had worked. That is a self-assessment, not a test. So I helped start a benchmark: shared tasks where somebody else holds the answer.</p>
+  <p class="byline">By <a href="/" rel="author">Shucheng Cao (Bangli Cao)</a> · 16 September 2026 · <span id="rt">8 min read</span></p>
+
+  <nav class="toc" aria-label="Contents">
+    <div class="h">Contents</div>
+    <ol>
+      <li><a href="#what">What a benchmark actually is</a></li>
+      <li><a href="#first">What went wrong the first time</a></li>
+      <li><a href="#second">What went wrong the second time</a></li>
+      <li><a href="#common">What both had in common</a></li>
+      <li><a href="#measured">What is already measured, and what is not</a></li>
+      <li><a href="#started">So we started one</a></li>
+      <li><a href="#state">The honest state of it</a></li>
+      <li><a href="#need">What it needs now</a></li>
+    </ol>
+  </nav>
+
+  <h2 id="what">What a benchmark actually is</h2>
+
+  <p>A benchmark is not a set of exam questions. It is a shared measuring stick: a way for two people who have built different things to find out whose works better, without either of them being the judge.</p>
+
+  <p>For that to mean anything, five pieces have to exist.</p>
+
+  <ul>
+    <li><strong>A task contract.</strong> What the agent is given, what it must hand back, and what it is not allowed to look at.</li>
+    <li><strong>A dataset.</strong> The material the agent can see, and the answer it cannot.</li>
+    <li><strong>A scorer.</strong> How an answer gets marked — by rule where possible, by a person where not.</li>
+    <li><strong>Leakage control.</strong> Some reason to believe the model did not simply memorise the answer before you asked.</li>
+    <li><strong>A baseline.</strong> At least one reference result that anybody can reproduce.</li>
+  </ul>
+
+  <p>Miss any one of the five and what you have is a demonstration. Demonstrations are useful. They are not evidence that a thing works.</p>
+
+  <h2 id="first">What went wrong the first time</h2>
+
+  <p>The first agent reads public genetics databases and writes one page on whether a protein is worth making a drug against. I spent a summer trying to break it.</p>
+
+  <p>The attack that mattered used 41 separate model instances, each told to hunt for defects from a different angle, with every claim re-checked by an independent second instance before it counted. Eighty-six were claimed, twenty-seven survived the re-check, and eighteen were confirmed as real, distinct defects.</p>
+
+  <p class="spot">My own checks caught <b>none of the eighteen</b>.</p>
+
+  <p>Then a second number went wrong in the opposite direction. Ten cards out of ten passed validation, and I nearly wrote that down as progress — until I counted how much there had been to check. Across the whole batch of ten, three claims were checkable at all. The model had found the safe move: say almost nothing that can be tested. A pass rate with nothing behind it measures caution, not accuracy.</p>
+
+  <p>Both numbers were produced by me, about my own system, using checks I had written.</p>
+
+  <h2 id="second">What went wrong the second time</h2>
+
+  <p>The <a href="/blog/metabocausal/">second agent</a> asks the same kind of question starting from a molecule in blood rather than a protein. Different databases, a different way of naming things, an extra step to find the gene behind the molecule.</p>
+
+  <p>The machinery moved across without argument. The problems moved across with it. A request that could not be resolved. A source that failed and had to be reported as failed rather than as empty. A verdict that had to be computed rather than written, because the line most likely to be quoted back is the line a model should not be able to reach.</p>
+
+  <p>And once again, the only person deciding whether any of it worked was the person who built it.</p>
+
+  <h2 id="common">What both had in common</h2>
+
+  <p>I wrote the claim and I wrote the check. When the check passed, that told you the two agreed with each other. It did not tell you either one was right.</p>
+
+  <p>This is not a character flaw and it is not unusual. It is the normal condition of nearly every scientific agent being shown off right now: the team that built the system also decided what counted as success, which cases to show, and when to stop testing. Their results are not lies. They are unfalsifiable, which is worse in a different way.</p>
+
+  <p>The twenty target–disease pairs I eventually scored against real drug-development outcomes were labelled that way because I went and built the labels myself, from a published survey. That was the closest thing to an outside opinion available to me. It should not have been.</p>
+
+  <h2 id="measured">What is already measured, and what is not</h2>
+
+  <p>There is no shortage of benchmarks in this area. Several good ones test whether a model can find a paper, answer a question about a database, or reason its way through an open scientific problem. Between them they cover literature retrieval and open-ended scientific question answering fairly well.</p>
+
+  <p>What none of them scores is the thing my two agents kept failing at.</p>
+
+  <p class="spot">Not <b>can it answer</b>, but: can the chain be checked, number by number &#8212; and will it stop when the evidence runs out?</p>
+
+  <p>Those are different questions. An agent can produce a true sentence that nothing it retrieved supports, and every existing test will pass it, because the sentence is true. An agent can decline to commit and score badly, when declining was the correct behaviour. Until refusal counts for something and every step is checkable against a source, the leaderboard rewards fluency.</p>
+
+  <h2 id="started">So we started one</h2>
+
+  <p>Rather than build a third agent and grade it myself, I became one of the initiators of <a href="https://ai4sbench.org/" target="_blank" rel="noopener">AI4S-Benchmark</a>, an interdisciplinary benchmark for AI agents in science, and wrote the first three tasks in my own area.</p>
+
+  <p>The idea is narrow on purpose: scientists contribute hard, open problems from their own fields, and those get turned into tasks with a verifiable answer, which frontier agents are then run against. A task travels through a fixed pipeline — a proposal, automated checks, review by people in the domain for whether it is scientifically worth anything and whether it can actually be verified, a structured pull request, then a run and a versioned release.</p>
+
+  <ul>
+    <li><strong>Protein evidence.</strong> Given a protein and a disease, rebuild the human-genetic causal evidence — the estimate, its direction, the checks that travel with it — and be scored on whether each piece traces to a source, not on whether the conclusion sounds right.</li>
+    <li><strong>Metabolite evidence.</strong> The same, starting from a molecule measured in blood, where identity is ambiguous and the gene behind the molecule has to be nominated before the question is even well posed.</li>
+    <li><strong>Reaction rules.</strong> Checking and repairing the gene-to-reaction rules inside a human metabolic model, where the answer is a formal expression that can be verified edge by edge and then run.</li>
+  </ul>
+
+  <p>Tasks are reviewed before they are accepted, by people with a claim to judge them, and reviewers are credited permanently for the work. The whole thing is open, and the review happens on GitHub in public — so the argument about whether a task is sound is itself readable, not a decision taken in a room.</p>
+
+  <p>That review step is the part that makes any of it worth something. It is what stops a benchmark from being one more system graded by the person who built it.</p>
+
+  <h2 id="state">The honest state of it</h2>
+
+  <div class="callout">
+    <span class="h">Where this actually stands</span>
+    <p>My three tasks are specifications. For them there is no gold answer set, no hidden test set, and no score for any agent, including my own. Nothing on this page is a result.</p>
+    <p>The pipeline above is the design, and my tasks have not been through the far end of it. I would rather say that than describe a plan in the present tense.</p>
+  </div>
+
+  <p>Writing a task contract is the cheap part. The expensive parts are the ones that decide whether a benchmark means anything: somebody has to produce answers that are right independently of any agent, somebody has to hold those answers back, and somebody has to be willing to say the tasks are not yet hard enough or not yet fair.</p>
+
+  <h2 id="need">What it needs now</h2>
+
+  <p>Three things, in order.</p>
+
+  <ol>
+    <li><strong>Reviewers who will argue.</strong> People who can look at a task in genetics, metabolism or agent evaluation and say whether it is verifiable, whether it is genuinely difficult, and whether it is worth anyone&#8217;s time. Disagreement is the product here.</li>
+    <li><strong>Independent answers.</strong> Cases where the truth is known from somewhere other than the system being tested — a completed trial, a curated model, an expert who will commit to an answer in writing.</li>
+    <li><strong>Somebody else&#8217;s agent.</strong> A benchmark with one participant is still a self-assessment, just a more elaborate one.</li>
+  </ol>
+
+  <p><strong>If any of that is yours to give, write to me.</strong> I am most interested in hearing from people who think one of these tasks is wrong, or too easy, or measures something other than what it claims. That is more useful to me than agreement, and it is the entire reason for doing this in the open rather than in my own repository.</p>
+
+  <p>Write to <a href="mailto:shucheng.cao@mail.mcgill.ca">shucheng.cao@mail.mcgill.ca</a>.</p>
+
+  <p><em>This is the third of three posts. The <a href="/blog/what-the-agent-gets-wrong/">first</a> is about the failure that started all of this; the <a href="/blog/metabocausal/">second</a> is about what happened when the same design moved to a different kind of molecule.</em></p>
+
+</article>
+
+<footer>
+  <span>© <span id="yr">2026</span> Shucheng Cao · also published as Bangli Cao</span>
+  <a href="/">Home</a>
+  <a href="/blog/">Blog</a>
+  <a href="https://github.com/shuchengcaoxin" target="_blank" rel="noopener">GitHub</a>
+  <a href="mailto:shucheng.cao@mail.mcgill.ca">Email</a>
+</footer>
+
+</div>
+
+<script>
+document.getElementById('yr').textContent = new Date().getFullYear();
+(function(){
+  var w = document.querySelector('article').innerText.trim().split(/\s+/).length;
+  document.getElementById('rt').textContent = Math.max(1, Math.round(w / 230)) + ' min read';
+})();
+</script>
+</body>
+</html>
