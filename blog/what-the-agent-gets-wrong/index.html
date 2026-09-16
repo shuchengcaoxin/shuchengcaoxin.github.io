@@ -177,6 +177,12 @@ footer a:hover{color:var(--accent)}
   .toc ol{font-size:13.5px}
 }
 
+/* ---- spotlight: one line, where it pays off ---- */
+.spot{margin:34px 0; padding:18px 0; border-top:1px solid var(--line);
+      border-bottom:1px solid var(--line); font-family:var(--display);
+      font-size:25px; line-height:1.32; letter-spacing:-0.2px; color:var(--ink)}
+.spot b{font-weight:650}
+
 /* ---- what the post found, up front ---- */
 .findings{border:1px solid var(--accent); border-radius:10px; padding:16px 18px;
           background:var(--accent-soft); margin:24px 0}
@@ -195,6 +201,7 @@ h2{scroll-margin-top:64px}
   h1{font-size:27px}
   h1 .title-sub{font-size:17px; margin-top:9px}
   h2{font-size:20px}
+  .spot{font-size:19px; padding:15px 0; margin:26px 0}
   .standfirst{font-size:17px}
 }
 </style>
@@ -274,20 +281,6 @@ h2{scroll-margin-top:64px}
   not whether the sentence is true &#8212; it is whether the retrieval supports it. Those two
   come apart quietly, and nothing downstream notices. The rest of this post is a worked example
   of that, in a domain where being wrong is expensive.</p>
-
-  <div class="findings">
-    <span class="h">What this post found</span>
-    <ul>
-      <li>The failure that mattered <strong>was not a hallucination</strong>. It was a true sentence
-      that nothing the pipeline had retrieved supported.</li>
-      <li>My guardrails caught none of it: an adversarial audit surfaced 18 real defects, and the checks I had already written <strong>flagged 0 of the 18</strong>.</li>
-      <li>A high pass rate turned out to measure caution, not accuracy — the model learned to
-      pass by asserting almost nothing.</li>
-      <li>The check I built afterwards caught the same failure twice, on twenty
-      target–indication pairs whose outcomes history had already settled.</li>
-      <li>The pathway behind that true-but-unsupported sentence &#8212; IL6R for coronary heart disease &#8212; then <strong>failed its phase 3 trial this year</strong>. The borrowed answer did not even stay true.</li>
-    </ul>
-  </div>
 
   <nav class="toc" aria-label="Contents">
     <div class="h">Contents</div>
@@ -446,6 +439,9 @@ h2{scroll-margin-top:64px}
   </figure>
 
   <h2 id="attack">How hard it was attacked</h2>
+
+  <p class="spot">An audit of my own agent found <b>18 real defects</b>. The checks I had
+  already written caught <b>none of them</b>.</p>
 
   <p>Every version of this system has been shipped, attacked, and shipped again. The attack that mattered used 41 adversarial agents &#8212; separate LLM instances, each prompted to hunt for defects from one of four angles &#8212; with every claim re-checked by an independent second agent before it counted: 86 claimed,
   27 survived the re-check, and <strong>18 were confirmed as distinct defects</strong>.</p>
@@ -641,6 +637,9 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
   of guessing.</p>
 
   <h2 id="phase3">The pharmacology was right, and it still did not work</h2>
+
+  <p class="spot">In <b>2012</b> the genetics said this pathway lowers heart disease. In
+  <b>2026</b> the phase 3 trial missed its endpoint.</p>
 
   <p>The model reached past its retrieval, supplied the shedding biology from memory, and
   was correct. I had been calling that a near miss &#8212; right this time, wrong
