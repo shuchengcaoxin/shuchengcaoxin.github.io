@@ -261,12 +261,6 @@ h2{scroll-margin-top:64px}
   chemical is known to hit it, and whether switching it off is likely to be safe. None of them
   needs an account or a paid key.</p>
 
-  <p><strong>One rule shapes the whole design: the model writes as little as possible.</strong>
-  Every number, every table and every source link on the card is written by code, from exactly
-  what the databases returned. The model writes two things only &#8212; a one-line verdict and a
-  short paragraph. A checker then compares those two against the stored answers, and fails the
-  run if they claim anything the databases did not.</p>
-
   <p>This is exactly the kind of work people now hand to a model: <strong>cheap labour that
   never gets bored.</strong></p>
 
@@ -302,7 +296,8 @@ h2{scroll-margin-top:64px}
       <li><a href="#why">What the agent does</a></li>
       <li><a href="#lessons">What I learned</a></li>
       <li><a href="#product">What it ships</a></li>
-      <li><a href="#design">How it works: the model writes as little as possible</a></li>
+      <li><a href="#asks">What it asks each database</a></li>
+      <li><a href="#nofake">How I keep it from making things up</a></li>
       <li><a href="#attack">How hard it was attacked</a></li>
       <li><a href="#case">The case: IL6R &#215; coronary heart disease</a></li>
       <li><a href="#right">Why the card was right</a></li>
@@ -330,10 +325,9 @@ h2{scroll-margin-top:64px}
 
   <h2 id="product">What it ships</h2>
 
-  <p>One command &#8212; a protein and a disease &#8212; returns one evidence card. The
-  model writes only the verdict banner (the go / no-go call) and one paragraph. Every table,
-  every number and the validation line are written by code from stored tool returns, and each
-  panel names the database release it came from.</p>
+  <p>One command &#8212; a protein and a disease &#8212; returns one evidence card: a verdict at
+  the top, then one panel per database, each naming the release of the database it was read
+  from.</p>
 
   <figure>
     <picture>
@@ -369,7 +363,7 @@ h2{scroll-margin-top:64px}
   </div>
 
 
-  <h2 id="design">How it works: the model writes as little as possible</h2>
+  <h2 id="asks">What it asks each database</h2>
 
   <p>Nine tools, eight public databases, no API key. Each one answers a different part of
   the question a reviewer would ask, and each is a separate call whose return is kept:</p>
@@ -425,6 +419,8 @@ h2{scroll-margin-top:64px}
   <p class="srcnote">MR &#8212; Mendelian randomization &#8212; uses genetic variants as natural
   experiments to ask whether a molecule <em>causes</em> a disease rather than tracking it. It is
   the only one of the nine that speaks to causality, which is why most of this post is about it.</p>
+
+  <h2 id="nofake">How I keep it from making things up</h2>
 
   <p><strong>Nine good sources do nothing on their own.</strong> The model still has to turn
   them into a page, and that is the step where it can write past them &#8212; so the design
@@ -706,7 +702,10 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
     readers who do not work on drugs. <a href="#why">What the agent does</a> was rewritten to say
     who it is for, which databases it queries and how it is built, and the two passages it used
     to open with — the failure rate and the day of reading per target — came out of it, because
-    the new Background section already carries them. Two passages were added further down: one
+    the new Background section already carries them. The old section on how the agent works was
+    split in two, <a href="#asks">what it asks each database</a> and
+    <a href="#nofake">how I keep it from making things up</a>, and that design had been described
+    three times over in three different places; it is now in one. Two passages were added further down: one
     naming the general shape of the problem for readers outside biology, one stating what the
     tool answers and what it does not. And the opening summary was rewritten to say plainly what the problem is and what
     I built; it originally read: &#8220;The most dangerous failure was not a made-up number. It
