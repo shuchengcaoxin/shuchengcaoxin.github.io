@@ -260,16 +260,17 @@ h2{scroll-margin-top:64px}
   chemical is known to hit it, and whether switching it off is likely to be safe. None of them
   needs an account or a paid key.</p>
 
-  <p><strong>Handing this job to a model is the obvious move.</strong> It is cheap labour that
-  never gets bored, and there are thousands of proteins to get through.</p>
+  <p>Giving this job to a language model looks like the easy answer. It never gets bored, it
+  costs almost nothing, and there are thousands of proteins to get through.</p>
 
-  <p><strong>It is also the dangerous one.</strong> A model answers fluently whether or not it
-  has grounds to, and cheap labour that invents its evidence is not cheap: here a confident
-  wrong sentence costs years of work, not just a wrong answer.</p>
+  <p>The problem is that a model writes a fluent answer whether or not it has anything to back
+  it up. Here a confident wrong sentence can point years of drug development at the wrong
+  protein. So the model is only cheap if it does not invent its evidence.</p>
 
-  <p>So the question the whole design turns on is not whether the card&#8217;s sentences are
-  true. It is whether anything the agent retrieved actually supports them. Those two things come
-  apart quietly, and nothing downstream notices.</p>
+  <p>Whether a sentence on the card is true and whether the retrieved evidence supports it are
+  two different questions. I built the whole design around the second one. A sentence can be
+  true with nothing behind it in what the agent fetched, and nothing on the card would show
+  that.</p>
 
   <p>That is why I spent the summer attacking my own agent rather than adding to it. The rest of
   this post is what the attacks found.</p>
@@ -400,9 +401,9 @@ h2{scroll-margin-top:64px}
   <p><strong>The card used to be written by the model.</strong> Now it is built by code from
   what the tools returned, and the model writes two sentences that a checker has to approve.</p>
 
-  <p><strong>Nine good sources do nothing on their own.</strong> The model still has to turn
-  them into a page, and that is the step where it can write past them &#8212; so the design
-  gives the model as little of that step as possible.</p>
+  <p>Having nine good sources is not enough by itself. Someone still has to turn what they
+  return into a page. If that someone is the model, this is the step where it can add things the
+  sources never said. So the design leaves the model as little of that step as possible.</p>
 
   <p>Every tool return is stored word for word. From that store, code &#8212; not the model
   &#8212; builds the evidence table, the warnings, the source links, and a footer tracing each
@@ -469,7 +470,7 @@ ld_check              null</code></pre>
   disease. So the data seemed to support raising the target, while the card recommended
   inhibiting it.</p>
 
-  <p>That reading was wrong, and the way it was wrong is the point of this post.</p>
+  <p>My reading was wrong. Working out why is what the rest of this post is about.</p>
 
   <h2 id="right">Why the card was right</h2>
 
@@ -503,9 +504,10 @@ ld_check              null</code></pre>
   correct.</p>
 
   <p><strong>That is the failure mode I now worry about most: not a hallucinated fact, but a
-  correct conclusion that the retrieval does not support.</strong> An expert skimming the card
-  nods, because the sentence is true &#8212; filling the gap from memory exactly as the model
-  did. The reader&#8217;s own knowledge hides the pipeline&#8217;s silence.</p>
+  correct conclusion that the retrieval does not support.</strong> An invented fact at least
+  looks wrong to an expert. This does not. The expert reads the card, nods because the sentence
+  is true, and fills the gap from their own memory exactly as the model did. So nobody notices
+  that the pipeline fetched nothing to back it.</p>
 
   <p>Next time the remembered answer will be stale, or wrong, or right for a different protein, and nothing in the system will be able to tell the
   difference.</p>
@@ -565,9 +567,10 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
   inhibition contradicts the sign. Only the shedding biology closes that gap, and the
   pipeline never fetched it.</p>
 
-  <p>I also had to be careful about the rule itself. An early version of the direction check
-  rejected a sentence that was correct. A check that punishes you for being precise just teaches
-  you to be vague, which is the opposite of what any of this is for.</p>
+  <p>I also had to be careful with the rule itself. An early version of the direction check
+  rejected a sentence that was correct. If a check rejects correct, precise sentences, the model
+  learns to write vague ones instead, and vague sentences are exactly what I am trying to get
+  rid of.</p>
 
   <h2 id="vanity">Why a perfect pass rate meant nothing</h2>
 
@@ -580,14 +583,14 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
 
   <p>Later I made the validator stricter, and the same benchmark dropped to 8/10 — both failures
   were the model asserting clinical status ("clinically proven", "approved") that none of the
-  retrieved sources returns. <strong>A pass rate that falls when the check gets honest is what
-  progress actually looks like.</strong></p>
+  retrieved sources returns. <strong>The score dropped because the check got stricter, and a
+  lower score from a stricter check is progress.</strong></p>
 
   <p>So the pipeline now reports <strong>claim density</strong> &#8212; checkable tokens per
   100 words &#8212; beside the pass rate. Alone, neither means much; together they answer the
-  real question: how much did it claim, and how much held up? This run: 8/10 passed, 2
-  checkable tokens across 842 words. Worse than the run before it, and reporting that is the
-  point.</p>
+  real question: how much did it claim, and how much held up? This run: 8 of 10 passed, with
+  2 checkable tokens across 842 words. That is worse than the run before it, and I report it as
+  it is.</p>
 
 
   <h2 id="external">Tested on data I did not pick</h2>
@@ -602,7 +605,8 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
   <p>I scored the agent against twenty target–indication pairs sampled from
   <a href="https://doi.org/10.1038/s41586-024-07316-0" target="_blank" rel="noopener">Minikel et al.,
   <em>Nature</em> 2024</a>: ten drugs that launched, ten programmes that died at phase II/III.
-  History supplies the labels, not me. I withheld the clinical-evidence tool, because it reports
+  Whether each pair counts as a success or a failure was decided by what happened in the clinic,
+  not by me. I withheld the clinical-evidence tool, because it reports
   approval stages directly and would hand the agent the answer.</p>
 
   <div class="callout">
@@ -629,10 +633,8 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
   <b>2026</b> the phase 3 trial missed its endpoint.</p>
 
   <p>The model reached past its retrieval, supplied the shedding biology from memory, and
-  was correct. I had been calling that a near miss &#8212; right this time, wrong
-  eventually.</p>
-
-  <p>It was worse than that.</p>
+  was correct. I had been calling that a near miss: right this time, and likely wrong some
+  other time. Then the answer itself stopped being right.</p>
 
   <figure>
     <picture>
@@ -661,12 +663,13 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
   was engaged: hsCRP, the blood marker of IL-6-driven inflammation, fell exactly as the
   biology predicted. The outcome did not move.</p>
 
-  <p>If the field&#8217;s own consensus can sit that far from the trial result, a pipeline
-  that stays silent and lets the reader fill the gap from memory is not borrowing a safe
-  fact. It is borrowing a bet.</p>
+  <p>If the whole field&#8217;s best guess could miss the trial result by this much, then a
+  card that stays silent and lets the reader fill the gap from memory is passing on a guess, not
+  a fact.</p>
 
-  <p>Making the silence visible is the whole argument. A card that prints
-  <code>Steiger / coloc / LD → NA / NA / NA</code> and refuses the causal sentence is not being fussy; it is refusing to make that bet on the reader&#8217;s behalf.</p>
+  <p>That is why the card has to show where it has nothing. When it prints
+  <code>Steiger / coloc / LD → NA / NA / NA</code> and will not use the word causal, it is
+  leaving that guess to the reader instead of making it for them.</p>
 
   <h2 id="lessons">What I learned</h2>
 
@@ -679,8 +682,8 @@ LPA    beta +0.2523  p 5.39e-39  n_snp 1  steiger TRUE  ld_check 1.0   coloc nul
     <li><strong>Report how much was checkable, not just how much passed.</strong> A pass rate
     without claim density measures caution, not accuracy.</li>
     <li><strong>Attack your own guardrails before trusting them.</strong> I would have shipped
-    mine with a clean conscience. Recall 0/18 is not a number you discover by staring at your own
-    code.</li>
+    mine believing they worked. I only found out they had caught none of the 18 because other
+    agents went looking for the defects I had not thought of.</li>
   </ol>
 
   <p>The code, the 62 regression tests holding the validator&#8217;s rules in place, and the
