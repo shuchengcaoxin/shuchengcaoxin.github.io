@@ -121,7 +121,7 @@ footer a{color:var(--ink-2);text-decoration:none}
   <p class="standfirst">LLMs hallucinate, and this is the second agent I built so that a made-up claim would not reach the page. This one starts from a molecule in blood (a metabolite) rather than a protein, so before it can say anything about a drug target it has to find the gene behind that molecule. The verdict itself is computed by a function, not written by a model.</p>
   <p class="byline">By <a href="/" rel="author">Shucheng Cao (Bangli Cao)</a> with the MetaboCausal team · 12 September 2026 · 6 min read</p>
 
-  <p>This is the second agent I have built this way. <a href="/blog/what-the-agent-gets-wrong/">The first one</a> answers protein–disease questions, and its core came over unchanged: every tool call is recorded, the card is written by code, and the model is held to two sentences. Everything else here is new — pinning down which molecule you mean, naming the gene behind it, a literature layer, a module for biochemical context, and a classifier that settles the verdict so that no model writes it. If none of this biology is yours, <a href="#carried">that part</a> is the one to read.</p>
+  <p>This is the second agent I have built this way. <a href="/blog/what-the-agent-gets-wrong/">The first one</a> answers protein–disease questions, and its core came over unchanged: every tool call is recorded, the card is written by code, and the model writes only a short part of it. Everything else here is new — pinning down which molecule you mean, naming the gene behind it, a literature layer, a module for biochemical context, and a classifier that settles the verdict so that no model writes it. If none of this biology is yours, <a href="#carried">that part</a> is the one to read.</p>
 
   <nav class="toc" aria-label="Contents">
     <div class="h">Contents</div>
@@ -213,7 +213,7 @@ footer a{color:var(--ink-2);text-decoration:none}
     <li><strong>EpiGraphDB</strong> — has anyone already published a causal estimate for this pair?</li>
     <li><strong>OpenGWAS</strong> — do the genetic instruments exist, and are they strong enough for the analysis to be worth running?</li>
     <li><strong>GWAS Catalog</strong> — what else is this disease genetically associated with?</li>
-    <li><strong>An atlas, a paper, or Human-GEM</strong> — which gene makes or breaks this molecule?</li>
+    <li><strong>An atlas or a paper</strong> — which gene is behind this molecule? <strong>Human-GEM</strong> separately lists the enzymes that make or break it.</li>
     <li><strong>Open Targets</strong> — how strongly is that gene tied to the disease, and has a drug against it been tried?</li>
     <li><strong>ChEMBL</strong> — is there already chemistry against it?</li>
     <li><strong>gnomAD</strong> — how well do people tolerate losing that gene?</li>
@@ -222,9 +222,9 @@ footer a{color:var(--ink-2);text-decoration:none}
 
   <h2 id="carried">How the card is held together</h2>
 
-  <p>Three rules, and all three exist to stop the same thing: the card saying something its sources did not. Every tool call is recorded together with its return, word for word. The card is then built from those stored returns by code—tables, numbers, caveats, sources—so nothing a reader might want to check is written by a model. And whatever prose a model does add is compared against those same stored returns, and the run fails when the prose outruns them.</p>
+  <p>Three rules, and all three exist to stop the same thing: the card saying something its sources did not. Every tool call is recorded together with its return, word for word. The card is then built from those stored returns by code—tables, numbers, caveats, sources—so nothing a reader might want to check is written by a model. Whatever prose a model does add is checked against those same stored returns. Every number and name in it has to appear there, or the model’s text is dropped and the card prints a fixed line instead. A sentence can still pass this check and use a real number or gene name the wrong way.</p>
 
-  <p>Two things are harder here than they would be for a protein. <strong>Identity:</strong> a protein arrives with one accession, while a metabolite arrives as a common name, a synonym or a database id—so a run begins by resolving it through OLS4 and PubChem, and prints what it resolved to, because you cannot audit a resolution you cannot see. <strong>The effector gene:</strong> a protein is its own gene and a metabolite is not, so the gene has to be nominated—from an atlas or a paper where one exists, and otherwise from Human-GEM’s enzymes. That step is where a metabolite question becomes a target question, and everything downstream—druggability, population constraint, what the clinic already tried—hangs on which gene was named, so the nomination is printed together with the source it came from rather than quietly assumed.</p>
+  <p>Two things are harder here than they would be for a protein. <strong>Identity:</strong> a protein arrives with one accession, while a metabolite arrives as a common name, a synonym or a database id—so a run begins by resolving it through OLS4 and PubChem, and prints what it resolved to, because you cannot audit a resolution you cannot see. <strong>The effector gene:</strong> a protein is its own gene and a metabolite is not, so the gene has to be nominated by an atlas or a paper. When neither names one, the card says so. That step is where a metabolite question becomes a target question, and everything downstream—druggability, population constraint, what the clinic already tried—hangs on which gene was named, so the nomination is printed together with the source it came from rather than quietly assumed.</p>
 
   <p>The verdict is computed rather than written. A pure function reads the returns a run collected and assigns one of three states, and no model writes that sentence or can change it. The line most likely to be quoted back is the line a model cannot reach. In the two examples bundled with the public repository, urate × gout comes back <strong>State A</strong>—22 retrieved estimates, each carrying an effect size, an uncertainty and a p-value, retrieved from published sources and not computed here. Glycine × coronary artery disease comes back <strong>State B</strong>: no retrieved estimate exists, but the best exposure dataset carries 49 genome-wide significant hits and three outcome datasets are available, so that analysis is feasible and simply has not been run. State C is an evidence gap in the sources queried. None of the three, on its own, establishes causality.</p>
 
@@ -235,7 +235,7 @@ footer a{color:var(--ink-2);text-decoration:none}
     <li><strong>A failed request is not a negative answer.</strong> In the bundled glycine run, the GWAS Catalog call ran past its deadline with the response still arriving. The card prints that the request failed, says plainly that this is not the same statement as the Catalog holding no association for that trait, and the state does not move.</li>
   </ul>
 
-  <p>Two further layers sit above all of that. A literature layer widens the set of metabolite–disease pairs beyond the ones the MR resource already holds, through two independent searches whose overlapping results are matched and de-duplicated before anything moves downstream. A biochemical-context module built on Human-GEM nominates effector genes for metabolites where no atlas or paper names one, which is the case far more often than it is for proteins.</p>
+  <p>Two further layers sit above all of that. A literature layer widens the set of metabolite–disease pairs beyond the ones the MR resource already holds, through two independent searches whose overlapping results are matched and de-duplicated before anything moves downstream. A biochemical-context module built on Human-GEM lists the enzymes that make or break the molecule. An enzyme acting on a molecule does not show that its gene changes how much of that molecule is in the blood, so the card lists these enzymes as background and nominates none of them.</p>
 
   <p>Both run in the working repository. The public snapshot linked above is the 12 September build and predates them, so its notes still describe those two as unfinished—worth saying plainly, because a reader who opens the repository should not have to reconcile it with this page on their own.</p>
 
@@ -344,6 +344,13 @@ footer a{color:var(--ink-2);text-decoration:none}
   <div class="note">
     <p><strong>Update — 15 September 2026.</strong> This post went up on 12 September under the title “When a better blood marker is not a better medicine”, written around the CETP case and the product rather than the agent. It has since been retitled and reopened to match <a href="/blog/what-the-agent-gets-wrong/">the first post in this pair</a>, and a section was added on what carried over from that agent, what a metabolite broke, and what is new here.</p>
     <p><strong>One correction:</strong> the closing paragraph described the literature and biochemical-context layers as work still to come. They are built; what remains is publishing them in the open snapshot. The CETP account, the timeline and the team section are unchanged.</p>
+  </div>
+
+  <div class="note">
+    <p><strong>Correction — 23 September 2026.</strong> I checked this page against the code and found three places where it described the system wrongly. Each is fixed above.</p>
+    <p>It said a module built on Human-GEM “nominates effector genes for metabolites where no atlas or paper names one”. It nominates none. It lists the enzymes that make or break the molecule, and the card shows them under the label “reaction membership, not genetic effectors”.</p>
+    <p>It said the model “is held to two sentences”. The model writes three short parts: a one-sentence headline, a reading of two to four sentences, and two to three sentences on what the run did not establish.</p>
+    <p>It said “the run fails when the prose outruns them”. The check looks up every number and name the model writes, and blocks a few kinds of claim by their wording. When something fails, the model’s text is dropped and the card prints a fixed line instead; the run itself goes on. A sentence can also pass the check and still say more than the evidence supports.</p>
   </div>
 
 </article>
