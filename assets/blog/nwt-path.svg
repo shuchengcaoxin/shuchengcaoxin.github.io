@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 300" width="1100" height="300" role="img"
-     aria-label="How I got here, in four steps. First agent, protein to disease: an audit found 18 real defects and my own checks caught none of them. Second agent, metabolite to disease: the same kinds of failure in a new field. Then the realisation, highlighted: I wrote the systems and I wrote the checks, so passing only meant the two agreed with each other. Therefore AI4S-Benchmark, where someone other than the author holds the answer.">
+     aria-label="How I got here, in four steps. First agent, protein to disease: an audit raised 86 allegations and my own checks flagged none of them. Second agent, metabolite to disease: the same kinds of failure in a new field. Then the realisation, highlighted: I wrote the systems and I wrote the checks, so passing only meant the two agreed with each other. Therefore AI4S-Benchmark, where someone other than the author holds the answer.">
   <defs>
     <style>
       .hd  { font-family:Aptos,"Segoe UI",Helvetica,Arial,sans-serif; font-size:12px; font-weight:700;
@@ -29,8 +29,8 @@
   <rect class="box" x="20" y="58" width="240" height="132" rx="10"/>
   <text class="t" x="140" y="92">First agent</text>
   <text class="s" x="140" y="114">protein &#8594; disease</text>
-  <text class="c" x="140" y="146">18 real defects found</text>
-  <text class="c" x="140" y="166">my checks caught 0</text>
+  <text class="c" x="140" y="146">86 allegations raised</text>
+  <text class="c" x="140" y="166">my checks flagged 0</text>
   <line x1="266" y1="124" x2="294" y2="124" stroke="#aeb8b0" stroke-width="2" marker-end="url(#p)"/>
 
   <!-- 2 -->

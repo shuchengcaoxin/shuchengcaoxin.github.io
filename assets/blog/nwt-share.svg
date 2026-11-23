@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630" role="img"
-     aria-label="Evidence agents, part 3. Headline: my own checks caught none of the eighteen. An audit funnel: 41 adversarial agents, 86 defects claimed, 27 surviving re-check, 18 confirmed, 0 caught by my own validator. Footer: so I stopped grading my own work.">
+     aria-label="Evidence agents, part 3. Headline: my own checks caught none of the 86. An audit funnel: 41 adversarial agents, 86 allegations, 36 ruled on, 27 upheld, 0 flagged by my own validator. Footer: so I stopped grading my own work.">
   <defs>
     <style>
       .kick { font-family:Aptos,"Segoe UI",Helvetica,Arial,sans-serif; font-size:23px; font-weight:700;
@@ -25,16 +25,16 @@
   <text class="kick" x="78" y="86">EVIDENCE AGENTS · PART 3</text>
 
   <text class="head" x="78" y="200">My own checks caught</text>
-  <text class="head" x="78" y="282">none of the eighteen.</text>
+  <text class="head" x="78" y="282">none of the 86.</text>
 
   <line x1="78" y1="344" x2="1122" y2="344" stroke="#d5dad3" stroke-width="1"/>
 
   <g>
     <text class="num" x="182" y="432">41</text><text class="lab" x="182" y="462">agents attacking</text>
-    <text class="num" x="392" y="432">86</text><text class="lab" x="392" y="462">defects claimed</text>
-    <text class="num" x="602" y="432">27</text><text class="lab" x="602" y="462">survived re-check</text>
-    <text class="num" x="812" y="432">18</text><text class="lab" x="812" y="462">confirmed real</text>
-    <text class="numz" x="1022" y="432">0</text><text class="labz" x="1022" y="462">my validator caught</text>
+    <text class="num" x="392" y="432">86</text><text class="lab" x="392" y="462">allegations</text>
+    <text class="num" x="602" y="432">36</text><text class="lab" x="602" y="462">ruled on</text>
+    <text class="num" x="812" y="432">27</text><text class="lab" x="812" y="462">upheld</text>
+    <text class="numz" x="1022" y="432">0</text><text class="labz" x="1022" y="462">my validator flagged</text>
   </g>
 
   <line x1="78" y1="506" x2="1122" y2="506" stroke="#d5dad3" stroke-width="1"/>

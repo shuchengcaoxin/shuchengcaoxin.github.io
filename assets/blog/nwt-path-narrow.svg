@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 720" width="560" height="720" role="img"
-     aria-label="How I got here, stacked. First agent, protein to disease: 18 real defects found, my checks caught none. Second agent, metabolite to disease: the same kinds of failure in a new field. Then, highlighted: both times I wrote the checks, so passing only meant the system and the check agreed with each other. Therefore a benchmark, where someone else holds the answer. Today: three task specifications, no gold answers, no hidden test set, no scores yet.">
+     aria-label="How I got here, stacked. First agent, protein to disease: 86 allegations raised, my checks flagged none. Second agent, metabolite to disease: the same kinds of failure in a new field. Then, highlighted: both times I wrote the checks, so passing only meant the system and the check agreed with each other. Therefore a benchmark, where someone else holds the answer. Today: three task specifications, no gold answers, no hidden test set, no scores yet.">
   <defs>
     <style>
       .hd  { font-family:Aptos,"Segoe UI",Helvetica,Arial,sans-serif; font-size:13px; font-weight:700;
@@ -23,7 +23,7 @@
   <rect class="box" x="24" y="52" width="420" height="108" rx="10"/>
   <text class="t" x="48" y="84">First agent</text>
   <text class="s" x="48" y="108">protein &#8594; disease</text>
-  <text class="c" x="48" y="138">18 real defects found — my checks caught 0</text>
+  <text class="c" x="48" y="138">86 allegations raised — my checks flagged 0</text>
   <line x1="120" y1="164" x2="120" y2="192" stroke="#aeb8b0" stroke-width="2" marker-end="url(#q)"/>
 
   <rect class="box" x="24" y="198" width="420" height="108" rx="10"/>

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 216" width="860" height="216" role="img" aria-label="The adversarial audit: 41 adversarial agents across four critic lenses made 86 claimed defects; an independent second agent re-tested every claim; 27 survived, resolving to 18 confirmed distinct defects. The validator I trusted caught zero of the eighteen.">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 216" width="860" height="216" role="img" aria-label="The adversarial audit: 41 adversarial agents across four critic lenses made 86 claimed defects. A self-imposed cap meant only 36 were ever ruled on: 27 upheld, 9 rejected, 50 never adjudicated. The validator I trusted caught zero of the 86 allegations raised.">
   <style>
     .t   { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
     .box { fill: #ffffff; stroke: #0d6e68; stroke-width: 1.4; }
@@ -45,26 +45,27 @@
   <path class="arw" d="M402 63 L426 63"/>
   <path class="ah" d="M434 63 l-9 -5 v10 z"/>
 
-  <text class="t hd" x="442" y="14">RE-CHECK</text>
+  <text class="t hd" x="442" y="14">ADJUDICATE</text>
   <rect class="box" x="442" y="26" width="190" height="74" rx="9"/>
-  <text class="t lbl" x="458" y="52">independent re-check</text>
-  <text class="t sub" x="458" y="72">a second agent re-tests</text>
-  <text class="t sub" x="458" y="87">every claim &#183; 27 survive</text>
+  <text class="t big" x="458" y="56">36</text>
+  <text class="t lbl" x="500" y="52">ruled on</text>
+  <text class="t sub" x="458" y="76">self-imposed cap</text>
+  <text class="t sub" x="458" y="91">50 never ruled</text>
 
   <path class="arw" d="M632 63 L656 63"/>
   <path class="ah" d="M664 63 l-9 -5 v10 z"/>
 
   <text class="t hd" x="672" y="14">CONFIRMED</text>
   <rect class="box" x="672" y="26" width="180" height="74" rx="9"/>
-  <text class="t big" x="688" y="56">18</text>
-  <text class="t lbl" x="726" y="52">distinct defects</text>
-  <text class="t sub" x="688" y="76">real, reproducible,</text>
-  <text class="t sub" x="688" y="91">each one fixed</text>
+  <text class="t big" x="688" y="56">27</text>
+  <text class="t lbl" x="726" y="52">defects upheld</text>
+  <text class="t sub" x="688" y="76">9 rejected,</text>
+  <text class="t sub" x="688" y="91">of 36 ruled on</text>
 
   <path class="arw" d="M762 100 L762 122"/>
   <path class="ah" d="M762 130 l-5 -9 h10 z"/>
 
   <rect class="gate" x="8" y="134" width="844" height="66" rx="9"/>
-  <text class="t gate-lbl" x="28" y="160">My validator caught 0 of the 18</text>
+  <text class="t gate-lbl" x="28" y="160">My validator caught 0 of the 86 raised</text>
   <text class="t gate-sub" x="28" y="180">Every check I had written was necessary. None of them covered the failures that mattered &#8212; which is why the guardrails below exist.</text>
 </svg>
